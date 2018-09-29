@@ -4,10 +4,10 @@ node_js:
 script:
   - yarn
   - yarn build
-  deploy:
+deploy:
     provider: pages
     skip-cleanup: true
     github-token: $REPO_TOKEN
     keep-history: true
-  on:
+on:
     branch: master
