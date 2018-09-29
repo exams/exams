@@ -11,3 +11,11 @@ deploy:
     keep-history: true
 on:
     branch: master
+after_success:
+  - cd ./build
+  - git init
+  - git config --global user.name 'Domines'
+  - git config --global user.email '719480072@qq.com'
+  - git remote add . https://github.com/Domines/ant.github.io.git
+  - git push -u . master
+    
