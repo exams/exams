@@ -12,4 +12,4 @@ after_success:
   - git config --global user.email '719480072@qq.com'
   - git add .
   - git commit -m "generate static resources, triggerd by travis ci"
-  - git push --force "https://${REPO_TOKEN}@github.com/Domines/ant.github.io.git"
+  - git push --set-upstream --force "https://${REPO_TOKEN}@github.com/Domines/ant.github.io.git" master
