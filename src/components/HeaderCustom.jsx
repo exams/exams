@@ -7,7 +7,7 @@ import screenfull from 'screenfull';
 import { gitOauthToken, gitOauthInfo } from '../axios';
 import { queryString } from '../utils';
 import avater from '../style/imgs/b1.jpg';
-import SiderCustom from './SiderCustom';
+import TopMenuContainer from './TopMenuContainer';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { Row, Col } from 'antd';
@@ -82,7 +82,7 @@ class HeaderCustom extends Component {
             <Header className="custom-theme" >
                 <Row>
                     <Col span={18}>
-                        <SiderCustom></SiderCustom>
+                        <TopMenuContainer></TopMenuContainer>
                     </Col>
                     <Col span={6}>
                         <Menu
