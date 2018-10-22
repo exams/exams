@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { Layout, notification, Icon } from 'antd';
 import './style/index.less';
-import SiderCustom from './components/SiderCustom';
 import HeaderCustom from './components/HeaderCustom';
 import { receiveData } from './action';
 import { connect } from 'react-redux';
@@ -62,7 +61,7 @@ class App extends Component {
     render() {
         // console.log(this.props.auth);
         // console.log(this.props.responsive);
-        const { auth, responsive } = this.props;
+        const { auth } = this.props;
         return (
             <Layout>
                 <Layout style={{flexDirection: 'column'}}>
