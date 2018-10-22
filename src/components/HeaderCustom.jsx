@@ -2,7 +2,7 @@
  * Created by hao.cheng on 2017/4/13.
  */
 import React, { Component } from 'react';
-import { Menu, Icon, Layout, Badge, Popover } from 'antd';
+import { Menu, Icon, Layout, Badge } from 'antd';
 import screenfull from 'screenfull';
 import { gitOauthToken, gitOauthInfo } from '../axios';
 import { queryString } from '../utils';
@@ -77,12 +77,11 @@ class HeaderCustom extends Component {
         this.setState({ visible });
     };
     render() {
-        const { responsive, path } = this.props;
         return (
             <Header className="custom-theme" >
                 <Row>
                     <Col span={18}>
-                        <TopMenuContainer></TopMenuContainer>
+                        <TopMenuContainer />
                     </Col>
                     <Col span={6}>
                         <Menu
