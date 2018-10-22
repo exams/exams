@@ -7,8 +7,6 @@ import { withRouter } from 'react-router-dom';
 import routes from '../routes/config';
 import SiderMenu from './SiderMenu';
 
-const { Sider } = Layout;
-
 class SiderCustom extends Component {
     static getDerivedStateFromProps (props, state) {
         if (props.collapsed !== state.collapsed) {
