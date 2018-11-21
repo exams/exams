@@ -5,7 +5,7 @@ import './style/lib/animate.css';
 import registerServiceWorker from './registerServiceWorker';
 import { Provider } from 'react-redux';
 import thunk from 'redux-thunk';
-import reducer from './reducer';
+import httpData from './reducer';
 import { AppContainer } from 'react-hot-loader';
 import Page from './Page';
 import { reducer as paperTemplateReducer } from './components/paperTemplate/reducer'
