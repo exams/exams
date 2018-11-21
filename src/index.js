@@ -1,16 +1,23 @@
 import React from 'react';
+import {createStore, combineReducers, applyMiddleware} from 'redux';
 import ReactDOM from 'react-dom';
 import './style/lib/animate.css';
 import registerServiceWorker from './registerServiceWorker';
 import { Provider } from 'react-redux';
 import thunk from 'redux-thunk';
-import { createStore, applyMiddleware } from 'redux';
 import reducer from './reducer';
 import { AppContainer } from 'react-hot-loader';
 import Page from './Page';
+import { reducer as paperTemplateReducer } from './components/paperTemplate/reducer'
 
 // redux 注入操作
 const middleware = [thunk];
+
+const reducer = combineReducers({
+    httpData,
+    paperTemplates : paperTemplateReducer
+})
+
 const store = createStore(reducer, applyMiddleware(...middleware));
 console.log(store.getState());
 
@@ -19,7 +26,7 @@ const render = Component => {   // 增加react-hot-loader保持状态刷新操�
     ReactDOM.render(
         <AppContainer>
             <Provider store={store}>
-                <Component store={store} />
+                <Component />
             </Provider>
         </AppContainer>
         ,
