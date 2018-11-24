@@ -1,6 +1,6 @@
 import { createReducer } from 'redux-action-tools'
 import {
-    GET_PAPER_TEMPLATE_LIST
+    GET_PAPER_LIST
 } from './actionType'
 
 const defaultState = {
@@ -8,19 +8,18 @@ const defaultState = {
     status: 'initial'
 }
 
-const paperTemplateReducer = createReducer()
-    .when(GET_PAPER_TEMPLATE_LIST, (state, action) => {
-        console.log('begin action')
+const papersReducer = createReducer()
+    .when(GET_PAPER_LIST, (state, action) => {
         return {
             ...state,
             status: 'loading'
         }
     })
     .done((state= defaultState, action) => {
-        const templates = action.payload.data
+        const papers = action.payload.data
         return {
             ...state,
-            templates,
+            papers,
             status: 'completed'
         }
     })
@@ -34,4 +33,4 @@ const paperTemplateReducer = createReducer()
         status: 'initial'
     })
 
-export { paperTemplateReducer as reducer }
+export { papersReducer as reducer }

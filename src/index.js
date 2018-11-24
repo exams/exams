@@ -9,13 +9,15 @@ import httpData from './reducer';
 import { AppContainer } from 'react-hot-loader';
 import Page from './Page';
 import { reducer as paperTemplateReducer } from './components/paperTemplate/reducer'
+import { reducer as papersReducer } from './components/paper/reducer'
 
 // redux 注入操作
 const middleware = [thunk];
 
 const reducer = combineReducers({
     httpData,
-    paperTemplates : paperTemplateReducer
+    paperTemplates : paperTemplateReducer,
+    papers: papersReducer
 })
 
 const store = createStore(reducer, applyMiddleware(...middleware));

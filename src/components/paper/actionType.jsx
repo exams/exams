@@ -1,0 +1,2 @@
+export const GET_PAPER_LIST = 'GET_PAPER_LIST'
+export const GET_PAPER_DETAIL = 'GET_PAPER_DETAIL'

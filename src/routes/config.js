@@ -5,6 +5,9 @@ export default {
             key: '/app/template', title: '模板', icon: 'star', component: 'PaperTemplate'
         },
         {
+            key: '/app/papers', title: '试卷', icon: 'star', component: 'Papers'
+        },
+        {
             key: '/app/ui', title: 'UI', icon: 'scan',
             subs: [
                 { key: '/app/ui/buttons', title: '按钮', component: 'Buttons'},
