@@ -1,81 +1,95 @@
 import React, {Component} from 'react';
-import { Card, Icon, Slider, InputNumber, Row, Col } from 'antd';
+import { Card, Icon, Row, Col, List, Button } from 'antd';
 
 class TemplateCard extends Component{
 
     state = {
-        isEdit: false,
+        score: 0,
         difficulty: 0
     }
 
-    onDifficultyChange = (value) => {
+    componentDidMount() {
+        const { template } = this.props;
+        this.calculateScoreAndDifficulty(template);
+    }
+
+    calculateScoreAndDifficulty = (template) => {
+        var score = 0;
+        var difficulty = 0;
+        var itemScore = 0;
+        template.paperStructs.forEach((item) => {
+            itemScore = item.score * item.number * item.type.questionNumber;
+            score += itemScore;
+        });
+        template.paperStructs.forEach((item) => {
+            itemScore = item.score * item.number * item.type.questionNumber;
+            difficulty += itemScore / score * item.difficulty;
+        });
         this.setState({
-            difficulty: value
+            score: score,
+            difficulty: difficulty.toFixed(1)
         })
     }
 
-    editClick = () => {
-        this.setState({
-            isEdit: true
-        })
+    create = () => {
+    }
+
+    edit = () => {
+
+    }
+
+    copy = () => {
+
+    }
+
+    delete = () => {
+
     }
 
     render() {
         const { template } = this.props;
+        const { score, difficulty } = this.state;
         return (
             <Card
+                headStyle={{fontSize:20, fontWeight: 20}}
                 title={template.name}
-                actions={[<Icon type="edit" onClick={this.editClick} />,<Icon type="copy" />,<Icon type="delete" />, <Icon type="profile" />]}
-                style={{ width: 400 }} >
+                extra={[
+                    <Button type="primary" onClick={this.create} key="create" style={{marginRight: 20}}>生成试卷</Button>,
+                    <Button.Group key="edit">
+                        <Button icon="edit" onClick={this.edit} title={"修改"}></Button>
+                        <Button icon="copy" onClick={this.copy} title={"复制"}></Button>
+                        <Button icon="delete" onClick={this.delete} title={"删除"}></Button>
+                    </Button.Group>
+                ]}
+                style={{ margin: 10 }} >
                 <Row>
                     <Col span={4}>
                         总分:
                     </Col>
-                    <Col>
-                        30
+                    <Col span={4}>
+                        {score}
                     </Col>
-                </Row>
-
-                <Row>
                     <Col span={4}>
                         难度:
                     </Col>
-                    <Col span={16}>
-                        <Slider
-                            disabled={this.state.isEdit ? false : true}
-                            min={1}
-                            max={10}
-                            onChange={this.onDifficultyChange}
-                            value={typeof template.difficulty === 'number' ? template.difficulty : 0} />
-                    </Col>
                     <Col span={4}>
-                        <InputNumber
-                            min={1}
-                            max={10}
-                            value={template.difficulty}
-                            onChange={this.onDifficultyChange}
-                            style={{ width: 30 }}
-                        />
+                        {difficulty}
                     </Col>
                 </Row>
 
-                {
-                    template.paperStructs.map((questType, key) => {
-                        return (
-                            <Row key={key}>
-                                <Col span={8}>
-                                    {questType.name}
-                                </Col>
-                                <Col span={8}>
-                                    {questType.number}
-                                </Col>
-                                <Col span={8}>
-                                    {questType.difficult}
-                                </Col>
-                            </Row>
-                        )
-                    })}
-
+                <List
+                    itemLayout="horizontal"
+                    dataSource={template.paperStructs}
+                    renderItem={item => (
+                        <List.Item>
+                            <List.Item.Meta
+                                title={item.type.name}
+                            />
+                            <div>难度{item.difficulty} 共{item.number}题 每题有{item.type.questionNumber}小题</div>
+                            <div>每题{item.score}分, 共{item.score * item.number * item.type.questionNumber}分</div>
+                        </List.Item>
+                    )}
+                />
             </Card>
         )
     }
