@@ -28,6 +28,7 @@ import Cssmodule from './cssmodule';
 import MapUi from './ui/map';
 import PaperTemplate from './paperTemplate/PaperTemplate';
 import Papers from './paper/Papers';
+import Paper from './paper/Paper';
 
 const WysiwygBundle = Loadable({    // 按需加载富文本配置
     loader: () => import('./ui/Wysiwyg'),
@@ -39,5 +40,5 @@ export default {
     Echarts, Recharts, Icons, Buttons, Spins, Modals, Notifications,
     Tabs, Banners, Drags, Dashboard, Gallery, BasicAnimations,
     ExampleAnimations, AuthBasic, RouterEnter, WysiwygBundle,
-    Cssmodule, MapUi, PaperTemplate, Papers
+    Cssmodule, MapUi, PaperTemplate, Papers, Paper
 }

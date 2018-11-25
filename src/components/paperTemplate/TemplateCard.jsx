@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { Card, Icon, Row, Col, List, Button } from 'antd';
+import { Card, Row, Col, List, Button } from 'antd';
 
 class TemplateCard extends Component{
 

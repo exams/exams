@@ -12,20 +12,17 @@ class PaperTemplate extends Component{
     render() {
         const { status, templates } = this.props
 
-        console.log(templates);
-        return (
-            <LoadingArea status={status}>
-                {
-                    () => (
-                        templates.map((template, key) => {
-                            return (
-                                <TemplateCard template={template} key={key} />
-                            )
-                        })
+        if ('completed' === status) {
+            return (
+                templates.map((template, key) => {
+                    return (
+                        <TemplateCard template={template} key={key}/>
                     )
-                }
-            </LoadingArea>
-        )
+                })
+            );
+        }
+
+        return( <LoadingArea status={status}/> )
     }
 }
 

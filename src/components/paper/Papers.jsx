@@ -1,8 +1,9 @@
 import React, {Component} from 'react';
-import {withRouter} from "react-router-dom";
+import {withRouter, Link} from "react-router-dom";
 import { getPapers } from "./action";
 import { connect } from 'react-redux'
 import LoadingArea from '../LoadingArea'
+import { List, Button } from 'antd';
 
 class Papers extends Component{
     componentDidMount() {
@@ -11,20 +12,24 @@ class Papers extends Component{
     render() {
         const { status, papers } = this.props
 
-        console.log(papers);
-        return (
-            <LoadingArea status={status}>
-                {
-                    () => (
-                        papers.map((template, key) => {
-                            return (
-                                <div>1</div>
-                            )
-                        })
-                    )
-                }
-            </LoadingArea>
-        )
+        if ('completed' === status) {
+            return (
+                <List
+                    itemLayout="horizontal"
+                    dataSource={papers}
+                    renderItem={item => (
+                        <List.Item>
+                            <List.Item.Meta
+                                title={<Link to="/app/paper">{item.name}</Link>}
+                                description="Ant Design, a design language for background applications, is refined by Ant UED Team"
+                            />
+                        </List.Item>
+                    )}
+                />
+            );
+        }
+
+        return( <LoadingArea status={status}/> )
     }
 }
 
