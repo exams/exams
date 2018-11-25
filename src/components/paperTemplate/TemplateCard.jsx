@@ -56,9 +56,9 @@ class TemplateCard extends Component{
                 extra={[
                     <Button type="primary" onClick={this.create} key="create" style={{marginRight: 20}}>生成试卷</Button>,
                     <Button.Group key="edit">
-                        <Button icon="edit" onClick={this.edit} title={"修改"}></Button>
-                        <Button icon="copy" onClick={this.copy} title={"复制"}></Button>
-                        <Button icon="delete" onClick={this.delete} title={"删除"}></Button>
+                        <Button icon="edit" onClick={this.edit} title={"修改"} />
+                        <Button icon="copy" onClick={this.copy} title={"复制"} />
+                        <Button icon="delete" onClick={this.delete} title={"删除"} />
                     </Button.Group>
                 ]}
                 style={{ margin: 10 }} >

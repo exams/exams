@@ -29,7 +29,7 @@ class Papers extends Component{
             );
         }
 
-        return( <LoadingArea status={status}/> )
+        return( <LoadingArea status={status} /> )
     }
 }
 

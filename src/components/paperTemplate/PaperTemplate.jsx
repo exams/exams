@@ -16,13 +16,13 @@ class PaperTemplate extends Component{
             return (
                 templates.map((template, key) => {
                     return (
-                        <TemplateCard template={template} key={key}/>
+                        <TemplateCard template={template} key={key} />
                     )
                 })
             );
         }
 
-        return( <LoadingArea status={status}/> )
+        return( <LoadingArea status={status} /> )
     }
 }
 
