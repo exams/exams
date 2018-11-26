@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import { Card, Row, Col, List, Button } from 'antd';
+import PropTypes from 'prop-types';
 
 class TemplateCard extends Component{
 
@@ -32,6 +33,9 @@ class TemplateCard extends Component{
     }
 
     create = () => {
+        const { template } = this.props;
+        var id = template.id;
+        this.context.router.history.push('/app/papers/' + id);
     }
 
     edit = () => {
@@ -93,6 +97,10 @@ class TemplateCard extends Component{
             </Card>
         )
     }
+}
+
+TemplateCard.contextTypes = {
+    router: PropTypes.object.isRequired
 }
 
 export { TemplateCard }

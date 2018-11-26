@@ -8,6 +8,9 @@ export default {
             key: '/app/papers', title: '试卷', icon: 'star', component: 'Papers'
         },
         {
+            key: '/app/papers/:id', visible: false, title: '试卷', icon: 'star', component: 'Paper'
+        },
+        {
             key: '/app/ui', title: 'UI', icon: 'scan',
             subs: [
                 { key: '/app/ui/buttons', title: '按钮', component: 'Buttons'},

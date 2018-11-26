@@ -7,7 +7,13 @@ class Paper extends Component{
 
     }
     render() {
-        return( <div>test</div> )
+        const { match } = this.props
+        return(
+            <div>
+                <p>test</p>
+                <p>{match.params.id}</p>
+            </div>
+        )
     }
 }
 

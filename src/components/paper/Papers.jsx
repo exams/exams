@@ -9,8 +9,9 @@ class Papers extends Component{
     componentDidMount() {
         this.props.getPapers()
     }
+
     render() {
-        const { status, papers } = this.props
+        const { status, papers, match } = this.props
 
         if ('completed' === status) {
             return (
@@ -20,8 +21,8 @@ class Papers extends Component{
                     renderItem={item => (
                         <List.Item>
                             <List.Item.Meta
-                                title={<Link to="/app/paper">{item.name}</Link>}
-                                description="Ant Design, a design language for background applications, is refined by Ant UED Team"
+                                title={<Link to={match.url + '/' + item.id}>{item.name}</Link>}
+                                onClick={this.goDetail}
                             />
                         </List.Item>
                     )}
