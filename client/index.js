@@ -5,11 +5,12 @@ import './style/lib/animate.css';
 import registerServiceWorker from './registerServiceWorker';
 import { Provider } from 'react-redux';
 import thunk from 'redux-thunk';
-import httpData from './reducer';
+import { reducer as httpData } from './reducer';
 import { AppContainer } from 'react-hot-loader';
 import Page from './Page';
-import { reducer as paperTemplateReducer } from './components/paperTemplate/reducer'
-import { reducer as papersReducer } from './components/paper/reducer'
+import axios from 'axios';
+import { reducer as paperTemplateReducer } from './components/paperTemplate/reducer';
+import { reducer as papersReducer } from './components/paper/reducer';
 
 // redux 注入操作
 const middleware = [thunk];
@@ -21,14 +22,12 @@ const reducer = combineReducers({
 })
 
 const store = createStore(reducer, applyMiddleware(...middleware));
-console.log(store.getState());
-
 
 const render = Component => {   // 增加react-hot-loader保持状态刷新操作，如果不需要可去掉并把下面注释的打开
     ReactDOM.render(
         <AppContainer>
             <Provider store={store}>
-                <Component />
+                <Component/>
             </Provider>
         </AppContainer>
         ,
@@ -37,6 +36,31 @@ const render = Component => {   // 增加react-hot-loader保持状态刷新操�
 };
 
 render(Page);
+
+// axios拦截器
+axios.interceptors.request.use(request => {
+    const super_exams_token = window.localStorage.getItem('super_exams_token');
+    if (super_exams_token) {
+        request.headers['Authorization'] =`Bearer ${super_exams_token}`;
+    }
+    return request;
+});
+axios.interceptors.response.use(
+    response => {
+        if (response.data.token) {
+            console.log('token');
+            window.localStorage.setItem('super_exams_token', response.data.token);
+        }
+        return response;
+    },
+    error => {
+        const errRes = error.response;
+        if (errRes.status === 401) {
+            window.localStorage.removeItem('super_exams_token');
+            this.props.history.push('/login');
+        }
+        return Promise.reject(error.message);   // 返回接口返回的错误信息
+    });
 
 // Webpack Hot Module Replacement API
 if (module.hot) {

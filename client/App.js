@@ -16,13 +16,10 @@ class App extends Component {
         const { receiveData } = this.props;
         const user = JSON.parse(localStorage.getItem('user'));
         user && receiveData(user, 'auth');
-        // receiveData({a: 213}, 'auth');
-        // fetchData({funcName: 'admin', stateName: 'auth'});
         this.getClientWidth();
         window.onresize = () => {
             console.log('屏幕变化了');
             this.getClientWidth();
-            // console.log(document.body.clientWidth);
         }
     }
     componentDidMount() {
@@ -33,10 +30,7 @@ class App extends Component {
                   <div>
                       <p>
                           GitHub地址： <a href="https://github.com/yezihaohao" target="_blank" rel="noopener noreferrer">https://github.com/yezihaohao</a>
-                      </p>
-                      <p>
-                          博客地址： <a href="https://yezihaohao.github.io/" target="_blank" rel="noopener noreferrer">https://yezihaohao.github.io/</a>
-                      </p>
+                      </p>上
                   </div>
               ),
               icon: <Icon type="smile-circle" style={{ color: 'red' }} />,
@@ -59,32 +53,16 @@ class App extends Component {
         });
     };
     render() {
-        // console.log(this.props.auth);
-        // console.log(this.props.responsive);
         const { auth } = this.props;
         return (
-            <Layout>
-                <Layout style={{flexDirection: 'column'}}>
-                    <HeaderCustom toggle={this.toggle} user={auth.data || {}} />
-                    <Content style={{ margin: '0 16px', overflow: 'initial', flex: '1 1 0' }}>
-                        <Routes auth={auth} />
-                    </Content>
-                    <Footer style={{ textAlign: 'center' }}>
+            <Layout style={{flexDirection: 'column'}}>
+                <HeaderCustom toggle={this.toggle} user={auth.data || {}} />
+                <Content style={{ margin: '0 16px', overflow: 'initial', flex: '1 1 0' }}>
+                    <Routes auth={auth} />
+                </Content>
+                <Footer style={{ textAlign: 'center' }}>
                     React-Admin ©{new Date().getFullYear()} Created by 719480072@qq.com
-                    </Footer>
-                </Layout>
-                
-                {/* {
-                    responsive.data.isMobile && (   // 手机端对滚动很慢的处理
-                        <style>
-                        {`
-                            #root{
-                                height: auto;
-                            }
-                        `}
-                        </style>
-                    )
-                } */}
+                </Footer>
             </Layout>
         );
     }

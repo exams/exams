@@ -6,6 +6,7 @@ import { Form, Icon, Input, Button, Checkbox } from 'antd';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { fetchData, receiveData } from '@/action';
+import PropTypes from "prop-types";
 
 const FormItem = Form.Item;
 
@@ -14,20 +15,14 @@ class Login extends React.Component {
         const { receiveData } = this.props;
         receiveData(null, 'auth');
     }
-    // componentWillReceiveProps(nextProps) {
-    //     const { auth: nextAuth = {} } = nextProps;
-    //     const { history } = this.props;
-    //     if (nextAuth.data && nextAuth.data.uid) {   // 判断是否登陆
-    //         localStorage.setItem('user', JSON.stringify(nextAuth.data));
-    //         history.push('/');
-    //     }
-    // }
-    componentDidUpdate(prevProps) { // React 16.3+弃用componentWillReceiveProps
+
+    componentDidUpdate(prevProps) {
         const { auth: nextAuth = {}, history } = this.props;
-        // const { history } = this.props;
+
         if (nextAuth.data && nextAuth.data.uid) {   // 判断是否登陆
             localStorage.setItem('user', JSON.stringify(nextAuth.data));
-            history.push('/');
+            this.context.router.history.push('/');
+            //history.push('/');
         }
     }
     handleSubmit = (e) => {
@@ -86,7 +81,6 @@ class Login extends React.Component {
                     </Form>
                 </div>
             </div>
-
         );
     }
 }
@@ -99,6 +93,10 @@ const mapDispatchToProps = dispatch => ({
     fetchData: bindActionCreators(fetchData, dispatch),
     receiveData: bindActionCreators(receiveData, dispatch)
 });
+
+Login.contextTypes = {
+    router: PropTypes.object.isRequired
+}
 
 
 export default connect(mapStateToPorps, mapDispatchToProps)(Form.create()(Login));

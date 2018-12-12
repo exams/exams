@@ -27,6 +27,4 @@ const httpData = (state = {}, action) => {
     }
 };
 
-export default combineReducers({
-    httpData
-});
+export { httpData as reducer }
