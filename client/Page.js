@@ -1,8 +1,8 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom';
 import NotFound from './components/pages/NotFound';
-import Login from './components/pages/Login';
-import App from './App';
+import Login from './components/core/Login';
+import App from './App1';
 
 export default () => (
     <Router>

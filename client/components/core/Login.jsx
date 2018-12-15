@@ -1,50 +1,36 @@
-/**
- * Created by hao.cheng on 2017/4/16.
- */
-import React from 'react';
+import React, {Component} from 'react';
 import { Form, Icon, Input, Button, Checkbox } from 'antd';
 import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
-import { fetchData, receiveData } from '@/action';
+import { doAuthenticate } from "./action";
 
 const FormItem = Form.Item;
 
-class Login extends React.Component {
-    componentWillMount() {
-        const { receiveData } = this.props;
-        receiveData(null, 'auth');
-    }
+class Login extends Component {
 
-    componentDidUpdate(prevProps) {
-        const { auth: nextAuth = {}, history } = this.props;
-
-        if (nextAuth.data && nextAuth.data.uid) {   // 判断是否登陆
-            localStorage.setItem('user', JSON.stringify(nextAuth.data));
+    componentDidUpdate() {
+        const { auth: data = {}, history } = this.props;
+        if (data.result === 'ok' && data.token) {   // 判断是否登陆
+            localStorage.setItem('super_exams_token', data.token);
             history.push('/');
         }
     }
+
     handleSubmit = (e) => {
         e.preventDefault();
         this.props.form.validateFields((err, values) => {
             if (!err) {
-                console.log('Received values of form: ', values);
-                const { fetchData } = this.props;
-                // if (values.userName === 'hello' && values.password === 'Huawei12#$') fetchData({funcName: 'admin', stateName: 'auth'});
-                if (values.userName === 'admin' && values.password === 'admin') fetchData({funcName: 'admin', stateName: 'auth'});
-                if (values.userName === 'guest' && values.password === 'guest') fetchData({funcName: 'guest', stateName: 'auth'});
+                this.props.doAuthenticate(values);
             }
         });
     };
-    gitHub = () => {
-        window.location.href = 'https://github.com/login/oauth/authorize?client_id=792cdcd244e98dcd2dee&redirect_uri=http://localhost:3006/&scope=user&state=reactAdmin';
-    };
+
     render() {
         const { getFieldDecorator } = this.props.form;
         return (
             <div className="login">
                 <div className="login-form" >
                     <div className="login-logo">
-                        <span>React Admin</span>
+                        <span>Super Exams</span>
                     </div>
                     <Form onSubmit={this.handleSubmit} style={{maxWidth: '300px'}}>
                         <FormItem>
@@ -74,7 +60,7 @@ class Login extends React.Component {
                             </Button>
                             <p style={{display: 'flex', justifyContent: 'space-between'}}>
                                 <a href="">或 现在就去注册!</a>
-                                <a onClick={this.gitHub} ><Icon type="github" />(第三方登录)</a>
+                                <a><Icon type="github" />(第三方登录)</a>
                             </p>
                         </FormItem>
                     </Form>
@@ -84,13 +70,15 @@ class Login extends React.Component {
     }
 }
 
-const mapStateToPorps = state => {
-    const { auth } = state.httpData;
-    return { auth };
-};
-const mapDispatchToProps = dispatch => ({
-    fetchData: bindActionCreators(fetchData, dispatch),
-    receiveData: bindActionCreators(receiveData, dispatch)
-});
+const mapStateToProps = (state) => {
+    return {
+        status: state.userAuth.status,
+        auth: state.userAuth.auth
+    }
+}
 
-export default connect(mapStateToPorps, mapDispatchToProps)(Form.create()(Login));
+const mapDispatchToProps = (dispatch) => ({
+    doAuthenticate: (values) => dispatch(doAuthenticate(values))
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(Form.create()(Login));

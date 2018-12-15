@@ -3,7 +3,7 @@ import {withRouter, Link} from "react-router-dom";
 import { getPapers } from "./action";
 import { connect } from 'react-redux'
 import LoadingArea from '../LoadingArea'
-import { List, Button } from 'antd';
+import { List } from 'antd';
 
 class Papers extends Component{
     componentDidMount() {

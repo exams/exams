@@ -58,14 +58,14 @@ class TemplateCard extends Component{
                 headStyle={{fontSize:20, fontWeight: 20}}
                 title={template.name}
                 extra={[
-                    <Button type="primary" onClick={this.create} key="create" style={{marginRight: 20}}>生成试卷</Button>,
-                    <Button.Group key="edit">
-                        <Button icon="edit" onClick={this.edit} title={"修改"} />
-                        <Button icon="copy" onClick={this.copy} title={"复制"} />
-                        <Button icon="delete" onClick={this.delete} title={"删除"} />
-                    </Button.Group>
-                ]}
-                style={{ margin: 10 }} >
+                        <Button type="primary" onClick={this.create} key="create" style={{marginRight: 20}}>生成试卷</Button>,
+                        <Button.Group key="edit">
+                            <Button icon="edit" onClick={this.edit} title={"修改"} />
+                            <Button icon="copy" onClick={this.copy} title={"复制"} />
+                            <Button icon="delete" onClick={this.delete} title={"删除"} />
+                        </Button.Group>
+                    ]}
+                style={{ margin: 10 }}>
                 <Row>
                     <Col span={4}>
                         总分:

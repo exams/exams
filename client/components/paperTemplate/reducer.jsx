@@ -10,7 +10,6 @@ const defaultState = {
 
 const paperTemplateReducer = createReducer()
     .when(GET_PAPER_TEMPLATE_LIST, (state, action) => {
-        console.log('begin action')
         return {
             ...state,
             status: 'loading'

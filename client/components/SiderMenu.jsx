@@ -30,7 +30,7 @@ const renderSubMenu = item => (
 export default ({ menus, ...props }) => (
     <Menu {...props}>
         {menus && menus.map(item => 
-            (item.visible != false)&&(item.subs ? renderSubMenu(item) : renderMenuItem(item))
+            (item.visible !== false)&&(item.subs ? renderSubMenu(item) : renderMenuItem(item))
         )}
     </Menu>
 );

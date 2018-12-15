@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Layout, notification, Icon } from 'antd';
+import { Layout } from 'antd';
 import './style/index.less';
 import HeaderCustom from './components/HeaderCustom';
 import { receiveData } from './action';
@@ -9,54 +9,29 @@ import Routes from './routes';
 const { Content, Footer } = Layout;
 
 class App extends Component {
-    state = {
-        collapsed: false,
-    };
+
     componentWillMount() {
         const { receiveData } = this.props;
         const user = JSON.parse(localStorage.getItem('user'));
         user && receiveData(user, 'auth');
         this.getClientWidth();
         window.onresize = () => {
-            console.log('屏幕变化了');
             this.getClientWidth();
         }
     }
-    componentDidMount() {
-        const openNotification = () => {
-            notification.open({
-              message: '博主-yezihaohao',
-              description: (
-                  <div>
-                      <p>
-                          GitHub地址： <a href="https://github.com/yezihaohao" target="_blank" rel="noopener noreferrer">https://github.com/yezihaohao</a>
-                      </p>上
-                  </div>
-              ),
-              icon: <Icon type="smile-circle" style={{ color: 'red' }} />,
-              duration: 0,
-            });
-            localStorage.setItem('isFirst', JSON.stringify(true));
-        };
-        const isFirst = JSON.parse(localStorage.getItem('isFirst'));
-        !isFirst && openNotification();
-    }
+
     getClientWidth = () => {    // 获取当前浏览器宽度并设置responsive管理响应式
         const { receiveData } = this.props;
         const clientWidth = document.body.clientWidth;
         console.log(clientWidth);
         receiveData({isMobile: clientWidth <= 992}, 'responsive');
     };
-    toggle = () => {
-        this.setState({
-            collapsed: !this.state.collapsed,
-        });
-    };
+
     render() {
         const { auth } = this.props;
         return (
             <Layout style={{flexDirection: 'column'}}>
-                <HeaderCustom toggle={this.toggle} user={auth.data || {}} />
+                <HeaderCustom user={auth.data || {}} />
                 <Content style={{ margin: '0 16px', overflow: 'initial', flex: '1 1 0' }}>
                     <Routes auth={auth} />
                 </Content>
