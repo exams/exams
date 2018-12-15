@@ -5,21 +5,20 @@ import routesConfig from './config';
 
 export default class CRouter extends Component {
 
-    requireAuth = (permission, component) => {
-        const { auth } = this.props;
-        const { permissions } = auth.data;
-        // const { auth } = store.getState().httpData;
-        if (!permissions || !permissions.includes(permission)) return <Redirect to={'/login'} />;
+    requireAuth = (role, component) => {
+        const { me } = this.props;
+        const { roles } = me.roles;
+        if (!roles || !roles.includes(role)) return <Redirect to={'/login'} />;
         return component;
     };
 
-    requireLogin = (component, permission) => {
-        const { auth } = this.props;
-        const { permissions } = auth.data;
-        if (process.env.NODE_ENV === 'production' && !permissions) { // 线上环境判断是否登录
+    requireLogin = (component, role) => {
+        const { me } = this.props;
+        const { roles } = me.roles;
+        if (process.env.NODE_ENV === 'production' && !roles) { // 线上环境判断是否登录
             return <Redirect to={'/login'} />;
         }
-        return permission ? this.requireAuth(permission, component) : component;
+        return role ? this.requireAuth(role, component) : component;
     };
 
     render() {

@@ -5,6 +5,7 @@ import {
 
 const defaultState = {
     auth: {},
+    me: {},
     status: 'initial'
 }
 
@@ -44,7 +45,7 @@ const meReducer = createReducer()
         const me = action.payload.data
         return {
             ...state,
-            me,
+            me: me,
             status: 'completed'
         }
     })

@@ -2,7 +2,7 @@ import {
     DO_AUTHENTICATE, GET_ME
 } from './actionType'
 import { createAsyncAction } from 'redux-action-tools'
-import { axios_instance as axios } from '../../axios'
+import { instance as axios } from '../../axios'
 import { authenticate, me } from '../../api/api'
 
 const doAuthenticate = createAsyncAction(

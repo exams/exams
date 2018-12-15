@@ -10,17 +10,13 @@ const { Content, Footer } = Layout;
 
 class App extends Component {
 
-    componentWillMount() {
+    componentDidMount() {
         this.props.getMe();
-    }
-
-    componentDidMount(){
-        const { me } = this.props;
-        console.log(me);
     }
 
     render() {
         const { me } = this.props;
+        console.log(me);
         return (
             <Layout style={{flexDirection: 'column'}}>
                 <HeaderCustom user={me.data || {}} />
@@ -36,9 +32,10 @@ class App extends Component {
 }
 
 const mapStateToProps = state => {
+    console.log(state.me);
     return {
         status: state.me.status,
-        me: state.me.data
+        me: state.me.me
     }
 };
 
