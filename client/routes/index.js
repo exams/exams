@@ -6,15 +6,16 @@ import routesConfig from './config';
 export default class CRouter extends Component {
 
     requireAuth = (role, component) => {
-        const { me } = this.props;
-        const { roles } = me.roles;
+        const { auth } = this.props;
+        const { roles } = auth.roles;
         if (!roles || !roles.includes(role)) return <Redirect to={'/login'} />;
         return component;
     };
 
     requireLogin = (component, role) => {
-        const { me } = this.props;
-        const { roles } = me.roles;
+        const { auth } = this.props;
+        console.log(auth);
+        const { roles } = auth.roles;
         if (process.env.NODE_ENV === 'production' && !roles) { // 线上环境判断是否登录
             return <Redirect to={'/login'} />;
         }

@@ -6,13 +6,12 @@ import { connect } from 'react-redux';
 
 class AuthWidget extends Component {
     render() {
-        return this.props.children(this.props.auth.data || {});
+        return this.props.children(this.props.user || {});
     }
 }
 
 const mapStateToProps = state => {
-    const { auth = {data: {}} } = state.httpData;
-    return { auth };
+    return { user: state.me.me };
 };
 
 export default connect(mapStateToProps)(AuthWidget);

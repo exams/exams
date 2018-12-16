@@ -14,10 +14,6 @@ const SubMenu = Menu.SubMenu;
 const MenuItemGroup = Menu.ItemGroup;
 
 class HeaderCustom extends Component {
-    state = {
-        user: '',
-        visible: false,
-    };
 
     screenFull = () => {
         if (screenfull.enabled) {
@@ -25,7 +21,7 @@ class HeaderCustom extends Component {
         }
     };
     menuClick = e => {
-        e.key === 'logout' && this.logout();
+        e.key === 'logsout' && this.logout();
     };
     logout = () => {
         localStorage.removeItem('user');
@@ -56,7 +52,7 @@ class HeaderCustom extends Component {
                             </Menu.Item>
                             <SubMenu title={<span className="avatar"><img src={avater} alt="头像" /><i className="on bottom b-white" /></span>}>
                                 <MenuItemGroup title="用户中心">
-                                    <Menu.Item key="setting:1">你好 - {this.props.user.userName}</Menu.Item>
+                                    <Menu.Item key="setting:1">你好 - {this.props.user.username}</Menu.Item>
                                     <Menu.Item key="setting:2">个人信息</Menu.Item>
                                     <Menu.Item key="logout"><span onClick={this.logout}>退出登录</span></Menu.Item>
                                 </MenuItemGroup>

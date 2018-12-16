@@ -5,6 +5,7 @@ import HeaderCustom from './components/HeaderCustom';
 import { connect } from 'react-redux';
 import Routes from './routes';
 import { getMe } from './components/core/action'
+import LoadingArea from './components/LoadingArea'
 
 const { Content, Footer } = Layout;
 
