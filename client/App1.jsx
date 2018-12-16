@@ -15,24 +15,26 @@ class App extends Component {
     }
 
     render() {
-        const { me } = this.props;
-        console.log(me);
-        return (
-            <Layout style={{flexDirection: 'column'}}>
-                <HeaderCustom user={me.data || {}} />
-                <Content style={{ margin: '0 16px', overflow: 'initial', flex: '1 1 0' }}>
-                    <Routes auth={me} />
-                </Content>
-                <Footer style={{ textAlign: 'center' }}>
-                    React-Admin ©{new Date().getFullYear()} Created by 719480072@qq.com
-                </Footer>
-            </Layout>
-        );
+        const { status, me } = this.props
+        if ('completed' === status) {
+            return (
+                <Layout style={{flexDirection: 'column'}}>
+                    <HeaderCustom user={ me } />
+                    <Content style={{ margin: '0 16px', overflow: 'initial', flex: '1 1 0' }}>
+                        <Routes auth={ me } />
+                    </Content>
+                    <Footer style={{ textAlign: 'center' }}>
+                        React-Admin ©{new Date().getFullYear()} Created by 719480072@qq.com
+                    </Footer>
+                </Layout>
+            );
+        }
+
+        return( <LoadingArea status={status} /> )
     }
 }
 
 const mapStateToProps = state => {
-    console.log(state.me);
     return {
         status: state.me.status,
         me: state.me.me
