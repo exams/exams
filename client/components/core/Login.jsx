@@ -9,7 +9,7 @@ class Login extends Component {
 
     componentDidUpdate() {
         const { auth: data = {}, history } = this.props;
-        if (data.result === 'ok' && data.token) {   // 判断是否登陆
+        if (data.success && data.token) {   // 判断是否登陆
             localStorage.setItem('super_exams_token', data.token);
             history.push('/');
         }

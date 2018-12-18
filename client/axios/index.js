@@ -31,6 +31,7 @@ instance.interceptors.response.use(
     },
     error => {
         const errRes = error.response;
+        console.log(error);
         if (errRes.status === 401) {
             localStorage.removeItem('super_exams_token');
             this.props.history.push('/login');
