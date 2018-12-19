@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { get } from './tools';
 import * as config from './config';
+import { BrowserRouter } from 'react-router-dom'
 
 // easy-mock数据交互
 // 管理员权限获取
@@ -11,7 +12,7 @@ export const guest = () => get({url: config.MOCK_AUTH_VISITOR});
 
 export const instance = axios.create({
     baseURL: 'http://127.0.0.1:3000',
-    timeout: 1000
+    timeout: 10000
 });
 
 // axios拦截器
@@ -30,11 +31,12 @@ instance.interceptors.response.use(
         return response;
     },
     error => {
-        const errRes = error.response;
-        console.log(error);
-        if (errRes.status === 401) {
+        if (error.message === 'Network Error' ||
+            error.message === 'UnauthorizedError' ||
+            error.response.status === 401) {
             localStorage.removeItem('super_exams_token');
-            this.props.history.push('/login');
+            BrowserRouter.push('/login')
+            //history.push('/login');
         }
         return Promise.reject(error.message);   // 返回接口返回的错误信息
     });
