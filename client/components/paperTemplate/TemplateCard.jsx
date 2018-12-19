@@ -65,7 +65,8 @@ class TemplateCard extends Component{
                             <Button icon="delete" onClick={this.delete} title={"删除"} />
                         </Button.Group>
                     ]}
-                style={{ margin: 10 }}>
+                style={{ margin: 10 }}
+            >
                 <Row>
                     <Col span={4}>
                         总分:
