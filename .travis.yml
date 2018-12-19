@@ -10,7 +10,7 @@ after_success:
   - git init
   - git config --global user.name 'Domines'
   - git config --global user.email '719480072@qq.com'
-  - git rm -r --cached *
+  - git remote rm *
   - git add .
   - git commit -m "generate static resources, triggerd by travis ci"
   - git push --set-upstream --force "https://${REPO_TOKEN}@github.com/Domines/ant.github.io.git" master
