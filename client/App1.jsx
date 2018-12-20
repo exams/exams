@@ -6,6 +6,8 @@ import { connect } from 'react-redux';
 import Routes from './routes';
 import { getMe } from './components/core/action'
 import LoadingArea from './components/LoadingArea'
+import PropTypes from "prop-types";
+import { notification } from 'antd';
 
 const { Content, Footer } = Layout;
 
@@ -17,6 +19,17 @@ class App extends Component {
 
     render() {
         const { status, me } = this.props
+        if ('failed' === status) {
+            const { error } = this.props
+            if ('Network Error' === error.message || 'UnauthorizedError' === error.message ||
+            error.response.status === 401) {
+                notification['warning']({
+                    message: '提示',
+                    description: '服务异常或者登陆超时,请重新登陆',
+                });
+                this.context.router.history.push('/login');
+            }
+        }
         if ('completed' === status) {
             return (
                 <Layout style={{flexDirection: 'column'}}>
@@ -38,12 +51,17 @@ class App extends Component {
 const mapStateToProps = state => {
     return {
         status: state.me.status,
-        me: state.me.me
+        me: state.me.me,
+        error: state.me.error
     }
 };
 
 const mapDispatchToProps = (dispatch) => ({
     getMe: () => dispatch(getMe())
 })
+
+App.contextTypes = {
+    router: PropTypes.object.isRequired
+}
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);

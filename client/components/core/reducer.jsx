@@ -50,8 +50,10 @@ const meReducer = createReducer()
         }
     })
     .failed((state, action) => {
+        const error = action.payload
         return {
             ...state,
+            error: error,
             status: 'failed'
         }
     })
