@@ -11,6 +11,9 @@ export default {
             key: '/app/papers/:id', visible: false, title: '试卷', icon: 'star', component: 'Paper'
         },
         {
+            key: '/app/records', title: '录入', icon: 'star', component: 'Records'
+        },
+        {
             key: '/subs4', title: '页面', icon: 'switcher',
             subs: [
                 { key: '/login', title: '登录' },

@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {withRouter} from "react-router-dom";
 import { connect } from 'react-redux'
 
-class Paper extends Component{
+class Record extends Component{
     componentDidMount() {
 
     }
@@ -27,4 +27,4 @@ const mapDispatchToProps = (dispatch) => ({
 
 })
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Paper));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Record));
