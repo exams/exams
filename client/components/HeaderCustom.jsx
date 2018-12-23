@@ -6,9 +6,10 @@ import { Menu, Icon, Layout, Badge } from 'antd';
 import screenfull from 'screenfull';
 import avater from '../style/imgs/b1.jpg';
 import TopMenuContainer from './TopMenuContainer';
-import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { Row, Col } from 'antd';
+import PropTypes from 'prop-types';
+
 const { Header } = Layout;
 const SubMenu = Menu.SubMenu;
 const MenuItemGroup = Menu.ItemGroup;
@@ -29,6 +30,8 @@ class HeaderCustom extends Component {
     };
 
     render() {
+        const { intl } = this.props
+        console.log(intl);
         return (
             <Header className="custom-theme" >
                 <Row>
@@ -42,6 +45,11 @@ class HeaderCustom extends Component {
                             style={{float: 'right', height:'60px', lineHeight: '60px' }}
                             onClick={this.menuClick}
                         >
+                            {
+                                intl.enabledLanguages.map(lang => {
+                                    return (<Menu.Item key={lang} onClick={() => this.props.switchLanguage(lang)}>{lang}</Menu.Item>)
+                                })
+                            }
                             <Menu.Item key="full" onClick={this.screenFull} >
                                 <Icon type="arrows-alt" onClick={this.screenFull} />
                             </Menu.Item>
@@ -69,9 +77,8 @@ class HeaderCustom extends Component {
     }
 }
 
-const mapStateToProps = state => {
-    const { responsive = {data: {}} } = state.httpData;
-    return {responsive};
+HeaderCustom.propTypes = {
+    intl: PropTypes.object.isRequired,
 };
 
-export default withRouter(connect(mapStateToProps)(HeaderCustom));
+export default withRouter(HeaderCustom);

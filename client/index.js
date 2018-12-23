@@ -7,16 +7,19 @@ import { Provider } from 'react-redux';
 import thunk from 'redux-thunk';
 import { reducer as httpData } from './reducer';
 import { AppContainer } from 'react-hot-loader';
+import IntlWrapper from './components/core/IntlWrapper';
 import Page from './Page';
 import { reducer as paperTemplateReducer } from './components/paperTemplate/reducer';
 import { reducer as papersReducer } from './components/paper/reducer';
 import { authReducer, meReducer } from './components/core/reducer';
+import { IntlReducer } from './components/core/IntlReducer';
 
 // redux 注入操作
 const middleware = [thunk];
 
 const reducer = combineReducers({
     httpData,
+    intl: IntlReducer,
     userAuth: authReducer,
     me: meReducer,
     paperTemplates : paperTemplateReducer,
@@ -29,7 +32,9 @@ const render = Component => {   // 增加react-hot-loader保持状态刷新操�
     ReactDOM.render(
         <AppContainer>
             <Provider store={store}>
-                <Component />
+                <IntlWrapper>
+                    <Component />
+                </IntlWrapper>
             </Provider>
         </AppContainer>
         ,

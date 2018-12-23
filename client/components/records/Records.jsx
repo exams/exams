@@ -2,7 +2,8 @@ import React, {Component} from 'react';
 import {withRouter} from "react-router-dom";
 import { getPapers } from "./action";
 import { connect } from 'react-redux'
-import { Tabs, Button } from 'antd';
+import { Tabs } from 'antd';
+import { FormattedMessage } from 'react-intl';
 import SingleChoice from "./questType/SingleChoice";
 
 const TabPane = Tabs.TabPane;
@@ -18,8 +19,8 @@ class Records extends Component{
 
     render() {
         return (
-            <Tabs defaultActiveKey="singleChoice" onChange={this.tabChange}  tabBarExtraContent={<Button>Extra Action</Button>}>
-                <TabPane tab="单选题" key="singleChoice">
+            <Tabs defaultActiveKey="singleChoice" onChange={this.tabChange}>
+                <TabPane tab={<FormattedMessage id="singleChoice" />} key="singleChoice">
                     <SingleChoice />
                 </TabPane>
                 <TabPane tab="多选题" key="multiChoice">Content of Tab multiChoice</TabPane>
