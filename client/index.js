@@ -5,10 +5,9 @@ import './style/lib/animate.css';
 import registerServiceWorker from './registerServiceWorker';
 import { Provider } from 'react-redux';
 import thunk from 'redux-thunk';
-import { reducer as httpData } from './reducer';
 import { AppContainer } from 'react-hot-loader';
 import IntlWrapper from './components/core/IntlWrapper';
-import Page from './Page';
+import Router from './Router';
 import { reducer as paperTemplateReducer } from './components/paperTemplate/reducer';
 import { reducer as papersReducer } from './components/paper/reducer';
 import { authReducer, meReducer } from './components/core/reducer';
@@ -18,7 +17,6 @@ import { IntlReducer } from './components/core/IntlReducer';
 const middleware = [thunk];
 
 const reducer = combineReducers({
-    httpData,
     intl: IntlReducer,
     userAuth: authReducer,
     me: meReducer,
@@ -42,7 +40,7 @@ const render = Component => {   // 增加react-hot-loader保持状态刷新操�
     );
 };
 
-render(Page);
+render(Router);
 
 // Webpack Hot Module Replacement API
 if (module.hot) {
@@ -58,8 +56,8 @@ if (module.hot) {
             orgError.apply(console, args);
         }
     };
-    module.hot.accept('./Page', () => {
-        render(Page);
+    module.hot.accept('./Router', () => {
+        render(Router);
     })
 }
 

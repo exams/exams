@@ -1,7 +1,8 @@
 import React, {Component} from 'react';
-import { Form, Slider, Input, Radio , Checkbox } from 'antd';
-const RadioGroup = Radio.Group;
+import { FormattedMessage } from 'react-intl';
+import { Form, Slider, Input, Radio , Button } from 'antd';
 
+const RadioGroup = Radio.Group;
 const FormItem = Form.Item;
 const { TextArea } = Input;
 
@@ -13,9 +14,15 @@ class SingleChoiceInput extends Component{
 
     render() {
         const { getFieldDecorator } = this.props.form;
+
+        const formItemLayout = {
+            labelCol: { span: 6 },
+            wrapperCol: { span: 14 },
+        }
+
         return(
             <Form onSubmit={this.onSubmit}>
-                <FormItem label={"难度"}>
+                <FormItem {...formItemLayout} label={<FormattedMessage id="difficulty" />}>
                     {getFieldDecorator('slider')(
                         <Slider defaultValue={3} max={5} marks={{
                             1: '1', 2: '2', 3: '3', 4: '4', 5: '5',
@@ -23,21 +30,21 @@ class SingleChoiceInput extends Component{
                         />
                     )}
                 </FormItem>
-                <FormItem label={"题干"}>
+                <FormItem {...formItemLayout} label={<FormattedMessage id="stem" />}>
                     {getFieldDecorator('userName', {
                         rules: [{ required: true, message: 'Please input your username!' }],
                     })(
-                        <TextArea placeholder="请输入问题的题干" autosize={{ minRows: 3}} />
+                        <TextArea placeholder={<FormattedMessage id="stemPlaceholder" />} autosize={{ minRows: 3}} />
                     )}
                 </FormItem>
-                <FormItem label={"选项"}>
+                <FormItem {...formItemLayout} label={<FormattedMessage id="choiceItem" />}>
                     <RadioGroup onChange={this.onChange}>
                         <p>
                             <Radio value={'A'}>
                                 {getFieldDecorator('userName', {
                                     rules: [{ required: true, message: 'Please input your username!' }],
                                 })(
-                                    <TextArea placeholder="请输入问题的选项" autosize={{ minRows: 2}} />
+                                    <TextArea placeholder={<FormattedMessage id="choiceItemPlaceholder" />} autosize={{ minRows: 2}} />
                                 )}
                             </Radio>
                         </p>
@@ -46,7 +53,7 @@ class SingleChoiceInput extends Component{
                                 {getFieldDecorator('userName', {
                                     rules: [{ required: true, message: 'Please input your username!' }],
                                 })(
-                                    <TextArea placeholder="请输入问题的选项" autosize={{ minRows: 2}} />
+                                    <TextArea placeholder={<FormattedMessage id="choiceItemPlaceholder" />} autosize={{ minRows: 2}} />
                                 )}</Radio>
                         </p>
                         <p>
@@ -54,7 +61,7 @@ class SingleChoiceInput extends Component{
                                 {getFieldDecorator('userName', {
                                     rules: [{ required: true, message: 'Please input your username!' }],
                                 })(
-                                    <TextArea placeholder="请输入问题的选项" autosize={{ minRows: 2}} />
+                                    <TextArea placeholder={<FormattedMessage id="choiceItemPlaceholder" />} autosize={{ minRows: 2}} />
                                 )}
                             </Radio>
                         </p>
@@ -63,18 +70,26 @@ class SingleChoiceInput extends Component{
                                 {getFieldDecorator('userName', {
                                     rules: [{ required: true, message: 'Please input your username!' }],
                                 })(
-                                    <TextArea placeholder="请输入问题的选项" autosize={{ minRows: 2}} />
+                                    <TextArea placeholder={<FormattedMessage id="choiceItemPlaceholder" />} autosize={{ minRows: 2}} />
                                 )}
                             </Radio>
                         </p>
                     </RadioGroup>
                 </FormItem>
-                <FormItem label={"解析"}>
+                <FormItem {...formItemLayout} label={<FormattedMessage id="analysis" />}>
                     {getFieldDecorator('userName', {
                         rules: [{ required: true, message: 'Please input your username!' }],
                     })(
-                        <TextArea placeholder="请输入问题的解析" autosize={{ minRows: 3}} />
+                        <TextArea placeholder={<FormattedMessage id="analysisPlaceholder" />} autosize={{ minRows: 3}} />
                     )}
+                </FormItem>
+                <FormItem {...formItemLayout}>
+                    <Button>
+                        <FormattedMessage id="cancel" />
+                    </Button>
+                    <Button type="primary">
+                        <FormattedMessage id="submit" />
+                    </Button>
                 </FormItem>
             </Form>
         )

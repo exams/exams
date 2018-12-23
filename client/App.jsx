@@ -19,7 +19,6 @@ class App extends Component {
 
     render() {
         const { status, me, intl } = this.props
-        console.log(intl);
         if ('failed' === status) {
             const { error } = this.props
             if ('Network Error' === error.message || 'UnauthorizedError' === error.message ||

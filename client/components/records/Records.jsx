@@ -10,7 +10,7 @@ const TabPane = Tabs.TabPane;
 
 class Records extends Component{
     componentDidMount() {
-        // this.props.getPapers()
+
     }
 
     tabChange(key) {
@@ -23,11 +23,21 @@ class Records extends Component{
                 <TabPane tab={<FormattedMessage id="singleChoice" />} key="singleChoice">
                     <SingleChoice />
                 </TabPane>
-                <TabPane tab="多选题" key="multiChoice">Content of Tab multiChoice</TabPane>
-                <TabPane tab="判断题" key="judge">Content of Tab judge</TabPane>
-                <TabPane tab="填空题" key="blank">Content of Tab blank</TabPane>
-                <TabPane tab="问答题" key="questAnswer">Content of Tab questAnswer</TabPane>
-                <TabPane tab="组合题" key="mixing">Content of Tab mixing</TabPane>
+                <TabPane tab={<FormattedMessage id="multiChoice" />} key="multiChoice">
+                    Content of Tab multiChoice
+                </TabPane>
+                <TabPane tab={<FormattedMessage id="judge" />} key="judge">
+                    Content of Tab judge
+                </TabPane>
+                <TabPane tab={<FormattedMessage id="blank" />} key="blank">
+                    Content of Tab blank
+                </TabPane>
+                <TabPane tab={<FormattedMessage id="questAnswer" />} key="questAnswer">
+                    Content of Tab questAnswer
+                </TabPane>
+                <TabPane tab={<FormattedMessage id="mixing" />} key="mixing">
+                    Content of Tab mixing
+                </TabPane>
             </Tabs>
         );
     }
@@ -41,7 +51,7 @@ const mapStateToProps = (state) => {
 }
 
 const mapDispatchToProps = (dispatch) => ({
-    getPapers: () => dispatch(getPapers())
+
 })
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Records));

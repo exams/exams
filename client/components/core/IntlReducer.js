@@ -1,10 +1,10 @@
 import { enabledLanguages, localizationData } from '../../Intl/setup';
 import { SWITCH_LANGUAGE } from './actionType';
 
-const initLocale = navigator && navigator.language || 'zh';
+const initLocale = navigator && navigator.language;
 
 const initialState = {
-  locale: initLocale,
+  locale: initLocale || 'zh',
   enabledLanguages,
   ...(localizationData[initLocale] || {}),
 };
