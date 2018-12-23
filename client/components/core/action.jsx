@@ -4,7 +4,6 @@ import {
 import { createAsyncAction } from 'redux-action-tools'
 import { instance as axios } from '../../axios'
 import { authenticate, me } from '../../api/api'
-import { localizationData } from '../../Intl/setup'
 
 const doAuthenticate = createAsyncAction(
     DO_AUTHENTICATE,
@@ -24,11 +23,4 @@ const getMe = createAsyncAction(
     }
 )
 
-const switchLanguage = createAsyncAction(
-    SWITCH_LANGUAGE,
-    (newLang) => {
-        return localizationData[newLang]
-    }
-)
-
-export { switchLanguage, doAuthenticate, getMe }
+export { doAuthenticate, getMe }

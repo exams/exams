@@ -4,6 +4,8 @@ export const paperTempaltes = EASY_MOCK_BASE + '/Domines/exams/1.0.0/paperTempla
 
 export const papers = EASY_MOCK_BASE + '/Domines/exams/1.0.0/papers'
 
-const BASIC_SERVER = 'http://127.0.0.1:3000'
-export const authenticate = BASIC_SERVER + '/api/auth/signin'
-export const me = BASIC_SERVER + '/api/users/me'
+export const authenticate = '/api/auth/signin'
+export const me = '/api/users/me'
+
+export const singeChoiceApi = '/api/singlechoices';
+export const multiChoiceApi = '/api/multichoices';

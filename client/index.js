@@ -12,12 +12,14 @@ import { reducer as paperTemplateReducer } from './components/paperTemplate/redu
 import { reducer as papersReducer } from './components/paper/reducer';
 import { authReducer, meReducer } from './components/core/reducer';
 import { IntlReducer } from './components/core/IntlReducer';
+import RecordsReducer from './components/records/reducer'
 
 // redux 注入操作
 const middleware = [thunk];
 
 const reducer = combineReducers({
     intl: IntlReducer,
+    RecordsReducer,
     userAuth: authReducer,
     me: meReducer,
     paperTemplates : paperTemplateReducer,

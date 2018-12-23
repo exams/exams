@@ -1,6 +1,8 @@
 import React, {Component} from 'react';
-import { FormattedMessage } from 'react-intl';
-import { Form, Slider, Input, Radio , Button } from 'antd';
+import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
+import { Form, Slider, Input, Radio , Button, Icon } from 'antd';
+import { connect } from 'react-redux';
+import { addSingleChoice } from '../actions'
 
 const RadioGroup = Radio.Group;
 const FormItem = Form.Item;
@@ -8,8 +10,15 @@ const { TextArea } = Input;
 
 class SingleChoiceInput extends Component{
 
-    onSubmit() {
-
+    handleSubmit(e) {
+        e.preventDefault();
+        console.log(this);
+        this.props.form.validateFields((err, values) => {
+            if (!err) {
+                console.log(values);
+                addSingleChoice(values);
+            }
+        });
     }
 
     render() {
@@ -21,74 +30,65 @@ class SingleChoiceInput extends Component{
         }
 
         return(
-            <Form onSubmit={this.onSubmit}>
+            <Form onSubmit={this.handleSubmit} style={{maxWidth: '600px'}}>
                 <FormItem {...formItemLayout} label={<FormattedMessage id="difficulty" />}>
-                    {getFieldDecorator('slider')(
-                        <Slider defaultValue={3} max={5} marks={{
+                    {getFieldDecorator('difficulty')(
+                        <Slider initialValue={3} max={5} marks={{
                             1: '1', 2: '2', 3: '3', 4: '4', 5: '5',
                         }}
                         />
                     )}
                 </FormItem>
                 <FormItem {...formItemLayout} label={<FormattedMessage id="stem" />}>
-                    {getFieldDecorator('userName', {
-                        rules: [{ required: true, message: 'Please input your username!' }],
+                    {getFieldDecorator('stem', {
+                        rules: [{ required: true, message: this.props.intl.messages.stemPlaceholder }],
                     })(
-                        <TextArea placeholder={<FormattedMessage id="stemPlaceholder" />} autosize={{ minRows: 3}} />
+                        <TextArea placeholder={this.props.intl.messages.stemPlaceholder} autosize={{ minRows: 3}} />
                     )}
                 </FormItem>
                 <FormItem {...formItemLayout} label={<FormattedMessage id="choiceItem" />}>
-                    <RadioGroup onChange={this.onChange}>
-                        <p>
-                            <Radio value={'A'}>
-                                {getFieldDecorator('userName', {
-                                    rules: [{ required: true, message: 'Please input your username!' }],
+                    {getFieldDecorator('radio-group')(
+                        <RadioGroup onChange={this.onChange}>
+                            <Radio value={1}>
+                                {getFieldDecorator('1', {
+                                    rules: [{ required: true, message: this.props.intl.messages.choiceItemPlaceholder }],
                                 })(
-                                    <TextArea placeholder={<FormattedMessage id="choiceItemPlaceholder" />} autosize={{ minRows: 2}} />
+                                    <TextArea placeholder={this.props.intl.messages.choiceItemPlaceholder} autosize={{ minRows: 2}} />
                                 )}
                             </Radio>
-                        </p>
-                        <p>
                             <Radio value={2}>
-                                {getFieldDecorator('userName', {
-                                    rules: [{ required: true, message: 'Please input your username!' }],
+                                {getFieldDecorator('2', {
+                                    rules: [{ required: true, message: this.props.intl.messages.choiceItemPlaceholder }],
                                 })(
-                                    <TextArea placeholder={<FormattedMessage id="choiceItemPlaceholder" />} autosize={{ minRows: 2}} />
+                                    <TextArea placeholder={this.props.intl.messages.choiceItemPlaceholder} autosize={{ minRows: 2}} />
                                 )}</Radio>
-                        </p>
-                        <p>
                             <Radio value={3}>
-                                {getFieldDecorator('userName', {
-                                    rules: [{ required: true, message: 'Please input your username!' }],
+                                {getFieldDecorator('3', {
+                                    rules: [{ required: true, message: this.props.intl.messages.choiceItemPlaceholder }],
                                 })(
-                                    <TextArea placeholder={<FormattedMessage id="choiceItemPlaceholder" />} autosize={{ minRows: 2}} />
+                                    <TextArea placeholder={this.props.intl.messages.choiceItemPlaceholder} autosize={{ minRows: 2}} />
                                 )}
                             </Radio>
-                        </p>
-                        <p>
                             <Radio value={4}>
-                                {getFieldDecorator('userName', {
-                                    rules: [{ required: true, message: 'Please input your username!' }],
+                                {getFieldDecorator('4', {
+                                    rules: [{ required: true, message: this.props.intl.messages.choiceItemPlaceholder }],
                                 })(
-                                    <TextArea placeholder={<FormattedMessage id="choiceItemPlaceholder" />} autosize={{ minRows: 2}} />
+                                    <TextArea placeholder={this.props.intl.messages.choiceItemPlaceholder} autosize={{ minRows: 2}} />
                                 )}
                             </Radio>
-                        </p>
-                    </RadioGroup>
-                </FormItem>
-                <FormItem {...formItemLayout} label={<FormattedMessage id="analysis" />}>
-                    {getFieldDecorator('userName', {
-                        rules: [{ required: true, message: 'Please input your username!' }],
-                    })(
-                        <TextArea placeholder={<FormattedMessage id="analysisPlaceholder" />} autosize={{ minRows: 3}} />
+                        </RadioGroup>
                     )}
                 </FormItem>
-                <FormItem {...formItemLayout}>
-                    <Button>
-                        <FormattedMessage id="cancel" />
-                    </Button>
-                    <Button type="primary">
-                        <FormattedMessage id="submit" />
+                <FormItem {...formItemLayout} label={<FormattedMessage id="analysis" />}>
+                    {getFieldDecorator('analysis', {
+                        rules: [{ required: true, message: this.props.intl.messages.analysisPlaceholder }],
+                    })(
+                        <TextArea placeholder={this.props.intl.messages.analysisPlaceholder} autosize={{ minRows: 3}} />
+                    )}
+                </FormItem>
+                <FormItem wrapperCol={{ span: 12, offset: 6 }}>
+                    <Button type="primary" htmlType="submit" className="login-form-button" style={{width: '100%'}}>
+                        <FormattedMessage id="submit" htmlType="submit"/>
                     </Button>
                 </FormItem>
             </Form>
@@ -96,4 +96,8 @@ class SingleChoiceInput extends Component{
     }
 }
 
-export default Form.create()(SingleChoiceInput)
+SingleChoiceInput.propTypes = {
+    intl: intlShape.isRequired
+};
+
+export default injectIntl(Form.create()(SingleChoiceInput))

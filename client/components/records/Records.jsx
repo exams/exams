@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {withRouter} from "react-router-dom";
-import { getPapers } from "./action";
+import { getPapers } from "./actions";
 import { connect } from 'react-redux'
 import { Tabs } from 'antd';
 import { FormattedMessage } from 'react-intl';

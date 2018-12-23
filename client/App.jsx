@@ -21,6 +21,7 @@ class App extends Component {
         const { status, me, intl } = this.props
         if ('failed' === status) {
             const { error } = this.props
+            console.log(error);
             if ('Network Error' === error.message || 'UnauthorizedError' === error.message ||
             error.response.status === 401) {
                 notification['warning']({

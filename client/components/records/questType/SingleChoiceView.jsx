@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import {getSingleChoice} from "../reducer";
 
 class SingleChoiceView extends Component{
 
@@ -8,6 +9,13 @@ class SingleChoiceView extends Component{
                 <p>test</p>
             </div>
         )
+    }
+}
+
+const mapStateToProps = (state) => {
+    console.log(state);
+    return {
+        singleChoice: getSingleChoice(state)
     }
 }
 

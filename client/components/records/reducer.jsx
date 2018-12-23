@@ -1,36 +1,46 @@
-import { createReducer } from 'redux-action-tools'
 import {
-    GET_PAPER_LIST
-} from './actionType'
+    RECORD_REQUEST_START, RECORD_REQUEST_FAILED,
+    ADD_SINGECHOICE, ADD_SINGECHOICE_SUCCESS, ADD_SINGECHOICE_FAILED,
+    ADD_MULTICHOICE, ADD_MULTICHOICE_SUCCESS, ADD_MULTICHOICE_FAILED
+} from './actions'
 
-const defaultState = {
-    tempaltes: [],
-    status: 'initial'
-}
+// Initial State
+const initialState = { data: [] };
 
-const papersReducer = createReducer()
-    .when(GET_PAPER_LIST, (state, action) => {
-        return {
-            ...state,
-            status: 'loading'
-        }
-    })
-    .done((state= defaultState, action) => {
-        const papers = action.payload.data
-        return {
-            ...state,
-            papers,
-            status: 'completed'
-        }
-    })
-    .failed((state, action) => {
-        return {
-            ...state,
-            status: 'failed'
-        }
-    })
-    .build({
-        status: 'initial'
-    })
+const RecordsReducer = (state = initialState, action) => {
+    switch (action.type) {
+        case RECORD_REQUEST_START :
+            return {
+                data: [...state.data],
+                status: 'loading'
+            };
+        case ADD_SINGECHOICE_SUCCESS :
+            return {
+                data: [action.singleChoice, ...state.data],
+                status: 'success'
+            };
+        case ADD_MULTICHOICE_SUCCESS:
+            return {
+                data: [action.multiChoice, ...state.data],
+                status: 'success'
+            };
+        case RECORD_REQUEST_FAILED :
+            return {
+                data: [...state.data],
+                status: 'failed'
+            };
 
-export { papersReducer as reducer }
+        default:
+            return state;
+    }
+};
+
+/* Selectors */
+export const getSingleChoice = state => state.singleChoice.data;
+export const getSMultiChoice = state => state.multiChoice.data;
+
+// Get post by cuid
+// export const getPost = (state, cuid) => state.posts.data.filter(post => post.cuid === cuid)[0];
+
+// Export Reducer
+export default RecordsReducer;
