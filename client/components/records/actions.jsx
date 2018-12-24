@@ -14,7 +14,11 @@ export const addSingleChoice = (values) => {
             type: RECORD_REQUEST_START
         })
         axios.post(singeChoiceApi, {
-
+            title: values.stem,
+            difficulty: values.difficulty,
+            analysis: values.analysis,
+            answer: values.answer,
+            choiceItems: values.choiceItems
         }).then(response => {
             dispatch({
                 type: ADD_SINGECHOICE_SUCCESS,

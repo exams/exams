@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
-import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
-import { Form, Slider, Input, Radio , Button, Icon } from 'antd';
 import { connect } from 'react-redux';
+import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
+import { Form, Slider, Input, Radio , Button } from 'antd';
 import { addSingleChoice } from '../actions'
 
 const RadioGroup = Radio.Group;
@@ -10,13 +10,23 @@ const { TextArea } = Input;
 
 class SingleChoiceInput extends Component{
 
-    handleSubmit(e) {
+    state = {
+        choiceNum: 4
+    }
+
+    handleSubmit = (e) => {
         e.preventDefault();
-        console.log(this);
         this.props.form.validateFields((err, values) => {
             if (!err) {
-                console.log(values);
-                addSingleChoice(values);
+                const choiceItems = [];
+                for (var i = 1; i <= this.state.choiceNum; i++){
+                    const label = i.toString()
+                    const obj = {}
+                    obj[label] = values[i]
+                    choiceItems.push(obj)
+                }
+                values.choiceItems = choiceItems;
+                this.props.dispatch(addSingleChoice(values))
             }
         });
     }
@@ -29,11 +39,18 @@ class SingleChoiceInput extends Component{
             wrapperCol: { span: 14 },
         }
 
+        const radioStyle = {
+            display: 'block',
+            height: '100px',
+            lineHeight: '100px',
+            width: '600px'
+        };
+
         return(
-            <Form onSubmit={this.handleSubmit} style={{maxWidth: '600px'}}>
+            <Form onSubmit={this.handleSubmit}>
                 <FormItem {...formItemLayout} label={<FormattedMessage id="difficulty" />}>
                     {getFieldDecorator('difficulty')(
-                        <Slider initialValue={3} max={5} marks={{
+                        <Slider max={5} style={{maxWidth: '600px'}} marks={{
                             1: '1', 2: '2', 3: '3', 4: '4', 5: '5',
                         }}
                         />
@@ -47,29 +64,29 @@ class SingleChoiceInput extends Component{
                     )}
                 </FormItem>
                 <FormItem {...formItemLayout} label={<FormattedMessage id="choiceItem" />}>
-                    {getFieldDecorator('radio-group')(
-                        <RadioGroup onChange={this.onChange}>
-                            <Radio value={1}>
+                    {getFieldDecorator('answer')(
+                        <RadioGroup>
+                            <Radio value={1} style={radioStyle}>
                                 {getFieldDecorator('1', {
                                     rules: [{ required: true, message: this.props.intl.messages.choiceItemPlaceholder }],
                                 })(
                                     <TextArea placeholder={this.props.intl.messages.choiceItemPlaceholder} autosize={{ minRows: 2}} />
                                 )}
                             </Radio>
-                            <Radio value={2}>
+                            <Radio value={2} style={radioStyle}>
                                 {getFieldDecorator('2', {
                                     rules: [{ required: true, message: this.props.intl.messages.choiceItemPlaceholder }],
                                 })(
                                     <TextArea placeholder={this.props.intl.messages.choiceItemPlaceholder} autosize={{ minRows: 2}} />
                                 )}</Radio>
-                            <Radio value={3}>
+                            <Radio value={3} style={radioStyle}>
                                 {getFieldDecorator('3', {
                                     rules: [{ required: true, message: this.props.intl.messages.choiceItemPlaceholder }],
                                 })(
                                     <TextArea placeholder={this.props.intl.messages.choiceItemPlaceholder} autosize={{ minRows: 2}} />
                                 )}
                             </Radio>
-                            <Radio value={4}>
+                            <Radio value={4} style={radioStyle}>
                                 {getFieldDecorator('4', {
                                     rules: [{ required: true, message: this.props.intl.messages.choiceItemPlaceholder }],
                                 })(
@@ -100,4 +117,4 @@ SingleChoiceInput.propTypes = {
     intl: intlShape.isRequired
 };
 
-export default injectIntl(Form.create()(SingleChoiceInput))
+export default connect()(Form.create()(injectIntl(SingleChoiceInput)))
