@@ -50,10 +50,13 @@ class SingleChoiceInput extends Component{
             <Form onSubmit={this.handleSubmit}>
                 <FormItem {...formItemLayout} label={<FormattedMessage id="difficulty" />}>
                     {getFieldDecorator('difficulty')(
-                        <Slider max={5} style={{maxWidth: '600px'}} marks={{
-                            1: '1', 2: '2', 3: '3', 4: '4', 5: '5',
-                        }}
-                        />
+                        <RadioGroup buttonStyle={"solid"}>
+                            <Radio.Button value={1}>1</Radio.Button>
+                            <Radio.Button value={2}>2</Radio.Button>
+                            <Radio.Button value={3}>3</Radio.Button>
+                            <Radio.Button value={4}>4</Radio.Button>
+                            <Radio.Button value={5}>5</Radio.Button>
+                        </RadioGroup>
                     )}
                 </FormItem>
                 <FormItem {...formItemLayout} label={<FormattedMessage id="stem" />}>
