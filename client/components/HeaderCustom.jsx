@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
-import { Menu, Layout } from 'antd';
+import { Menu, Layout, Button } from 'antd';
 import avater from '../style/imgs/b1.jpg';
 import TopMenuContainer from './TopMenuContainer';
 import { withRouter } from 'react-router-dom';
 import { Row, Col } from 'antd';
 import PropTypes from 'prop-types';
+import { FormattedMessage } from 'react-intl';
 
 const { Header } = Layout;
 const SubMenu = Menu.SubMenu;
@@ -37,7 +38,9 @@ class HeaderCustom extends Component {
                         >
                             {
                                 intl.enabledLanguages.map(lang => {
-                                    return (<Menu.Item key={lang} onClick={() => this.props.switchLanguage(lang)}>{lang}</Menu.Item>)
+                                    return (intl.locale !== lang && <Button size={"small"} key={lang} onClick={() => this.props.switchLanguage(lang)}>
+                                        <FormattedMessage id="language" />
+                                    </Button>)
                                 })
                             }
                             <SubMenu title={<span className="avatar"><img src={avater} alt="头像" /><i className="on bottom b-white" /></span>}>

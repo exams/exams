@@ -4,6 +4,7 @@ export default {
       //common
       submit: '提交',
       cancel: '取消',
+      language: 'English',
       switchLanguage: '切换语言',
 
       // question

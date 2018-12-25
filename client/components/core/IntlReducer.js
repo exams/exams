@@ -1,12 +1,20 @@
 import { enabledLanguages, localizationData } from '../../Intl/setup';
 import { SWITCH_LANGUAGE } from './actionType';
 
-const initLocale = 'zh';
+let locale = 'zh'
+const settingLocale = localStorage.getItem('locale')
+if (settingLocale){
+    locale = settingLocale
+}else {
+    const initLocale = navigator && navigator.language
+    locale = initLocale && initLocale.split('-')[0] || 'zh';
+}
+
 
 const initialState = {
-  locale: initLocale,
+  locale: locale,
   enabledLanguages,
-  ...(localizationData[initLocale] || {}),
+  ...(localizationData[locale] || {}),
 };
 
 const IntlReducer = (state = initialState, action) => {
