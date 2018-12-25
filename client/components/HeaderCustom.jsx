@@ -9,7 +9,6 @@ import { FormattedMessage } from 'react-intl';
 
 const { Header } = Layout;
 const SubMenu = Menu.SubMenu;
-const MenuItemGroup = Menu.ItemGroup;
 
 class HeaderCustom extends Component {
 
@@ -38,17 +37,15 @@ class HeaderCustom extends Component {
                         >
                             {
                                 intl.enabledLanguages.map(lang => {
-                                    return (intl.locale !== lang && <Button size={"small"} key={lang} onClick={() => this.props.switchLanguage(lang)}>
+                                    return (intl.locale !== lang && <Menu.Item key={lang}><Button size={"small"} onClick={() => this.props.switchLanguage(lang)}>
                                         <FormattedMessage id="language" />
-                                    </Button>)
+                                    </Button></Menu.Item>)
                                 })
                             }
                             <SubMenu title={<span className="avatar"><img src={avater} alt="头像" /><i className="on bottom b-white" /></span>}>
-                                <MenuItemGroup title="用户中心">
-                                    <Menu.Item key="setting:1">你好 - {this.props.user.username}</Menu.Item>
-                                    <Menu.Item key="setting:2">个人信息</Menu.Item>
-                                    <Menu.Item key="logout"><span onClick={this.logout}>退出登录</span></Menu.Item>
-                                </MenuItemGroup>
+                                <Menu.Item key="setting:1"><FormattedMessage id="hello" /> {this.props.user.username}</Menu.Item>
+                                <Menu.Item key="setting:2">个人信息</Menu.Item>
+                                <Menu.Item key="logout"><span onClick={this.logout}><FormattedMessage id="signOut" /></span></Menu.Item>
                             </SubMenu>
                         </Menu>
                     </Col>

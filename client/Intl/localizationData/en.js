@@ -5,7 +5,25 @@ export default {
       submit: 'Submit',
       cancel: 'Cancel',
       language: '中文',
-      switchLanguage: 'Switch Language',
+      hello: 'hello-',
+      signIn: 'Sign In',
+      signOut: 'Sign Out',
+      forgot: 'Forget Password',
+      remember: 'Remember Me',
+      register: 'Go Register Now!',
+      signInTips : 'Please type in Username or Email!',
+      signInPassTips : 'Please type in password!',
+
+      //menus
+      home: 'Home',
+      template: 'Template',
+      paper: 'Paper',
+      record: 'Record',
+      page: 'Page',
+      notFound: 'Not Found',
+      permissionManage: 'Permission Manage',
+      basic: 'Basic',
+      routeIntercept: 'Route Intercept',
 
       // question
       singleChoice: 'Single Choice',

@@ -5,7 +5,25 @@ export default {
       submit: '提交',
       cancel: '取消',
       language: 'English',
-      switchLanguage: '切换语言',
+      hello: '你好-',
+      signIn: '登录',
+      signOut: '退出登录',
+      forgot: '忘记密码',
+      remember: '记住我',
+      register: '现在就去注册!',
+      signInTips : '请输入用户名或邮箱!',
+      signInPassTips : '请输入密码!',
+
+      //menus
+      home: '首页',
+      template: '模板',
+      paper: '试卷',
+      record: '录入',
+      page: '页面',
+      notFound: 'Not Found',
+      permissionManage: '权限管理',
+      basic: '基础演示',
+      routeIntercept: '路由拦截',
 
       // question
       singleChoice: '单选题',

@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import { Form, Icon, Input, Button, Checkbox } from 'antd';
 import { connect } from 'react-redux';
 import { doAuthenticate } from "./action";
+import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
 
 const FormItem = Form.Item;
 
@@ -35,16 +36,16 @@ class Login extends Component {
                     <Form onSubmit={this.handleSubmit} style={{maxWidth: '300px'}}>
                         <FormItem>
                             {getFieldDecorator('userName', {
-                                rules: [{ required: true, message: '请输入用户名!' }],
+                                rules: [{ required: true, message: this.props.intl.messages.signInTips }],
                             })(
-                                <Input prefix={<Icon type="user" style={{ fontSize: 13 }} />} placeholder="管理员输入admin, 游客输入guest" />
+                                <Input prefix={<Icon type="user" style={{ fontSize: 13 }} />} placeholder={this.props.intl.messages.signInTips} />
                             )}
                         </FormItem>
                         <FormItem>
                             {getFieldDecorator('password', {
-                                rules: [{ required: true, message: '请输入密码!' }],
+                                rules: [{ required: true, message: this.props.intl.messages.signInPassTips }],
                             })(
-                                <Input prefix={<Icon type="lock" style={{ fontSize: 13 }} />} type="password" placeholder="管理员输入admin, 游客输入guest" />
+                                <Input prefix={<Icon type="lock" style={{ fontSize: 13 }} />} type="password" placeholder={this.props.intl.messages.signInPassTips} />
                             )}
                         </FormItem>
                         <FormItem>
@@ -52,14 +53,14 @@ class Login extends Component {
                                 valuePropName: 'checked',
                                 initialValue: true,
                             })(
-                                <Checkbox>记住我</Checkbox>
+                                <Checkbox><FormattedMessage id="remember" /></Checkbox>
                             )}
                             <Button type="primary" htmlType="submit" className="login-form-button" style={{width: '100%'}}>
-                                登录
+                                <FormattedMessage id="signIn" />
                             </Button>
                             <p style={{display: 'flex', justifyContent: 'space-between'}}>
-                                <a href="">或 现在就去注册!</a>
-                                <a className="login-form-forgot" href="" style={{float: 'right'}}>忘记密码</a>
+                                <a href=""><FormattedMessage id="register" /></a>
+                                <a className="login-form-forgot" href="" style={{float: 'right'}}><FormattedMessage id="forgot" /></a>
                             </p>
                         </FormItem>
                     </Form>
@@ -80,4 +81,8 @@ const mapDispatchToProps = (dispatch) => ({
     doAuthenticate: (values) => dispatch(doAuthenticate(values))
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(Form.create()(Login));
+Login.propTypes = {
+    intl: intlShape.isRequired
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Form.create()(injectIntl(Login)));

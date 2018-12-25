@@ -50,11 +50,6 @@ class SiderCustom extends Component {
         const state = SiderCustom.setMenuOpen(this.props);
         this.setState(state);
     }
-    // componentWillReceiveProps(nextProps) {
-    //     console.log(nextProps);
-    //     this.onCollapse(nextProps.collapsed);
-    //     this.setMenuOpen(nextProps)
-    // }
     menuClick = e => {
         this.setState({
             selectedKey: e.key
