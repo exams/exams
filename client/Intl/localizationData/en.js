@@ -38,6 +38,7 @@ export default {
       choiceItem: 'Choice Items',
       choiceItemPlaceholder: 'Please type in choice items of the question',
       analysis: 'Analysis',
-      analysisPlaceholder: 'Please type in analysis of the question'
+      analysisPlaceholder: 'Please type in analysis of the question',
+      addChoiceItem: 'Add an new option'
   }
 };

@@ -38,7 +38,8 @@ export default {
       choiceItem: '选项',
       choiceItemPlaceholder: '请输入问题的选项',
       analysis: '解析',
-      analysisPlaceholder: '请输入问题的解析'
+      analysisPlaceholder: '请输入问题的解析',
+      addChoiceItem: '新增一个选项'
 
   }
 };

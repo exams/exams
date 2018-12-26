@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import { connect } from 'react-redux';
 import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
-import { Form, Slider, Input, Radio , Button } from 'antd';
+import { Form, Slider, Input, Radio , Button, Row, Col } from 'antd';
 import { addSingleChoice } from '../actions'
 
 const RadioGroup = Radio.Group;
@@ -14,21 +14,85 @@ class SingleChoiceInput extends Component{
         choiceNum: 4
     }
 
+    componentDidMount() {
+        this.props.form.setFieldsValue({difficulty: 3})
+    }
+
+    addChoiceItem = () => {
+        const choiceItemVal = this.state.choiceNum;
+        if (choiceItemVal < 10){
+            this.setState({choiceNum: choiceItemVal + 1})
+        }
+    }
+
+    delChoiceItem = () => {
+        const choiceItem = this.state.choiceNum;
+        this.setState({choiceNum: choiceItem - 1})
+    }
+
     handleSubmit = (e) => {
         e.preventDefault();
+        const choiceItem = this.state.choiceNum;
+        for (var i = 1; i <= choiceItem; i++){
+            console.log(this.refs[i])
+        }
         this.props.form.validateFields((err, values) => {
             if (!err) {
-                const choiceItems = [];
-                for (var i = 1; i <= this.state.choiceNum; i++){
-                    const label = i.toString()
-                    const obj = {}
-                    obj[label] = values[i]
-                    choiceItems.push(obj)
-                }
-                values.choiceItems = choiceItems;
-                this.props.dispatch(addSingleChoice(values))
+                console.log(values)
+                // const choiceItems = [];
+                // for (var i = 1; i <= this.state.choiceNum; i++){
+                //     const label = i.toString()
+                //     const obj = {}
+                //     obj[label] = values[i]
+                //     choiceItems.push(obj)
+                // }
+                // values.choiceItems = choiceItems;
+                // this.props.dispatch(addSingleChoice(values))
             }
         });
+    }
+
+    getChoiceItemArray = () => {
+        const choiceItem = this.state.choiceNum;
+        var choiceItemRes = [];
+        for (var i = 1; i <= choiceItem; i++){
+            choiceItemRes.push({key: i})
+        }
+        return choiceItemRes;
+    }
+
+    getChoiceItemView = () => {
+        const choiceItem = this.state.choiceNum;
+        var choiceItemRes = [];
+        for (var i = 1; i <= choiceItem; i++){
+            if (i <= 2){
+                choiceItemRes.push(
+                    <Row key={i}>
+                        <Col span={1}>
+                            <Radio value={i}></Radio>
+                        </Col>
+                        <Col span={21}>
+                            <Input name={i} ref={i} placeholder={this.props.intl.messages.choiceItemPlaceholder} autosize={{ minRows: 2}} />
+                        </Col>
+                    </Row>
+                )
+            } else {
+                choiceItemRes.push(
+                    <Row key={i}>
+                        <Col span={1}>
+                            <Radio value={i}></Radio>
+                        </Col>
+                        <Col span={21}>
+                            <Input name={i} ref={i} placeholder={this.props.intl.messages.choiceItemPlaceholder} autosize={{ minRows: 2}} />
+                        </Col>
+                        <Col span={2}>
+                            <Button onClick={this.delChoiceItem} icon={"minus"} style={{marginLeft: "5px"}} />
+                        </Col>
+                    </Row>
+                )
+            }
+        }
+        return choiceItemRes
     }
 
     render() {
@@ -39,77 +103,77 @@ class SingleChoiceInput extends Component{
             wrapperCol: { span: 14 },
         }
 
-        const radioStyle = {
-            display: 'block',
-            height: '100px',
-            lineHeight: '100px',
-            width: '600px'
-        };
-
         return(
             <Form onSubmit={this.handleSubmit}>
                 <FormItem {...formItemLayout} label={<FormattedMessage id="difficulty" />}>
-                    {getFieldDecorator('difficulty')(
-                        <RadioGroup buttonStyle={"solid"}>
-                            <Radio.Button value={1}>1</Radio.Button>
-                            <Radio.Button value={2}>2</Radio.Button>
-                            <Radio.Button value={3}>3</Radio.Button>
-                            <Radio.Button value={4}>4</Radio.Button>
-                            <Radio.Button value={5}>5</Radio.Button>
-                        </RadioGroup>
-                    )}
+                    <Row>
+                        <Col span={10}>
+                            {getFieldDecorator('difficulty')(
+                                <Slider step={1} min={1} max={5}/>
+                            )}
+                        </Col>
+                    </Row>
                 </FormItem>
                 <FormItem {...formItemLayout} label={<FormattedMessage id="stem" />}>
-                    {getFieldDecorator('stem', {
-                        rules: [{ required: true, message: this.props.intl.messages.stemPlaceholder }],
-                    })(
-                        <TextArea placeholder={this.props.intl.messages.stemPlaceholder} autosize={{ minRows: 3}} />
-                    )}
+                    <Row>
+                        <Col span={22}>
+                            {getFieldDecorator('stem', {
+                                rules: [{ required: true, message: this.props.intl.messages.stemPlaceholder }],
+                            })(
+                                <TextArea placeholder={this.props.intl.messages.stemPlaceholder} autosize={{ minRows: 3}} />
+                            )}
+                        </Col>
+                    </Row>
                 </FormItem>
                 <FormItem {...formItemLayout} label={<FormattedMessage id="choiceItem" />}>
                     {getFieldDecorator('answer')(
-                        <RadioGroup>
-                            <Radio value={1} style={radioStyle}>
-                                {getFieldDecorator('1', {
-                                    rules: [{ required: true, message: this.props.intl.messages.choiceItemPlaceholder }],
-                                })(
-                                    <TextArea placeholder={this.props.intl.messages.choiceItemPlaceholder} autosize={{ minRows: 2}} />
-                                )}
-                            </Radio>
-                            <Radio value={2} style={radioStyle}>
-                                {getFieldDecorator('2', {
-                                    rules: [{ required: true, message: this.props.intl.messages.choiceItemPlaceholder }],
-                                })(
-                                    <TextArea placeholder={this.props.intl.messages.choiceItemPlaceholder} autosize={{ minRows: 2}} />
-                                )}</Radio>
-                            <Radio value={3} style={radioStyle}>
-                                {getFieldDecorator('3', {
-                                    rules: [{ required: true, message: this.props.intl.messages.choiceItemPlaceholder }],
-                                })(
-                                    <TextArea placeholder={this.props.intl.messages.choiceItemPlaceholder} autosize={{ minRows: 2}} />
-                                )}
-                            </Radio>
-                            <Radio value={4} style={radioStyle}>
-                                {getFieldDecorator('4', {
-                                    rules: [{ required: true, message: this.props.intl.messages.choiceItemPlaceholder }],
-                                })(
-                                    <TextArea placeholder={this.props.intl.messages.choiceItemPlaceholder} autosize={{ minRows: 2}} />
-                                )}
-                            </Radio>
+                        <RadioGroup style={{width: '100%'}}>
+                            {
+                                this.getChoiceItemArray().map((item) => {
+                                    return(
+                                        <Row key={item.key}>
+                                            <Col span={1}>
+                                                <Radio value={item.key}></Radio>
+                                            </Col>
+                                            <Col span={21}>
+                                                <Input name={item.key} ref={item.key} placeholder={this.props.intl.messages.choiceItemPlaceholder} />
+                                            </Col>
+                                            <Col span={2}>
+                                                <Button onClick={this.delChoiceItem} icon={"minus"} style={{marginLeft: "5px"}} />
+                                            </Col>
+                                        </Row>
+                                    )
+                                })
+                            }
+                            <Row>
+                                <Col span={21} offset={1}>
+                                    <Button icon={"plus"} onClick={this.addChoiceItem} style={{width: '100%'}}>
+                                        <FormattedMessage id="addChoiceItem" />
+                                    </Button>
+                                </Col>
+                            </Row>
                         </RadioGroup>
                     )}
                 </FormItem>
                 <FormItem {...formItemLayout} label={<FormattedMessage id="analysis" />}>
-                    {getFieldDecorator('analysis', {
-                        rules: [{ required: true, message: this.props.intl.messages.analysisPlaceholder }],
-                    })(
-                        <TextArea placeholder={this.props.intl.messages.analysisPlaceholder} autosize={{ minRows: 3}} />
-                    )}
+                    <Row>
+                        <Col span={22}>
+                            {getFieldDecorator('analysis', {
+                                rules: [{ required: true, message: this.props.intl.messages.analysisPlaceholder }],
+                            })(
+                                <TextArea placeholder={this.props.intl.messages.analysisPlaceholder} autosize={{ minRows: 3}} />
+                            )}
+                        </Col>
+                    </Row>
                 </FormItem>
-                <FormItem wrapperCol={{ span: 12, offset: 6 }}>
-                    <Button type="primary" htmlType="submit" className="login-form-button" style={{width: '100%'}}>
-                        <FormattedMessage id="submit" htmlType="submit"/>
-                    </Button>
+                <FormItem wrapperCol={{ span: 14, offset: 6 }}>
+                    <Row>
+                        <Col span={22}>
+                            <Button type="primary" htmlType="submit" style={{width: '100%'}}>
+                                <FormattedMessage id="submit"/>
+                            </Button>
+                        </Col>
+                    </Row>
                 </FormItem>
             </Form>
         )
