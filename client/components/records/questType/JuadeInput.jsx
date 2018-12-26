@@ -104,60 +104,72 @@ class SingleChoiceInput extends Component{
         }
 
         return(
-            <Form>
+            <Form onSubmit={this.handleSubmit}>
                 <FormItem {...formItemLayout} label={<FormattedMessage id="difficulty" />}>
                     <Row>
                         <Col span={10}>
-                            <Slider step={1} min={1} max={5} ref={"difficulty"}/>
+                            {getFieldDecorator('difficulty')(
+                                <Slider step={1} min={1} max={5}/>
+                            )}
                         </Col>
                     </Row>
                 </FormItem>
                 <FormItem {...formItemLayout} label={<FormattedMessage id="stem" />}>
                     <Row>
                         <Col span={22}>
-                            <TextArea ref={"stem"} placeholder={this.props.intl.messages.stemPlaceholder} autosize={{ minRows: 3}} />
+                            {getFieldDecorator('stem', {
+                                rules: [{ required: true, message: this.props.intl.messages.stemPlaceholder }],
+                            })(
+                                <TextArea placeholder={this.props.intl.messages.stemPlaceholder} autosize={{ minRows: 3}} />
+                            )}
                         </Col>
                     </Row>
                 </FormItem>
                 <FormItem {...formItemLayout} label={<FormattedMessage id="choiceItem" />}>
-                    <RadioGroup style={{width: '100%'}}>
-                        {
-                            this.getChoiceItemArray().map((item) => {
-                                return(
-                                    <Row key={item.key}>
-                                        <Col span={1}>
-                                            <Radio value={item.key}></Radio>
-                                        </Col>
-                                        <Col span={21}>
-                                            <Input ref={item.key} placeholder={this.props.intl.messages.choiceItemPlaceholder} />
-                                        </Col>
-                                        <Col span={2}>
-                                            <Button onClick={this.delChoiceItem} icon={"minus"} style={{marginLeft: "5px"}} />
-                                        </Col>
-                                    </Row>
-                                )
-                            })
-                        }
-                        <Row>
-                            <Col span={21} offset={1}>
-                                <Button icon={"plus"} onClick={this.addChoiceItem} style={{width: '100%'}}>
-                                    <FormattedMessage id="addChoiceItem" />
-                                </Button>
-                            </Col>
-                        </Row>
-                    </RadioGroup>
+                    {getFieldDecorator('answer')(
+                        <RadioGroup style={{width: '100%'}}>
+                            {
+                                this.getChoiceItemArray().map((item) => {
+                                    return(
+                                        <Row key={item.key}>
+                                            <Col span={1}>
+                                                <Radio value={item.key}></Radio>
+                                            </Col>
+                                            <Col span={21}>
+                                                <Input name={item.key} ref={item.key} placeholder={this.props.intl.messages.choiceItemPlaceholder} />
+                                            </Col>
+                                            <Col span={2}>
+                                                <Button onClick={this.delChoiceItem} icon={"minus"} style={{marginLeft: "5px"}} />
+                                            </Col>
+                                        </Row>
+                                    )
+                                })
+                            }
+                            <Row>
+                                <Col span={21} offset={1}>
+                                    <Button icon={"plus"} onClick={this.addChoiceItem} style={{width: '100%'}}>
+                                        <FormattedMessage id="addChoiceItem" />
+                                    </Button>
+                                </Col>
+                            </Row>
+                        </RadioGroup>
+                    )}
                 </FormItem>
                 <FormItem {...formItemLayout} label={<FormattedMessage id="analysis" />}>
                     <Row>
                         <Col span={22}>
-                            <TextArea ref={"analysis"} placeholder={this.props.intl.messages.analysisPlaceholder} autosize={{ minRows: 3}} />
+                            {getFieldDecorator('analysis', {
+                                rules: [{ required: true, message: this.props.intl.messages.analysisPlaceholder }],
+                            })(
+                                <TextArea placeholder={this.props.intl.messages.analysisPlaceholder} autosize={{ minRows: 3}} />
+                            )}
                         </Col>
                     </Row>
                 </FormItem>
                 <FormItem wrapperCol={{ span: 14, offset: 6 }}>
                     <Row>
                         <Col span={22}>
-                            <Button type="primary" style={{width: '100%'}} onClick={this.handleSubmit}>
+                            <Button type="primary" htmlType="submit" style={{width: '100%'}}>
                                 <FormattedMessage id="submit"/>
                             </Button>
                         </Col>
@@ -172,4 +184,4 @@ SingleChoiceInput.propTypes = {
     intl: intlShape.isRequired
 };
 
-export default connect()(injectIntl(SingleChoiceInput))
+export default connect()(Form.create()(injectIntl(SingleChoiceInput)))
