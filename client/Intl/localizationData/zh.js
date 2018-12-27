@@ -39,7 +39,10 @@ export default {
       choiceItemPlaceholder: '请输入问题的选项',
       analysis: '解析',
       analysisPlaceholder: '请输入问题的解析',
-      addChoiceItem: '新增一个选项'
+      addChoiceItem: '新增一个选项',
+      difficultyDescription: '指明此题的难易程度. 从1到5难度增加',
+      subjectPlaceholder: '请选择科目',
+      subject: '科目',
 
   }
 };

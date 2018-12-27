@@ -1,6 +1,8 @@
 import React, {Component} from 'react';
 import SingleChoiceInput from './SingleChoiceInput'
 import SingleChoiceView from './SingleChoiceView'
+import { addSingleChoice } from '../actions'
+import { connect } from 'react-redux';
 
 class SingleChoice extends Component{
 
@@ -8,14 +10,25 @@ class SingleChoice extends Component{
         view: false
     }
 
+    handleSummit = (silgleChoice) => {
+        this.props.dispatch(addSingleChoice(silgleChoice));
+    }
+
     render() {
-        const { view } = this.props
-        if (view) {
+        const { singleChoice } = this.props
+        console.log(singleChoice);
+        if (singleChoice) {
             return(<SingleChoiceView />)
         } else {
-            return(<SingleChoiceInput />)
+            return(<SingleChoiceInput handleSummit={this.handleSummit}/>)
         }
     }
 }
 
-export default SingleChoice
+const mapStateToProps = (state) => {
+    return {
+        singleChoice: state.singleChoice
+    }
+}
+
+export default connect((mapStateToProps))(SingleChoice)

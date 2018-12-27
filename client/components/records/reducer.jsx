@@ -11,22 +11,20 @@ const RecordsReducer = (state = initialState, action) => {
     switch (action.type) {
         case RECORD_REQUEST_START :
             return {
-                data: [...state.data],
                 status: 'loading'
             };
         case ADD_SINGECHOICE_SUCCESS :
             return {
-                data: [action.singleChoice, ...state.data],
+                singleChoice: [action.data, ...state.data],
                 status: 'success'
             };
         case ADD_MULTICHOICE_SUCCESS:
             return {
-                data: [action.multiChoice, ...state.data],
+                multiChoice: [action.data, ...state.data],
                 status: 'success'
             };
         case RECORD_REQUEST_FAILED :
             return {
-                data: [...state.data],
                 status: 'failed'
             };
 

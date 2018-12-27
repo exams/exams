@@ -22,12 +22,12 @@ export const addSingleChoice = (values) => {
         }).then(response => {
             dispatch({
                 type: ADD_SINGECHOICE_SUCCESS,
-                payload: response
+                data: response.data
             })
         }).catch(error => {
             dispatch({
                 type: RECORD_REQUEST_FAILED,
-                payload: error
+                data: error
             })
         })
     }

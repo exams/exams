@@ -39,6 +39,9 @@ export default {
       choiceItemPlaceholder: 'Please type in choice items of the question',
       analysis: 'Analysis',
       analysisPlaceholder: 'Please type in analysis of the question',
-      addChoiceItem: 'Add an new option'
+      addChoiceItem: 'Add an new option',
+      difficultyDescription: 'Indicate the difficulty of this question, increase from 1 to 5',
+      subjectPlaceholder: 'Please select the Subject',
+      subject: 'Subject'
   }
 };

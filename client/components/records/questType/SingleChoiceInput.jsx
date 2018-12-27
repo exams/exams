@@ -1,8 +1,6 @@
 import React, {Component} from 'react';
-import { connect } from 'react-redux';
 import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
 import { Form, Slider, Input, Radio , Button, Row, Col } from 'antd';
-import { addSingleChoice } from '../actions'
 
 const RadioGroup = Radio.Group;
 const FormItem = Form.Item;
@@ -33,21 +31,17 @@ class SingleChoiceInput extends Component{
     handleSubmit = (e) => {
         e.preventDefault();
         const choiceItem = this.state.choiceNum;
-        for (var i = 1; i <= choiceItem; i++){
-            console.log(this.refs[i])
-        }
         this.props.form.validateFields((err, values) => {
             if (!err) {
-                console.log(values)
-                // const choiceItems = [];
-                // for (var i = 1; i <= this.state.choiceNum; i++){
-                //     const label = i.toString()
-                //     const obj = {}
-                //     obj[label] = values[i]
-                //     choiceItems.push(obj)
-                // }
-                // values.choiceItems = choiceItems;
-                // this.props.dispatch(addSingleChoice(values))
+                const choiceItems = [];
+                for (var i = 1; i <= choiceItem; i++){
+                    const label = i.toString()
+                    const obj = {}
+                    obj[label] = values[i]
+                    choiceItems.push(obj)
+                }
+                values.choiceItems = choiceItems;
+                this.props.handleSummit(values)
             }
         });
     }
@@ -61,40 +55,6 @@ class SingleChoiceInput extends Component{
         return choiceItemRes;
     }
 
-    getChoiceItemView = () => {
-        const choiceItem = this.state.choiceNum;
-        var choiceItemRes = [];
-        for (var i = 1; i <= choiceItem; i++){
-            if (i <= 2){
-                choiceItemRes.push(
-                    <Row key={i}>
-                        <Col span={1}>
-                            <Radio value={i}></Radio>
-                        </Col>
-                        <Col span={21}>
-                            <Input name={i} ref={i} placeholder={this.props.intl.messages.choiceItemPlaceholder} autosize={{ minRows: 2}} />
-                        </Col>
-                    </Row>
-                )
-            } else {
-                choiceItemRes.push(
-                    <Row key={i}>
-                        <Col span={1}>
-                            <Radio value={i}></Radio>
-                        </Col>
-                        <Col span={21}>
-                            <Input name={i} ref={i} placeholder={this.props.intl.messages.choiceItemPlaceholder} autosize={{ minRows: 2}} />
-                        </Col>
-                        <Col span={2}>
-                            <Button onClick={this.delChoiceItem} icon={"minus"} style={{marginLeft: "5px"}} />
-                        </Col>
-                    </Row>
-                )
-            }
-        }
-        return choiceItemRes
-    }
-
     render() {
         const { getFieldDecorator } = this.props.form;
 
@@ -105,18 +65,30 @@ class SingleChoiceInput extends Component{
 
         return(
             <Form onSubmit={this.handleSubmit}>
+                <FormItem {...formItemLayout} label={<FormattedMessage id="subject" />}>
+                    <Row>
+                        <Col span={10} offset={1}>
+                            {getFieldDecorator('subject')(
+                                <Input placeholder={this.props.intl.messages.subjectPlaceholder}/>
+                            )}
+                        </Col>
+                    </Row>
+                </FormItem>
                 <FormItem {...formItemLayout} label={<FormattedMessage id="difficulty" />}>
                     <Row>
-                        <Col span={10}>
+                        <Col span={10} offset={1}>
                             {getFieldDecorator('difficulty')(
                                 <Slider step={1} min={1} max={5}/>
                             )}
+                        </Col>
+                        <Col span={10} offset={1}>
+                            <FormattedMessage id="difficultyDescription" />
                         </Col>
                     </Row>
                 </FormItem>
                 <FormItem {...formItemLayout} label={<FormattedMessage id="stem" />}>
                     <Row>
-                        <Col span={22}>
+                        <Col span={21} offset={1}>
                             {getFieldDecorator('stem', {
                                 rules: [{ required: true, message: this.props.intl.messages.stemPlaceholder }],
                             })(
@@ -155,8 +127,8 @@ class SingleChoiceInput extends Component{
                                                         <Input placeholder={this.props.intl.messages.choiceItemPlaceholder} />
                                                     )}
                                                 </Col>
-                                                <Col span={2}>
-                                                    <Button onClick={this.delChoiceItem} icon={"minus"} style={{marginLeft: "5px"}} />
+                                                <Col span={1}>
+                                                    <Button icon={"minus"} onClick={this.delChoiceItem}  style={{marginLeft: '5px'}} />
                                                 </Col>
                                             </Row>
                                         )
@@ -175,7 +147,7 @@ class SingleChoiceInput extends Component{
                 </FormItem>
                 <FormItem {...formItemLayout} label={<FormattedMessage id="analysis" />}>
                     <Row>
-                        <Col span={22}>
+                        <Col span={21} offset={1}>
                             {getFieldDecorator('analysis', {
                                 rules: [{ required: true, message: this.props.intl.messages.analysisPlaceholder }],
                             })(
@@ -186,7 +158,7 @@ class SingleChoiceInput extends Component{
                 </FormItem>
                 <FormItem wrapperCol={{ span: 14, offset: 6 }}>
                     <Row>
-                        <Col span={22}>
+                        <Col span={21} offset={1}>
                             <Button type="primary" htmlType="submit" style={{width: '100%'}}>
                                 <FormattedMessage id="submit"/>
                             </Button>
@@ -202,4 +174,4 @@ SingleChoiceInput.propTypes = {
     intl: intlShape.isRequired
 };
 
-export default connect()(Form.create()(injectIntl(SingleChoiceInput)))
+export default Form.create()(injectIntl(SingleChoiceInput))
