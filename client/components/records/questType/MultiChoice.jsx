@@ -1,10 +1,10 @@
 import React, {Component} from 'react';
-import SingleChoiceInput from './SingleChoice.Input'
-import SingleChoiceView from './SingleChoice.View'
+import MultiChoiceInput from './MultiChoice.Input'
+import MultiChoiceView from './MultiChoice.View'
 import { addSingleChoice, cleanSingleChoice } from '../actions'
 import { connect } from 'react-redux'
 
-class SingleChoice extends Component{
+class MultiChoice extends Component{
 
     constructor(){
         super();
@@ -51,9 +51,9 @@ class SingleChoice extends Component{
 
         console.log(singleChoiceData)
         if (showView) {
-            return(<SingleChoiceView status={status} singleChoice={singleChoiceData} handleAddNew={this.handleAddNew} />)
+            return(<MultiChoiceView status={status} singleChoice={singleChoiceData} handleAddNew={this.handleAddNew} />)
         } else {
-            return(<SingleChoiceInput handleSummit={this.handleSummit}/>)
+            return(<MultiChoiceInput handleSummit={this.handleSummit}/>)
         }
     }
 }
@@ -70,4 +70,4 @@ const mapDispatchToProps = (dispatch) => ({
     cleanSingleChoice: () => dispatch(cleanSingleChoice())
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(SingleChoice)
+export default connect(mapStateToProps, mapDispatchToProps)(MultiChoice)

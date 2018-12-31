@@ -1,17 +1,23 @@
 export default {
     menus: [    // 菜单相关路由
-        { route: '/app/dashboard/index', key: 'home', title: '首页', icon: 'mobile', component: 'Dashboard' },
+        { route: '/app/dashboard/index', key: 'home', title: '首页', icon: 'home', component: 'Dashboard' },
         {
-            route: '/app/template', key: 'template', title: '模板', icon: 'star', component: 'PaperTemplate'
+            route: '/app/template', key: 'template', title: '模板', icon: 'snippets', component: 'PaperTemplate'
         },
         {
-            route: '/app/papers', key: 'paper', title: '试卷', icon: 'star', component: 'Papers'
+            route: '/app/papers', key: 'paper', title: '试卷', icon: 'file-text', component: 'Papers'
         },
         {
             route: '/app/papers/:id', visible: false, title: '试卷', icon: 'star', component: 'Paper'
         },
         {
-            route: '/app/records', key: 'record', title: '录入', icon: 'star', component: 'Records'
+            route: '/app/records', key: 'record', title: '录入', icon: 'file-done', component: 'Records'
+        },
+        {
+            route: '/app/subjects', key: 'subject', title: '科目', icon: 'cluster', component: 'Subjects'
+        },
+        {
+            route: '/app/users', key: 'user', title: '用户', icon: 'user', component: 'Users'
         },
         {
             route: '/subs4', key: 'page', title: '页面', icon: 'switcher',

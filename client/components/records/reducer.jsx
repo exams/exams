@@ -1,6 +1,7 @@
 import {
-    RECORD_REQUEST_START, RECORD_REQUEST_FAILED,
+    RECORD_REQUEST_FAILED,
     ADD_SINGECHOICE, ADD_SINGECHOICE_SUCCESS, ADD_SINGECHOICE_FAILED,
+    CLEAN_SINGECHOICE_SUCCESS,
     ADD_MULTICHOICE, ADD_MULTICHOICE_SUCCESS, ADD_MULTICHOICE_FAILED
 } from './actions'
 
@@ -8,19 +9,20 @@ import {
 const initialState = { data: [] };
 
 const RecordsReducer = (state = initialState, action) => {
+    let singleChoice
     switch (action.type) {
-        case RECORD_REQUEST_START :
-            return {
-                status: 'loading'
-            };
         case ADD_SINGECHOICE_SUCCESS :
+            singleChoice = action.data
             return {
-                singleChoice: [action.data, ...state.data],
+                ...state,
+                singleChoice,
                 status: 'success'
             };
         case ADD_MULTICHOICE_SUCCESS:
+            const multiChoice = action.data
             return {
-                multiChoice: [action.data, ...state.data],
+                ...state,
+                multiChoice,
                 status: 'success'
             };
         case RECORD_REQUEST_FAILED :
@@ -28,14 +30,22 @@ const RecordsReducer = (state = initialState, action) => {
                 status: 'failed'
             };
 
+        case CLEAN_SINGECHOICE_SUCCESS:
+            singleChoice = null;
+            return {
+                ...state,
+                singleChoice,
+                status: 'success'
+            }
+
         default:
             return state;
     }
 };
 
 /* Selectors */
-export const getSingleChoice = state => state.singleChoice.data;
-export const getSMultiChoice = state => state.multiChoice.data;
+export const getSingleChoice = state => state.singleChoice;
+export const getSMultiChoice = state => state.multiChoice;
 
 // Get post by cuid
 // export const getPost = (state, cuid) => state.posts.data.filter(post => post.cuid === cuid)[0];

@@ -28,7 +28,7 @@ class App extends Component {
         }
         if ('completed' === status) {
             return (
-                <Layout style={{flexDirection: 'column'}}>
+                <Layout>
                     <HeaderCustom user={ me } intl={ intl } switchLanguage={lang => this.props.switchLanguage(lang)} />
                     <Content style={{ margin: '0 16px', overflow: 'initial', flex: '1 1 0' }}>
                         <Routes auth={ me } />

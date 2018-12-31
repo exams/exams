@@ -7,5 +7,10 @@ export const papers = EASY_MOCK_BASE + '/Domines/exams/1.0.0/papers'
 export const authenticate = '/api/auth/signin'
 export const me = '/api/users/me'
 
+export const userApi = '/api/users'
+
+export const subjectsApi = '/api/subjects';
+
 export const singeChoiceApi = '/api/singlechoices';
 export const multiChoiceApi = '/api/multichoices';
+

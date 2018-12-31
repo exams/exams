@@ -8,11 +8,22 @@ export default {
       hello: 'hello-',
       signIn: 'Sign In',
       signOut: 'Sign Out',
+      user: 'User',
       forgot: 'Forget Password',
       remember: 'Remember Me',
       register: 'Go Register Now!',
       signInTips : 'Please type in Username or Email!',
       signInPassTips : 'Please type in password!',
+
+      //users
+      edit: 'Edit',
+      delete: 'Delete',
+      addUser: 'Add User',
+      username: 'User Name',
+      password: 'Password',
+      email: 'Email',
+      phone: 'cellphone',
+      role: 'Role',
 
       //menus
       home: 'Home',
@@ -37,11 +48,23 @@ export default {
       stemPlaceholder: 'Please type in stem of the question',
       choiceItem: 'Choice Items',
       choiceItemPlaceholder: 'Please type in choice items of the question',
+      answer: 'Answer',
+      answerPlaceholder: 'Please select the correct option',
       analysis: 'Analysis',
       analysisPlaceholder: 'Please type in analysis of the question',
       addChoiceItem: 'Add an new option',
       difficultyDescription: 'Indicate the difficulty of this question, increase from 1 to 5',
       subjectPlaceholder: 'Please select the Subject',
-      subject: 'Subject'
+      subject: 'Subject',
+      continueAddNext: 'Continue Add Next One',
+      isReal: 'Is Real',
+      isRealTrue: 'True',
+      isRealFalse:  'False',
+      isRealDescription: 'Description',
+      description: 'Description: such as 2018.6 Beijing college entrance examination',
+      recordStatus: 'Status',
+      loading: 'Saving',
+      success: 'Success',
+      failed: 'Failed',
   }
 };

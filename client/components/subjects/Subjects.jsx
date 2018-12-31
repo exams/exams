@@ -1,48 +1,44 @@
 import React, {Component} from 'react';
 import {withRouter, Link} from "react-router-dom";
-import { getPapers } from "./action";
 import { connect } from 'react-redux'
-import LoadingArea from '../LoadingArea'
-import { List } from 'antd';
+import { List, Icon, Button } from 'antd';
+import {addSubject, listSubjects} from "./actions";
+import { FormattedMessage } from 'react-intl';
 
 class Subjects extends Component{
     componentDidMount() {
-        this.props.getPapers()
+        this.props.listSubjects()
     }
 
     render() {
-        const { status, papers, match } = this.props
+        const { status, subjects, match } = this.props
 
-        if ('completed' === status) {
-            return (
-                <List
-                    itemLayout="horizontal"
-                    dataSource={papers}
-                    renderItem={item => (
-                        <List.Item>
-                            <List.Item.Meta
-                                title={<Link to={match.url + '/' + item.id}>{item.name}</Link>}
-                                onClick={this.goDetail}
-                            />
-                        </List.Item>
-                    )}
-                />
-            );
-        }
-
-        return( <LoadingArea status={status} /> )
+        return (
+            <List
+                itemLayout="horizontal"
+                dataSource={subjects}
+                renderItem={item => (
+                    <List.Item actions={[<a><Icon type={"edit"}/> <FormattedMessage id="edit"/></a>, <a><Icon type={"delete"}/> <FormattedMessage id="delete"/></a>]}>
+                        <List.Item.Meta
+                            title={<Link to={match.url + '/' + item.id}>{item.name}</Link>}
+                            onClick={this.goDetail}
+                        />
+                    </List.Item>
+                )}
+            />
+        );
     }
 }
 
 const mapStateToProps = (state) => {
     return {
-        status: state.papers.status,
-        papers: state.papers.papers
+        subjects: state.subjects.subjects
     }
 }
 
 const mapDispatchToProps = (dispatch) => ({
-    getPapers: () => dispatch(getPapers())
+    listSubjects: () => dispatch(listSubjects()),
+    addSubject: (subject) => dispatch(addSubject(subject))
 })
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Subjects));

@@ -1,10 +1,10 @@
 import React, {Component} from 'react';
 import {withRouter} from "react-router-dom";
-import { getPapers } from "./actions";
 import { connect } from 'react-redux'
 import { Tabs } from 'antd';
 import { FormattedMessage } from 'react-intl';
 import SingleChoice from "./questType/SingleChoice";
+import MultiChoice from "./questType/MultiChoice";
 
 const TabPane = Tabs.TabPane;
 
@@ -24,7 +24,7 @@ class Records extends Component{
                     <SingleChoice />
                 </TabPane>
                 <TabPane tab={<FormattedMessage id="multiChoice" />} key="multiChoice">
-                    Content of Tab multiChoice
+                    <MultiChoice />
                 </TabPane>
                 <TabPane tab={<FormattedMessage id="judge" />} key="judge">
                     Content of Tab judge
@@ -45,8 +45,7 @@ class Records extends Component{
 
 const mapStateToProps = (state) => {
     return {
-        status: state.papers.status,
-        papers: state.papers.papers
+
     }
 }
 

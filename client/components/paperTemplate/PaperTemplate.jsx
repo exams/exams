@@ -11,6 +11,7 @@ class PaperTemplate extends Component{
     }
     render() {
         const { status, templates } = this.props
+        console.log(status)
 
         if ('completed' === status) {
             return (
@@ -27,7 +28,6 @@ class PaperTemplate extends Component{
 }
 
 const mapStateToProps = (state) => {
-    console.log(state);
     return {
         status: state.paperTemplates.status,
         templates: state.paperTemplates.templates

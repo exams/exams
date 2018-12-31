@@ -1,19 +1,23 @@
 import React, {Component} from 'react';
 import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
-import { Form, Slider, Input, Radio , Button, Row, Col } from 'antd';
+import { Form, Slider, Input, Checkbox, Radio, Button, Row, Col } from 'antd';
 
-const RadioGroup = Radio.Group;
+const CheckboxGroup = Checkbox.Group;
+const RadioGroup = Radio.Group
 const FormItem = Form.Item;
 const { TextArea } = Input;
 
-class SingleChoiceInput extends Component{
+class MultiChoiceInput extends Component{
 
-    state = {
-        choiceNum: 4
+    constructor(){
+        super();
+        this.state = {
+            choiceNum: 4
+        }
     }
 
     componentDidMount() {
-        this.props.form.setFieldsValue({difficulty: 3})
+        this.props.form.setFieldsValue({difficulty: 3, isReal: false})
     }
 
     addChoiceItem = () => {
@@ -37,7 +41,8 @@ class SingleChoiceInput extends Component{
                 for (var i = 1; i <= choiceItem; i++){
                     const label = i.toString()
                     const obj = {}
-                    obj[label] = values[i]
+                    obj.label = label;
+                    obj.value = values[i]
                     choiceItems.push(obj)
                 }
                 values.choiceItems = choiceItems;
@@ -98,8 +103,10 @@ class SingleChoiceInput extends Component{
                     </Row>
                 </FormItem>
                 <FormItem {...formItemLayout} label={<FormattedMessage id="choiceItem" />}>
-                    {getFieldDecorator('answer')(
-                        <RadioGroup style={{width: '100%'}}>
+                    {getFieldDecorator('answer', {
+                        rules: [{ required: true, message: this.props.intl.messages.answerPlaceholder },],
+                    })(
+                        <CheckboxGroup style={{width: '100%'}}>
                             {
                                 this.getChoiceItemArray().map((item) => {
                                     const key = item.key;
@@ -107,10 +114,12 @@ class SingleChoiceInput extends Component{
                                         return(
                                             <Row key={key}>
                                                 <Col span={1}>
-                                                    <Radio value={key}></Radio>
+                                                    <Checkbox value={key}></Checkbox>
                                                 </Col>
                                                 <Col span={21}>
-                                                    {getFieldDecorator(key.toString())(
+                                                    {getFieldDecorator(key.toString(), {
+                                                        rules: [{ required: true, message: this.props.intl.messages.choiceItemPlaceholder }],
+                                                    })(
                                                         <Input placeholder={this.props.intl.messages.choiceItemPlaceholder} />
                                                     )}
                                                 </Col>
@@ -120,7 +129,7 @@ class SingleChoiceInput extends Component{
                                         return(
                                             <Row key={key}>
                                                 <Col span={1}>
-                                                    <Radio value={key}></Radio>
+                                                    <Checkbox value={key}></Checkbox>
                                                 </Col>
                                                 <Col span={21}>
                                                     {getFieldDecorator(key.toString())(
@@ -142,16 +151,35 @@ class SingleChoiceInput extends Component{
                                     </Button>
                                 </Col>
                             </Row>
-                        </RadioGroup>
+                        </CheckboxGroup>
                     )}
                 </FormItem>
                 <FormItem {...formItemLayout} label={<FormattedMessage id="analysis" />}>
                     <Row>
                         <Col span={21} offset={1}>
-                            {getFieldDecorator('analysis', {
-                                rules: [{ required: true, message: this.props.intl.messages.analysisPlaceholder }],
-                            })(
+                            {getFieldDecorator('analysis')(
                                 <TextArea placeholder={this.props.intl.messages.analysisPlaceholder} autosize={{ minRows: 3}} />
+                            )}
+                        </Col>
+                    </Row>
+                </FormItem>
+                <FormItem {...formItemLayout} label={<FormattedMessage id="isReal" />}>
+                    <Row>
+                        <Col span={10} offset={1}>
+                            {getFieldDecorator('isReal')(
+                                <RadioGroup initialValue={"false"} buttonStyle="solid">
+                                    <Radio.Button value={true}><FormattedMessage id="isRealTrue" /></Radio.Button>
+                                    <Radio.Button value={false}><FormattedMessage id="isRealFalse" /></Radio.Button>
+                                </RadioGroup>
+                            )}
+                        </Col>
+                    </Row>
+                </FormItem>
+                <FormItem {...formItemLayout} label={<FormattedMessage id="isRealDescription" />}>
+                    <Row>
+                        <Col span={10} offset={1}>
+                            {getFieldDecorator('description')(
+                                <Input placeholder={this.props.intl.messages.descriptionPlaceholder}/>
                             )}
                         </Col>
                     </Row>
@@ -170,8 +198,8 @@ class SingleChoiceInput extends Component{
     }
 }
 
-SingleChoiceInput.propTypes = {
+MultiChoiceInput.propTypes = {
     intl: intlShape.isRequired
 };
 
-export default Form.create()(injectIntl(SingleChoiceInput))
+export default Form.create()(injectIntl(MultiChoiceInput))

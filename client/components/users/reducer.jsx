@@ -1,30 +1,29 @@
 import {
-    SUBJECT_HTTP_FAILED,
-    ADD_SUBJECT_SUCCESS,
-    LIST_SUBJECT_SUCCESS
+    USER_HTTP_FAILED, ADD_USER_SUCCESS, LIST_USER_SUCCESS
 } from './actions'
 
 // Initial State
 const initialState = { data: [] };
 
-const SubjectsReducer = (state = initialState, action) => {
-    let subject
+const UsersReducer = (state = initialState, action) => {
+    let user
     switch (action.type) {
-        case ADD_SUBJECT_SUCCESS :
-            subject = action.data
+        case ADD_USER_SUCCESS :
+            user = action.data
             return {
                 ...state,
-                subject,
+                user,
                 status: 'success'
             };
-        case LIST_SUBJECT_SUCCESS:
-            const subjects = action.data
+        case LIST_USER_SUCCESS:
+            const users = action.data
+            console.log(users)
             return {
                 ...state,
-                subjects,
+                users,
                 status: 'success'
             };
-        case SUBJECT_HTTP_FAILED :
+        case USER_HTTP_FAILED :
             return {
                 status: 'failed'
             };
@@ -34,4 +33,4 @@ const SubjectsReducer = (state = initialState, action) => {
     }
 };
 
-export default SubjectsReducer;
+export default UsersReducer;
