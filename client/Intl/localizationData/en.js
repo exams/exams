@@ -13,7 +13,7 @@ export default {
       remember: 'Remember Me',
       register: 'Go Register Now!',
       signInTips : 'Please type in Username or Email!',
-      signInPassTips : 'Please type in password!',
+      signInPassTips : 'Please type in Password!',
 
       //users
       edit: 'Edit',
@@ -24,6 +24,13 @@ export default {
       email: 'Email',
       phone: 'cellphone',
       role: 'Role',
+      administrator: 'Administrator',
+      teacher: 'Teacher',
+      usernamePlaceHolder: 'Please type in Username',
+      passwordPlaceHolder: 'Please type in Password',
+      emailPlaceHolder: 'Please type in Email',
+      phonePlaceHolder: 'Please type in Phone Number',
+      rolePlaceHolder: 'Please select Role',
 
       //menus
       home: 'Home',

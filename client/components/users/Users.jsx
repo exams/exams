@@ -3,6 +3,7 @@ import {withRouter, Link} from "react-router-dom";
 import { connect } from 'react-redux'
 import { Row, Col, List, Icon, Button } from 'antd';
 import { listUsers, addUser } from "./actions";
+import { listSubjects } from "../subjects/actions";
 import { FormattedMessage } from 'react-intl';
 import AddUser from "./AddUser";
 
@@ -17,6 +18,7 @@ class Users extends Component{
 
     componentDidMount() {
         this.props.listUsers()
+        this.props.listSubjects()
     }
 
     toggleAddUser = () => {
@@ -25,13 +27,13 @@ class Users extends Component{
         })
     }
 
-    addUser = () => {
-        this.props.addUser();
+    addUser = (user) => {
+        this.props.addUser(user);
     }
 
     render() {
-        const { users, match } = this.props
-
+        const { users, match, subjects } = this.props
+        const { showAddUser } = this.state
         return (
             <div>
                 <Row>
@@ -39,9 +41,11 @@ class Users extends Component{
                         <Button onClick={this.toggleAddUser} icon={"plus"}><FormattedMessage id="addUser"/></Button>
                     </Col>
                 </Row>
-                <Row>
-                    <AddUser addUser={this.addUser}/>
-                </Row>
+                {
+                    showAddUser && (<Row>
+                        <AddUser addUser={this.addUser} subjects={subjects}/>
+                    </Row>)
+                }
                 <List
                     itemLayout="horizontal"
                     dataSource={users}
@@ -60,14 +64,17 @@ class Users extends Component{
 }
 
 const mapStateToProps = (state) => {
+    console.log(state)
     return {
-        users: state.users.users
+        users: state.users.users,
+        subjects: state.subjects.subjects
     }
 }
 
 const mapDispatchToProps = (dispatch) => ({
     listUsers: () => dispatch(listUsers()),
-    addUser: (user) => dispatch(addUser(user))
+    addUser: (user) => dispatch(addUser(user)),
+    listSubjects: () => dispatch(listSubjects())
 })
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Users));

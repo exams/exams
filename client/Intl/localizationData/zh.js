@@ -24,6 +24,8 @@ export default {
       email: '邮箱',
       phone: '手机',
       role: '角色',
+      administrator: '管理员',
+      teacher: '教师',
       usernamePlaceHolder: '请输入姓名',
       passwordPlaceHolder: '请输入密码',
       emailPlaceHolder: '请输入邮箱',

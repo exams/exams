@@ -1,58 +1,94 @@
 import React, {Component} from 'react';
-import { Row, Col, List, Icon, Button, Input } from 'antd';
+import { Form, Row, Col, List, Icon, Button, Input, Select } from 'antd';
 import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
+
+const FormItem = Form.Item;
+const Option = Select.Option;
 
 class AddUser extends Component{
 
+    handleSubjectSelect = (value) => {
+        console.log(`selected ${value}`);
+    }
+
+    addUser = (e) => {
+        e.preventDefault();
+        this.props.form.validateFields((err, values) => {
+            if (!err) {
+                this.props.addUser(values)
+            }
+        });
+    }
+
     render() {
-        const { users, match } = this.props
+        const { subjects } = this.props
+        const { getFieldDecorator } = this.props.form;
+        const formItemLayout = {
+            labelCol: { span: 3 },
+            wrapperCol: { span: 19 },
+        }
+
+        const children = [];
+        subjects && subjects.map((item) => {
+            children.push(<Option key={item.subjectCode}>{item.name}</Option>);
+        })
 
         return (
-            <div>
+            <Form onSubmit={this.handleSubmit}>
                 <Row>
-                    <Col span={4}>
-                        <FormattedMessage id="username"/>
+                    <Col span={12}>
+                        <FormItem {...formItemLayout} label={<FormattedMessage id="username" />}>
+                            {getFieldDecorator('username')(
+                                <Input placeholder={this.props.intl.messages.usernamePlaceholder}/>
+                            )}
+                        </FormItem>
                     </Col>
-                    <Col span={8}>
-                        <Input placeholder={this.props.intl.messages.usernamePlaceHolder} />
+
+                    <Col span={12}>
+                        <FormItem {...formItemLayout} label={<FormattedMessage id="password" />}>
+                            {getFieldDecorator('password')(
+                                <Input type={"password"} placeholder={this.props.intl.messages.passwordPlaceHolder} />
+                            )}
+                        </FormItem>
                     </Col>
-                    <Col span={4}>
-                        <FormattedMessage id="password"/>
+
+                    <Col span={12}>
+                        <FormItem {...formItemLayout} label={<FormattedMessage id="role" />}>
+                            {getFieldDecorator('role')(
+                                <Select
+                                mode="multiple"
+                                style={{ width: '100%' }}
+                                placeholder={this.props.intl.messages.rolePlaceHolder}
+                                onChange={this.handleSubjectSelect}
+                                >
+                                    <Option key={"teacher"}>{<FormattedMessage id="teacher" />}</Option>
+                                    <Option key={"admin"}>{<FormattedMessage id="administrator" />}</Option>
+                                </Select>
+                            )}
+                        </FormItem>
                     </Col>
-                    <Col span={8}>
-                        <Input type={"password"} placeholder={this.props.intl.messages.passwordPlaceHolder} />
-                    </Col>
-                    <Col span={4}>
-                        <FormattedMessage id="email"/>
-                    </Col>
-                    <Col span={8}>
-                        <Input placeholder={this.props.intl.messages.emailPlaceHolder} />
-                    </Col>
-                    <Col span={4}>
-                        <FormattedMessage id="phone"/>
-                    </Col>
-                    <Col span={8}>
-                        <Input placeholder={this.props.intl.messages.phonePlaceHolder} />
-                    </Col>
-                    <Col span={4}>
-                        <FormattedMessage id="role"/>
-                    </Col>
-                    <Col span={8}>
-                        <Input placeholder={this.props.intl.messages.rolePlaceHolder} />
-                    </Col>
-                    <Col span={4}>
-                        <FormattedMessage id="subject"/>
-                    </Col>
-                    <Col span={8}>
-                        <Input placeholder={this.props.intl.messages.subjectPlaceholder} />
+
+                    <Col span={12}>
+                        <FormItem {...formItemLayout} label={<FormattedMessage id="subject" />}>
+                            {getFieldDecorator('subject')(
+                                <Select
+                                    mode="multiple"
+                                    style={{ width: '100%' }}
+                                    placeholder={this.props.intl.messages.subjectPlaceholder}
+                                    onChange={this.handleSubjectSelect}
+                                >
+                                    {children}
+                                </Select>
+                            )}
+                        </FormItem>
                     </Col>
                 </Row>
                 <Row>
-                    <Button onClick={this.props.addUser} icon={"plus"}><FormattedMessage id="submit"/></Button>
+                    <Button onClick={this.addUser} icon={"plus"}><FormattedMessage id="submit"/></Button>
                 </Row>
-            </div>
+            </Form>
         );
     }
 }
 
-export default injectIntl(AddUser);
+export default Form.create()(injectIntl(AddUser));
