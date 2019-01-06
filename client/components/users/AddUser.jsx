@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
-import { Form, Row, Col, List, Icon, Button, Input, Select } from 'antd';
-import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
+import { Form, Row, Col, Button, Input, Select } from 'antd';
+import { injectIntl, FormattedMessage } from 'react-intl';
 
 const FormItem = Form.Item;
 const Option = Select.Option;

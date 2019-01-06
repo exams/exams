@@ -10,7 +10,6 @@ export const doAuthenticate = (values) => {
             usernameOrEmail: values.userName,
             password: values.password
         }).then(response => {
-            console.log(response)
             dispatch({
                 type: DO_AUTHENTICATE_SUCCESS,
                 data: response.data
@@ -24,11 +23,19 @@ export const doAuthenticate = (values) => {
     }
 }
 
+export const CLEAN_AUTHENTICATE_SUCCESS = 'CLEAN_AUTHENTICATE_SUCCESS'
+export const cleanAuthenticate = () => {
+    return (dispatch) => {
+        dispatch({
+            type: CLEAN_AUTHENTICATE_SUCCESS,
+        })
+    }
+}
+
 export const GET_ME_SUCCESS = 'GET_ME_SUCCESS'
 export const getMe = () => {
     return (dispatch) => {
         axios.get(me).then(response => {
-            console.log(response)
             dispatch({
                 type: GET_ME_SUCCESS,
                 data: response.data

@@ -53,7 +53,7 @@ class SingleChoice extends Component{
         if (showView) {
             return(<SingleChoiceView status={status} singleChoice={singleChoiceData} handleAddNew={this.handleAddNew} />)
         } else {
-            return(<SingleChoiceInput handleSummit={this.handleSummit}/>)
+            return(<SingleChoiceInput handleSummit={this.handleSummit} />)
         }
     }
 }

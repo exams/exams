@@ -1,8 +1,8 @@
 import {
-    RECORD_REQUEST_FAILED,
-    ADD_SINGECHOICE, ADD_SINGECHOICE_SUCCESS, ADD_SINGECHOICE_FAILED,
+    RECORD_REQUEST_ERROR,
+    ADD_SINGECHOICE_SUCCESS,
     CLEAN_SINGECHOICE_SUCCESS,
-    ADD_MULTICHOICE, ADD_MULTICHOICE_SUCCESS, ADD_MULTICHOICE_FAILED
+    ADD_MULTICHOICE_SUCCESS
 } from './actions'
 
 // Initial State
@@ -25,7 +25,7 @@ const RecordsReducer = (state = initialState, action) => {
                 multiChoice,
                 status: 'success'
             };
-        case RECORD_REQUEST_FAILED :
+        case RECORD_REQUEST_ERROR :
             return {
                 status: 'failed'
             };

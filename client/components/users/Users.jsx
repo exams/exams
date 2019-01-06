@@ -46,19 +46,19 @@ class Users extends Component{
             <div>
                 <Row>
                     <Col>
-                        <Button onClick={this.toggleAddUser} icon={"plus"}><FormattedMessage id="addUser"/></Button>
+                        <Button onClick={this.toggleAddUser} icon={"plus"}><FormattedMessage id="addUser" /></Button>
                     </Col>
                 </Row>
                 {
                     showAddUser && (<Row>
-                        <AddUser addUser={this.addUser} subjects={subjects}/>
+                        <AddUser addUser={this.addUser} subjects={subjects} />
                     </Row>)
                 }
                 <List
                     itemLayout="horizontal"
                     dataSource={users}
                     renderItem={item => (
-                        <List.Item actions={[<a><Icon type={"edit"}/> <FormattedMessage id="edit"/></a>, <a><Icon type={"delete"}/> <FormattedMessage id="delete"/></a>]}>
+                        <List.Item actions={[<a><Icon type={"edit"} /> <FormattedMessage id="edit" /></a>, <a><Icon type={"delete"} /> <FormattedMessage id="delete" /></a>]}>
                             <List.Item.Meta
                                 title={<Link to={match.url + '/' + item.id}>{item.username}</Link>}
                                 onClick={this.goDetail}

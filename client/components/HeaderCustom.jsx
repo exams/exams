@@ -4,9 +4,7 @@ import avater from '../style/imgs/b1.jpg';
 import TopMenuContainer from './TopMenuContainer';
 import { withRouter } from 'react-router-dom';
 import { Row, Col } from 'antd';
-import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
-import { connect } from 'react-redux'
 
 const { Header } = Layout;
 const SubMenu = Menu.SubMenu;
@@ -18,9 +16,7 @@ class HeaderCustom extends Component {
 
     };
     logout = () => {
-        this.props.cleanMe()
-        localStorage.removeItem('super_exams_token');
-        this.props.history.push('/login')
+        this.props.logout()
     };
 
     render() {
@@ -58,9 +54,4 @@ class HeaderCustom extends Component {
     }
 }
 
-HeaderCustom.propTypes = {
-    intl: PropTypes.object.isRequired,
-};
-
-
-export default withRouter(HeaderCustom);
+export default HeaderCustom;

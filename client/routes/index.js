@@ -14,7 +14,6 @@ export default class CRouter extends Component {
 
     requireLogin = (component, role) => {
         const { auth } = this.props;
-        console.log(auth);
         const { roles } = auth.roles;
         if (process.env.NODE_ENV === 'production' && !roles) { // 线上环境判断是否登录
             return <Redirect to={'/login'} />;

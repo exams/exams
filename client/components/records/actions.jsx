@@ -1,7 +1,7 @@
 import { instance as axios } from '../../axios'
 import { singeChoiceApi, multiChoiceApi } from '../../api/api'
 
-export const RECORD_REQUEST_FAILED = 'RECORD_REQUEST_FAILED'
+export const RECORD_REQUEST_ERROR = 'RECORD_REQUEST_ERROR'
 
 export const ADD_SINGECHOICE_SUCCESS = 'ADD_SINGECHOICE_SUCCESS'
 export const CLEAN_SINGECHOICE_SUCCESS = 'CLEAN_SINGECHOICE_SUCCESS'
@@ -16,7 +16,7 @@ export const addSingleChoice = (singleChoice) => {
         }).catch(error => {
             if (error.response || error.request){
                 dispatch({
-                    type: RECORD_REQUEST_FAILED,
+                    type: RECORD_REQUEST_ERROR,
                     data: error
                 })
             }
@@ -44,7 +44,7 @@ export const addMultiChoice = (multiChoice) => {
         }).catch(error => {
             if (error.response || error.request){
                 dispatch({
-                    type: RECORD_REQUEST_FAILED,
+                    type: RECORD_REQUEST_ERROR,
                     data: error
                 })
             }

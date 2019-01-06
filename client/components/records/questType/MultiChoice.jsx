@@ -53,7 +53,7 @@ class MultiChoice extends Component{
         if (showView) {
             return(<MultiChoiceView status={status} singleChoice={singleChoiceData} handleAddNew={this.handleAddNew} />)
         } else {
-            return(<MultiChoiceInput handleSummit={this.handleSummit}/>)
+            return(<MultiChoiceInput handleSummit={this.handleSummit} />)
         }
     }
 }

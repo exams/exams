@@ -4,7 +4,7 @@ import './style/index.less';
 import HeaderCustom from './components/HeaderCustom';
 import { connect } from 'react-redux';
 import Routes from './routes';
-import { getMe, cleanMe } from './components/core/actions'
+import { getMe, cleanMe, cleanAuthenticate } from './components/core/actions'
 import LoadingArea from './components/LoadingArea'
 import PropTypes from "prop-types";
 import {switchLanguage} from "./components/core/IntlActions";
@@ -14,9 +14,8 @@ const { Content, Footer } = Layout;
 class App extends Component {
 
     componentWillUpdate() {
-        const { status } = this.props
-        if ('error' === status) {
-            const { error } = this.props
+        const { error } = this.props
+        if (error) {
             if ('Network Error' === error.message || 'UnauthorizedError' === error.message ||
                 error.response.status === 401) {
                 this.context.router.history.push('/login');
@@ -28,12 +27,19 @@ class App extends Component {
         this.props.getMe();
     }
 
+    logout = () => {
+        this.props.cleanAuthenticate();
+        this.props.cleanMe();
+        localStorage.removeItem('super_exams_token');
+        this.props.history.push('/login')
+    }
+
     render() {
         const { status, me, intl } = this.props
         if (me) {
             return (
                 <Layout>
-                    <HeaderCustom user={ me } intl={ intl } cleanMe={this.props.cleanMe} switchLanguage={lang => this.props.switchLanguage(lang)} />
+                    <HeaderCustom user={ me } intl={ intl } logout={this.logout} switchLanguage={lang => this.props.switchLanguage(lang)} />
                     <Content style={{ margin: '0 16px', overflow: 'initial', flex: '1 1 0' }}>
                         <Routes auth={ me } />
                     </Content>
@@ -49,9 +55,7 @@ class App extends Component {
 }
 
 const mapStateToProps = state => {
-    console.log(state.core)
     return {
-        status: state.core.status,
         me: state.core.me,
         error: state.core.error,
         intl: state.intl
@@ -61,6 +65,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = (dispatch) => ({
     getMe: () => dispatch(getMe()),
     cleanMe: () => dispatch(cleanMe()),
+    cleanAuthenticate: () => dispatch(cleanAuthenticate()),
     switchLanguage: (values) => dispatch(switchLanguage(values))
 })
 
