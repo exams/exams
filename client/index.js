@@ -10,8 +10,9 @@ import IntlWrapper from './components/core/IntlWrapper';
 import Router from './Router';
 import { reducer as paperTemplateReducer } from './components/paperTemplate/reducer';
 import { reducer as papersReducer } from './components/paper/reducer';
-import { authReducer, meReducer } from './components/core/reducer';
-import { IntlReducer } from './components/core/IntlReducer';
+// import { authReducer, meReducer } from './components/core/reducer1';
+import CoreReducer from './components/core/reducer';
+import IntlReducer from './components/core/IntlReducer';
 import RecordsReducer from './components/records/reducer';
 import UsersReducer from './components/users/reducer'
 import SubjectsReducer from './components/subjects/reducer'
@@ -24,8 +25,9 @@ const reducer = combineReducers({
     records: RecordsReducer,
     users: UsersReducer,
     subjects: SubjectsReducer,
-    userAuth: authReducer,
-    me: meReducer,
+    // userAuth: authReducer,
+    // me: meReducer,
+    core: CoreReducer,
     paperTemplates : paperTemplateReducer,
     papers: papersReducer
 })

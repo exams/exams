@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import { Form, Icon, Input, Button, Checkbox } from 'antd';
 import { connect } from 'react-redux';
-import { doAuthenticate } from "./action";
+import { doAuthenticate } from "./actions";
 import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
 
 const FormItem = Form.Item;
@@ -72,8 +72,8 @@ class Login extends Component {
 
 const mapStateToProps = (state) => {
     return {
-        status: state.userAuth.status,
-        auth: state.userAuth.auth
+        status: state.core.status,
+        auth: state.core.auth
     }
 }
 

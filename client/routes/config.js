@@ -11,6 +11,9 @@ export default {
             route: '/app/papers/:id', visible: false, title: '试卷', icon: 'star', component: 'Paper'
         },
         {
+            route: '/app/quests', key:'quests',  title: '题库', icon: 'star', component: 'Quests'
+        },
+        {
             route: '/app/records', key: 'record', title: '录入', icon: 'file-done', component: 'Records'
         },
         {

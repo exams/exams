@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {withRouter, Link} from "react-router-dom";
 import { connect } from 'react-redux'
 import { Row, Col, List, Icon, Button } from 'antd';
-import { listUsers, addUser } from "./actions";
+import { listUsers, addUser, cleanUser } from "./actions";
 import { listSubjects } from "../subjects/actions";
 import { FormattedMessage } from 'react-intl';
 import AddUser from "./AddUser";
@@ -29,11 +29,19 @@ class Users extends Component{
 
     addUser = (user) => {
         this.props.addUser(user);
+        this.setState({
+            showAddUser: false
+        })
     }
 
     render() {
-        const { users, match, subjects } = this.props
-        const { showAddUser } = this.state
+        const { users, match, subjects } = this.props;
+        const { showAddUser } = this.state;
+        const { user, status } = this.props;
+        if (user != null || status === 'failed') {
+            this.props.listUsers();
+            this.props.cleanUser();
+        }
         return (
             <div>
                 <Row>
@@ -64,17 +72,19 @@ class Users extends Component{
 }
 
 const mapStateToProps = (state) => {
-    console.log(state)
     return {
         users: state.users.users,
-        subjects: state.subjects.subjects
+        user: state.users.user,
+        subjects: state.subjects.subjects,
+        status: state.users.status
     }
 }
 
 const mapDispatchToProps = (dispatch) => ({
     listUsers: () => dispatch(listUsers()),
     addUser: (user) => dispatch(addUser(user)),
-    listSubjects: () => dispatch(listSubjects())
+    listSubjects: () => dispatch(listSubjects()),
+    cleanUser: () => dispatch(cleanUser())
 })
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Users));

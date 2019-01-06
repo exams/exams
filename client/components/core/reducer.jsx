@@ -1,65 +1,41 @@
-import { createReducer } from 'redux-action-tools'
 import {
-    DO_AUTHENTICATE, GET_ME
-} from './actionType'
+    DO_AUTHENTICATE_SUCCESS, CORE_HTTP_ERROR, GET_ME_SUCCESS, CLEAN_ME_SUCCESS
+} from './actions'
 
-const defaultState = {
-    auth: {},
-    me: {},
-    status: 'initial'
-}
+// Initial State
+const initialState = { data: [] };
 
-const authReducer = createReducer()
-    .when(DO_AUTHENTICATE, (state = defaultState, action) => {
-        return {
-            ...state,
-            status: 'loading'
-        }
-    })
-    .done((state= defaultState, action) => {
-        const auth = action.payload.data
-        return {
-            ...state,
-            auth: auth,
-            status: 'completed'
-        }
-    })
-    .failed((state, action) => {
-        return {
-            ...state,
-            status: 'failed'
-        }
-    })
-    .build({
-        status: 'initial'
-    })
+const CoreReducer = (state = initialState, action) => {
+    switch (action.type) {
+        case DO_AUTHENTICATE_SUCCESS :
+            const auth = action.data
+            return {
+                ...state,
+                auth: auth,
+                status: 'success'
+            }
+        case GET_ME_SUCCESS:
+            const me = action.data
+            return {
+                ...state,
+                me: me,
+                status: 'success'
+            }
+        case CLEAN_ME_SUCCESS:
+            delete state.me
+            return {
+                ...state,
+                status: 'success'
+            };
+        case CORE_HTTP_ERROR :
+            return {
+                ...state,
+                status: 'error'
+            }
 
-const meReducer = createReducer()
-    .when(GET_ME, (state, action) => {
-        return {
-            ...state,
-            status: 'loading'
-        }
-    })
-    .done((state= defaultState, action) => {
-        const me = action.payload.data
-        return {
-            ...state,
-            me: me,
-            status: 'completed'
-        }
-    })
-    .failed((state, action) => {
-        const error = action.payload
-        return {
-            ...state,
-            error: error,
-            status: 'failed'
-        }
-    })
-    .build({
-        status: 'initial'
-    })
+        default:
+            return state;
+    }
+};
 
-
-export { authReducer, meReducer }
+export default CoreReducer;

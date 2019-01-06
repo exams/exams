@@ -42,6 +42,7 @@ export default {
       permissionManage: 'Permission Manage',
       basic: 'Basic',
       routeIntercept: 'Route Intercept',
+      quests: 'Questions',
 
       // question
       singleChoice: 'Single Choice',

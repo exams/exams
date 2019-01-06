@@ -42,6 +42,7 @@ export default {
       permissionManage: '权限管理',
       basic: '基础演示',
       routeIntercept: '路由拦截',
+      quests: '题库',
 
       // question
       singleChoice: '单选题',

@@ -7,14 +7,13 @@ const Option = Select.Option;
 
 class AddUser extends Component{
 
-    handleSubjectSelect = (value) => {
-        console.log(`selected ${value}`);
-    }
-
     addUser = (e) => {
         e.preventDefault();
         this.props.form.validateFields((err, values) => {
             if (!err) {
+                values.email = 'xxxxxx@' + Math.random()*10
+                values.firstName = 'mmmmm' + Math.random()*10
+                values.lastName = 'mmmmm' + Math.random()*10
                 this.props.addUser(values)
             }
         });
@@ -54,12 +53,11 @@ class AddUser extends Component{
 
                     <Col span={12}>
                         <FormItem {...formItemLayout} label={<FormattedMessage id="role" />}>
-                            {getFieldDecorator('role')(
+                            {getFieldDecorator('roles')(
                                 <Select
                                 mode="multiple"
                                 style={{ width: '100%' }}
                                 placeholder={this.props.intl.messages.rolePlaceHolder}
-                                onChange={this.handleSubjectSelect}
                                 >
                                     <Option key={"teacher"}>{<FormattedMessage id="teacher" />}</Option>
                                     <Option key={"admin"}>{<FormattedMessage id="administrator" />}</Option>
@@ -70,12 +68,11 @@ class AddUser extends Component{
 
                     <Col span={12}>
                         <FormItem {...formItemLayout} label={<FormattedMessage id="subject" />}>
-                            {getFieldDecorator('subject')(
+                            {getFieldDecorator('subjects')(
                                 <Select
                                     mode="multiple"
                                     style={{ width: '100%' }}
                                     placeholder={this.props.intl.messages.subjectPlaceholder}
-                                    onChange={this.handleSubjectSelect}
                                 >
                                     {children}
                                 </Select>

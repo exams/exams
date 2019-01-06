@@ -4,6 +4,7 @@ import { userApi } from '../../api/api'
 export const USER_HTTP_FAILED = 'USER_HTTP_FAILED'
 
 export const ADD_USER_SUCCESS = 'ADD_USER_SUCCESS'
+export const CLEAN_USER_SUCCESS = 'CLEAN_USER_SUCCESS'
 
 export const addUser = (user) => {
     return (dispatch) => {
@@ -19,6 +20,14 @@ export const addUser = (user) => {
                     data: error
                 })
             }
+        })
+    }
+}
+
+export const cleanUser = () => {
+    return (dispatch) => {
+        dispatch({
+            type: CLEAN_USER_SUCCESS
         })
     }
 }

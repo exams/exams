@@ -29,4 +29,4 @@ const IntlReducer = (state = initialState, action) => {
   }
 };
 
-export { IntlReducer }
+export default IntlReducer

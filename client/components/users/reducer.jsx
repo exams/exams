@@ -1,5 +1,5 @@
 import {
-    USER_HTTP_FAILED, ADD_USER_SUCCESS, LIST_USER_SUCCESS
+    USER_HTTP_FAILED, ADD_USER_SUCCESS, LIST_USER_SUCCESS, CLEAN_USER_SUCCESS
 } from './actions'
 
 // Initial State
@@ -10,6 +10,13 @@ const UsersReducer = (state = initialState, action) => {
     switch (action.type) {
         case ADD_USER_SUCCESS :
             user = action.data
+            return {
+                ...state,
+                user,
+                status: 'success'
+            };
+        case CLEAN_USER_SUCCESS:
+            user = null
             return {
                 ...state,
                 user,
