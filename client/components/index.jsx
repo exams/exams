@@ -8,7 +8,8 @@ import Records from './records/Records'
 import Users from './users/Users'
 import Subjects from './subjects/Subjects'
 import Quests from './quests/Quests'
+import Templates from './templates/Templates'
 
 export default {
-    Dashboard, AuthBasic, RouterEnter, PaperTemplate, Papers, Paper, Records, Users, Subjects, Quests
+    Dashboard, AuthBasic, RouterEnter, PaperTemplate, Papers, Paper, Records, Users, Subjects, Quests, Templates
 }

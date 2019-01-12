@@ -24,7 +24,8 @@ export default {
       email: '邮箱',
       phone: '手机',
       role: '角色',
-      administrator: '管理员',
+      admin: '管理员',
+      administrator: '超级管理员',
       teacher: '教师',
       usernamePlaceHolder: '请输入姓名',
       passwordPlaceHolder: '请输入密码',
@@ -79,5 +80,7 @@ export default {
       systemDefault: '系统内置',
       userDefinition: '用户创建',
 
+      // templates
+      creatTemplate: '创建模板',
   }
 };

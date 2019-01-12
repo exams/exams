@@ -1,15 +1,39 @@
 import React, {Component} from 'react';
-import { List, Icon, Row, Col, Select } from 'antd';
+import { List, Icon, Row, Col } from 'antd';
 import { FormattedMessage } from 'react-intl';
-import { singleChoiceView } from './singleChoice.View'
 
 class SingleChoiceListView extends Component{
 
     render() {
         const { singleChoices } = this.props
 
+        const IconText = ({ type, text }) => (
+            <span><Icon type={type} style={{ marginRight: 8 }} />{text}</span>
+        );
+
         return (
-            <div></div>
+            <List
+                itemLayout="vertical"
+                size="large"
+                pagination={{
+                    onChange: (page) => {
+
+                    },
+                    pageSize: 10,
+                }}
+                dataSource={singleChoices}
+                footer={<div><b>ant design</b> footer part</div>}
+                renderItem={item => (
+                    <List.Item
+                        key={item._id}
+                        actions={[<IconText type="edit" text={<FormattedMessage id={"edit"} />} />, <IconText type="delete" text={<FormattedMessage id={"delete"} />} />]}
+                    >
+                        <a href={item.href}>{item.title}</a>
+                    </List.Item>
+                )}
+            />
         )
     }
 }
+
+export default SingleChoiceListView

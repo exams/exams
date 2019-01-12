@@ -34,6 +34,7 @@ class App extends Component {
         }
 
         if (me) {
+            console.log(me)
             return (
                 <Layout>
                     <HeaderCustom user={ me } intl={ intl } logout={this.logout} switchLanguage={lang => this.props.switchLanguage(lang)} />

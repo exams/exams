@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {withRouter, Link} from "react-router-dom";
 import { connect } from 'react-redux'
-import { Row, Col, List, Icon, Button, Table, Divider, Tag, Input } from 'antd';
+import { Row, Col, List, Icon, Button, Tag } from 'antd';
 import { listUsers, addUser, cleanUser } from "./actions";
 import { listSubjects } from "../subjects/actions";
 import { FormattedMessage } from 'react-intl';
@@ -34,45 +34,19 @@ class Users extends Component{
         })
     }
 
-    getTableColumns = () => {
-        const columns = [{
-            title: '名称',
-            dataIndex: 'name',
-            key: 'name',
-            render: text => <a href="javascript:;">{text}</a>,
-        }, {
-            title: '角色',
-            key: 'roles',
-            dataIndex: 'roles',
-            render: roles => (
-                <span>{roles.map(role => <Tag color="blue" key={role}>{role}</Tag>)}</span>
-            ),
-        }, {
-            title: '操作',
-            key: 'action',
-            render: (text, record) => (
-                <span>
-                    <a href="javascript:;">Invite {record.name}</a>
-                    <Divider type="vertical" />
-                    <a href="javascript:;">Delete</a>
-                </span>
-            ),
-        }];
+    getRolesTags = (roles) => {
+        const tags = [];
+        for (var i = 0; i < roles.length; i++){
+            if ('Administrator' === roles[i])
+                tags.push(<Tag><FormattedMessage id={"administrator"}/></Tag>)
+            if ('admin' === roles[i])
+                tags.push(<Tag><FormattedMessage id={"admin"}/></Tag>)
+            if ('user' === roles[i])
+                tags.push(<Tag><FormattedMessage id={"teacher"}/></Tag>)
+        }
+        return tags
     }
 
-    formatUsers = (users) => {
-        if (!users)
-            return
-        console.log(users)
-
-        const tableUsers = null;
-        let tableUser = null;
-        users.map(user => {
-            tableUser.key = user.id;
-            tableUser.name = user.username;
-            tableUser.roles = user.roles;
-        })
-    }
 
     render() {
         const { users, match, subjects } = this.props;
@@ -96,7 +70,6 @@ class Users extends Component{
                         <AddUser addUser={this.addUser} subjects={subjects} />
                     </Row>)
                 }
-                {/*<Table columns={this.getTableColumns} dataSource={this.formatUsers(users)} />*/}
                 <List
                     itemLayout="horizontal"
                     dataSource={users}
@@ -106,7 +79,7 @@ class Users extends Component{
                                 title={<Link to={match.url + '/' + item.id}>{item.username}</Link>}
                                 onClick={this.goDetail}
                             />
-                            {item.roles}
+                            {this.getRolesTags(item.roles)}
                         </List.Item>
                     )}
                 />

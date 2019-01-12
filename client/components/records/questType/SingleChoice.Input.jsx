@@ -1,11 +1,12 @@
 import React, {Component} from 'react';
 import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
-import { Form, Slider, Input, Radio , Button, Row, Col } from 'antd';
-
+import { Form, Rate, Input, Radio , Button, Row, Col, Select } from 'antd';
 const RadioGroup = Radio.Group;
 const FormItem = Form.Item;
 const { TextArea } = Input;
 
+
+const Option = Select.Option;
 class SingleChoiceInput extends Component{
 
     constructor(){
@@ -59,6 +60,15 @@ class SingleChoiceInput extends Component{
         return choiceItemRes;
     }
 
+    getSubjects = () => {
+        const { subjects } = this.props
+        const childrenSubjects = [];
+        subjects && subjects.map((item) => {
+            childrenSubjects.push(<Option key={item._id}>{item.name}</Option>);
+        })
+        return childrenSubjects
+    }
+
     render() {
         const { getFieldDecorator } = this.props.form;
 
@@ -72,8 +82,15 @@ class SingleChoiceInput extends Component{
                 <FormItem {...formItemLayout} label={<FormattedMessage id="subject" />}>
                     <Row>
                         <Col span={10} offset={1}>
-                            {getFieldDecorator('subject')(
-                                <Input placeholder={this.props.intl.messages.subjectPlaceholder}/>
+                            {getFieldDecorator('subject', {
+                                rules: [{ required: true, message: this.props.intl.messages.subjectPlaceholder }],
+                            })(
+                                <Select
+                                    placeholder={this.props.intl.messages.subjectPlaceholder}
+                                    style={{ width: '100%' }}
+                                >
+                                    {this.getSubjects()}
+                                </Select>
                             )}
                         </Col>
                     </Row>
@@ -82,7 +99,7 @@ class SingleChoiceInput extends Component{
                     <Row>
                         <Col span={10} offset={1}>
                             {getFieldDecorator('difficulty')(
-                                <Slider step={1} min={1} max={5}/>
+                                <Rate />
                             )}
                         </Col>
                         <Col span={10} offset={1}>

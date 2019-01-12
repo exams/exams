@@ -11,12 +11,25 @@ class AddUser extends Component{
         e.preventDefault();
         this.props.form.validateFields((err, values) => {
             if (!err) {
-                values.email = 'xxxxxx@' + Math.random()*10
-                values.firstName = 'mmmmm' + Math.random()*10
-                values.lastName = 'mmmmm' + Math.random()*10
+                values.email = 'xxxxxx@' + Math.random()*10;
+                values.firstName = 'mmmmm' + Math.random()*10;
+                values.lastName = 'mmmmm' + Math.random()*10;
+                const subjects = this.getSubjects(values.subjects);
+                values.subjects = subjects;
                 this.props.addUser(values)
             }
         });
+    }
+
+    getSubjects = (subjectIds) => {
+        const { subjects } = this.props;
+        const newSubjects = [];
+        subjects && subjects.map((item) => {
+            if (subjectIds.indexOf(item._id) > 0){
+                newSubjects.push(item)
+            }
+        })
+        return newSubjects;
     }
 
     render() {
@@ -59,8 +72,8 @@ class AddUser extends Component{
                                 style={{ width: '100%' }}
                                 placeholder={this.props.intl.messages.rolePlaceHolder}
                                 >
-                                    <Option key={"teacher"}>{<FormattedMessage id="teacher" />}</Option>
-                                    <Option key={"admin"}>{<FormattedMessage id="administrator" />}</Option>
+                                    <Option key={"user"}>{<FormattedMessage id="teacher" />}</Option>
+                                    <Option key={"admin"}>{<FormattedMessage id="admin" />}</Option>
                                 </Select>
                             )}
                         </FormItem>

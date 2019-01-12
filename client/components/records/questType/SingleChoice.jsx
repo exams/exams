@@ -16,6 +16,7 @@ class SingleChoice extends Component{
 
     formatSingleChoice = (singleChoice) => {
         const newSingleChoice = {
+            subject: singleChoice.subject,
             title: singleChoice.stem,
             difficulty: singleChoice.difficulty,
             analysis: singleChoice.analysis,
@@ -44,16 +45,17 @@ class SingleChoice extends Component{
     }
 
     render() {
-        const { singleChoice, status } = this.props
+        const { singleChoice, status, me } = this.props
         const { showView, newSingleChoice } = this.state
         // 为了乐观更新,先渲染Post的数据, 后再渲染post返回的数据
         const singleChoiceData = singleChoice || newSingleChoice
+        const subjects = me.subjects
 
-        console.log(singleChoiceData)
         if (showView) {
-            return(<SingleChoiceView status={status} singleChoice={singleChoiceData} handleAddNew={this.handleAddNew} />)
+            return(<SingleChoiceView status={status} subjects={subjects} singleChoice={singleChoiceData} handleAddNew={this.handleAddNew} />)
         } else {
-            return(<SingleChoiceInput handleSummit={this.handleSummit} />)
+
+            return(<SingleChoiceInput subjects={subjects} handleSummit={this.handleSummit} />)
         }
     }
 }
@@ -61,7 +63,8 @@ class SingleChoice extends Component{
 const mapStateToProps = (state) => {
     return {
         status: state.records.status,
-        singleChoice: state.records.singleChoice
+        singleChoice: state.records.singleChoice,
+        me: state.core.me
     }
 }
 

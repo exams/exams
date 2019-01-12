@@ -24,7 +24,8 @@ export default {
       email: 'Email',
       phone: 'cellphone',
       role: 'Role',
-      administrator: 'Administrator',
+      admin: 'Administrator',
+      administrator: 'Super Administrator',
       teacher: 'Teacher',
       usernamePlaceHolder: 'Please type in Username',
       passwordPlaceHolder: 'Please type in Password',
@@ -78,5 +79,8 @@ export default {
       // subjects
       systemDefault: 'System Default',
       userDefinition: 'User Definition',
+
+      // templates
+      creatTemplate: 'Create Template',
   }
 };

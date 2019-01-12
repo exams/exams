@@ -10,6 +10,7 @@ export const me = '/api/users/me'
 export const userApi = '/api/users'
 
 export const subjectsApi = '/api/subjects';
+export const templatesApi = '/api/templates';
 
 export const singleChoiceApi = '/api/singlechoices';
 export const multiChoiceApi = '/api/multichoices';

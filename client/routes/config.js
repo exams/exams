@@ -2,7 +2,10 @@ export default {
     menus: [    // 菜单相关路由
         { route: '/app/dashboard/index', key: 'home', title: '首页', icon: 'home', component: 'Dashboard' },
         {
-            route: '/app/template', key: 'template', title: '模板', icon: 'snippets', component: 'PaperTemplate'
+            route: '/app/template1', key: 'template', title: '模板', icon: 'snippets', component: 'PaperTemplate'
+        },
+        {
+            route: '/app/template', key: 'template', title: '模板', icon: 'snippets', component: 'Templates'
         },
         {
             route: '/app/papers', key: 'paper', title: '试卷', icon: 'file-text', component: 'Papers'

@@ -25,28 +25,35 @@ class SingleChoiceView extends Component{
         return this.getLabel()[label]
     }
 
+    getSubjects = (subject) => {
+        const { subjects } = this.props;
+        let newSubject = null;
+        subjects && subjects.map((item) => {
+            if (subject === item._id){
+                newSubject = item
+            }
+        })
+        return newSubject;
+    }
+
     render() {
         const { singleChoice } = this.props
+
         return(
             <div>
                 <Row>
                     <Col span={4}>
                         <FormattedMessage id={"recordStatus"} style={{float: "right"}} />
-                    </Col>
-                    <Col span={8}>
                         {this.showStatus()}
                     </Col>
-                    <Col span={4}>
-                        <Icon type="check" style={{color: "#52c41a"}} />
-                        <FormattedMessage id={"success"} />
+                    <Col span={2}>
+                        <span><Icon type="check" style={{color: "#52c41a", marginRight: 8}} /><FormattedMessage id={"success"} /></span>
                     </Col>
-                    <Col span={4}>
-                        <Icon type="loading" />
-                        <FormattedMessage id={"loading"} />
+                    <Col span={2}>
+                        <span><Icon type="loading" style={{marginRight: 8}} /><FormattedMessage id={"loading"} /></span>
                     </Col>
-                    <Col span={4}>
-                        <Icon type="warning" style={{color: "#eb2f96"}} />
-                        <FormattedMessage id={"failed"} />
+                    <Col span={2}>
+                        <span><Icon type="warning" style={{color: "#eb2f96", marginRight: 8}} /><FormattedMessage id={"failed"} /></span>
                     </Col>
                 </Row>
                 <hr/>
@@ -55,7 +62,7 @@ class SingleChoiceView extends Component{
                         <FormattedMessage id={"subject"} style={{float: "right"}} />
                     </Col>
                     <Col span={8}>
-                        {singleChoice.subject}
+                        {this.getSubjects(singleChoice.subject).name}
                     </Col>
                     <Col span={4}>
                         <FormattedMessage id={"difficulty"} style={{float: "right"}} />
@@ -142,11 +149,5 @@ class SingleChoiceView extends Component{
         )
     }
 }
-
-// const mapStateToProps = (state) => {
-//     return {
-//         singleChoice: getSingleChoice(state)
-//     }
-// }
 
 export default connect()(SingleChoiceView)

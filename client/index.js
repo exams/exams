@@ -16,6 +16,7 @@ import RecordsReducer from './components/records/reducer';
 import UsersReducer from './components/users/reducer'
 import SubjectsReducer from './components/subjects/reducer'
 import QuestsReducer from './components/quests/reducer'
+import TemplatesReducer from './components/templates/reducer'
 
 // redux 注入操作
 const middleware = [thunk];
@@ -27,6 +28,7 @@ const reducer = combineReducers({
     users: UsersReducer,
     subjects: SubjectsReducer,
     quests: QuestsReducer,
+    template: TemplatesReducer,
     paperTemplates : paperTemplateReducer,
     papers: papersReducer
 })

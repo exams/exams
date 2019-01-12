@@ -32,7 +32,7 @@ const UsersReducer = (state = initialState, action) => {
             };
         case USER_HTTP_FAILED :
             return {
-                status: 'failed'
+                status: 'error'
             };
 
         default:

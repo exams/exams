@@ -5,6 +5,7 @@ import { List, Icon, Row, Col, Select } from 'antd';
 import { listSubjects} from "../subjects/actions";
 import { listQuestTypes, listSingleChoice, listMultiChoice, listJudge, listBlank, listQuestAnswer, listmixing } from "./actions";
 import { FormattedMessage } from 'react-intl';
+import SingleChoiceListView from "./SingleChoiceList.View";
 
 const Option = Select.Option;
 class Quests extends Component{
@@ -13,7 +14,7 @@ class Quests extends Component{
         super();
         this.state = {
             subject: null,
-            questType: null
+            questType: 'singleChoice'
         }
     }
 
@@ -23,21 +24,37 @@ class Quests extends Component{
         this.props.listSingleChoice('Math');
     }
 
-    render() {
-        const { subjects, questTypes, match } = this.props
-
+    getSubjectsChildren = () => {
+        const { me } = this.props
+        const subjects = me.subjects
         const childrenSubjects = [];
         subjects && subjects.map((item) => {
             childrenSubjects.push(<Option key={item._id}>{item.name}</Option>);
         })
+        return childrenSubjects
+    }
 
+    getQuestTypesChildren = () => {
+        const { questTypes } = this.props
         const childrenQuestTypes = [];
         questTypes && questTypes.map((item) => {
             childrenQuestTypes.push(<Option key={item.questType}><FormattedMessage id={item.questType} /></Option>);
         })
+        return childrenQuestTypes
+    }
 
+    getQuestType = () => {
         const { questType } = this.state
 
+        if ('singleChoice' === questType){
+            const { singleChoices } = this.props
+            return (singleChoices && <SingleChoiceListView singleChoices = {singleChoices} />)
+        }
+    }
+
+    render() {
+        const { questType } = this.state
+        const { singleChoices } = this.props
         return (
             <div>
                 <Row>
@@ -46,47 +63,35 @@ class Quests extends Component{
                     </Col>
                     <Col span={8}>
                         <Select
-                            mode="multiple"
                             style={{ width: '100%' }}
                         >
-                            {childrenSubjects}
+                            {this.getSubjectsChildren()}
                         </Select>
                     </Col>
                     <Col span={8}>
                         <Select
-                            mode="multiple"
                             style={{ width: '100%' }}
                         >
-                            {childrenQuestTypes}
+                            {this.getQuestTypesChildren()}
                         </Select>
                     </Col>
                 </Row>
-                
-                <List
-                    itemLayout="horizontal"
-                    dataSource={subjects}
-                    renderItem={item => (
-                        <List.Item actions={[<a><Icon type={"edit"} /> <FormattedMessage id="edit" /></a>, <a><Icon type={"delete"} /> <FormattedMessage id="delete" /></a>]}>
-                            <List.Item.Meta
-                                title={<Link to={match.url + '/' + item.id}>{item.name}</Link>}
-                                onClick={this.goDetail}
-                            />
-                            <span>{item.isDefault ? <FormattedMessage id="systemDefault" />: <FormattedMessage id="userDefinition" />}</span>
-                        </List.Item>
-                    )}
-                />
+
+                {
+                    'singleChoice' === questType && singleChoices && <SingleChoiceListView singleChoices = {singleChoices} />
+                }
+
             </div>
         );
     }
 }
 
 const mapStateToProps = (state) => {
-    console.log( state.quests.singleChoice)
     return {
-        subjects: state.subjects.subjects,
+        me: state.core.me,
         questTypes: state.quests.questTypes,
-        singleChoice: state.quests.singleChoice,
-        multiChoice: state.quests.multiChoice,
+        singleChoices: state.quests.singleChoices,
+        multiChoices: state.quests.multiChoices,
     }
 }
 
