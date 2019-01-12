@@ -11,6 +11,11 @@ export const userApi = '/api/users'
 
 export const subjectsApi = '/api/subjects';
 
-export const singeChoiceApi = '/api/singlechoices';
+export const singleChoiceApi = '/api/singlechoices';
 export const multiChoiceApi = '/api/multichoices';
+export const judgeApi = '/api/judges';
+export const blankApi = '/api/blanks';
+export const questAnswerApi = '/api/questAnswers';
+export const mixingApi = '/api/mixings';
+
 

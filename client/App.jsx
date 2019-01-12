@@ -13,16 +13,6 @@ const { Content, Footer } = Layout;
 
 class App extends Component {
 
-    componentWillUpdate() {
-        const { error } = this.props
-        if (error) {
-            if ('Network Error' === error.message || 'UnauthorizedError' === error.message ||
-                error.response.status === 401) {
-                this.context.router.history.push('/login');
-            }
-        }
-    }
-
     componentDidMount() {
         this.props.getMe();
     }
@@ -35,7 +25,14 @@ class App extends Component {
     }
 
     render() {
-        const { status, me, intl } = this.props
+        const { status, intl, me, error } = this.props
+        if (status === 'error' || error) {
+            if ('Network Error' === error.message || 'UnauthorizedError' === error.message ||
+                error.response.status === 401) {
+                this.context.router.history.push('/login');
+            }
+        }
+
         if (me) {
             return (
                 <Layout>
@@ -54,8 +51,9 @@ class App extends Component {
     }
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
     return {
+        status: state.core.status,
         me: state.core.me,
         error: state.core.error,
         intl: state.intl

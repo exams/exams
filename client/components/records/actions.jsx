@@ -1,5 +1,5 @@
 import { instance as axios } from '../../axios'
-import { singeChoiceApi, multiChoiceApi } from '../../api/api'
+import { singleChoiceApi, multiChoiceApi } from '../../api/api'
 
 export const RECORD_REQUEST_ERROR = 'RECORD_REQUEST_ERROR'
 
@@ -8,7 +8,7 @@ export const CLEAN_SINGECHOICE_SUCCESS = 'CLEAN_SINGECHOICE_SUCCESS'
 
 export const addSingleChoice = (singleChoice) => {
     return (dispatch) => {
-        axios.post(singeChoiceApi, singleChoice).then(response => {
+        axios.post(singleChoiceApi, singleChoice).then(response => {
             dispatch({
                 type: ADD_SINGECHOICE_SUCCESS,
                 data: response.data

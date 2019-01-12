@@ -23,6 +23,7 @@ class Subjects extends Component{
                             title={<Link to={match.url + '/' + item.id}>{item.name}</Link>}
                             onClick={this.goDetail}
                         />
+                        <span>{item.isDefault ? <FormattedMessage id="systemDefault" />: <FormattedMessage id="userDefinition" />}</span>
                     </List.Item>
                 )}
             />

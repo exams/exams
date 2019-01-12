@@ -74,5 +74,9 @@ export default {
       loading: 'Saving',
       success: 'Success',
       failed: 'Failed',
+
+      // subjects
+      systemDefault: 'System Default',
+      userDefinition: 'User Definition',
   }
 };

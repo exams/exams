@@ -1,0 +1,8 @@
+[
+    {"questType": "singleChoice"},
+    {"questType": "multiChoice"},
+    {"questType": "judge"},
+    {"questType": "blank"},
+    {"questType": "questAnswer"},
+    {"questType": "mixing"}
+]

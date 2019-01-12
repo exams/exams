@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {withRouter, Link} from "react-router-dom";
 import { connect } from 'react-redux'
-import { Row, Col, List, Icon, Button } from 'antd';
+import { Row, Col, List, Icon, Button, Table, Divider, Tag, Input } from 'antd';
 import { listUsers, addUser, cleanUser } from "./actions";
 import { listSubjects } from "../subjects/actions";
 import { FormattedMessage } from 'react-intl';
@@ -34,6 +34,46 @@ class Users extends Component{
         })
     }
 
+    getTableColumns = () => {
+        const columns = [{
+            title: '名称',
+            dataIndex: 'name',
+            key: 'name',
+            render: text => <a href="javascript:;">{text}</a>,
+        }, {
+            title: '角色',
+            key: 'roles',
+            dataIndex: 'roles',
+            render: roles => (
+                <span>{roles.map(role => <Tag color="blue" key={role}>{role}</Tag>)}</span>
+            ),
+        }, {
+            title: '操作',
+            key: 'action',
+            render: (text, record) => (
+                <span>
+                    <a href="javascript:;">Invite {record.name}</a>
+                    <Divider type="vertical" />
+                    <a href="javascript:;">Delete</a>
+                </span>
+            ),
+        }];
+    }
+
+    formatUsers = (users) => {
+        if (!users)
+            return
+        console.log(users)
+
+        const tableUsers = null;
+        let tableUser = null;
+        users.map(user => {
+            tableUser.key = user.id;
+            tableUser.name = user.username;
+            tableUser.roles = user.roles;
+        })
+    }
+
     render() {
         const { users, match, subjects } = this.props;
         const { showAddUser } = this.state;
@@ -45,8 +85,10 @@ class Users extends Component{
         return (
             <div>
                 <Row>
-                    <Col>
+                    <Col span={6}>
                         <Button onClick={this.toggleAddUser} icon={"plus"}><FormattedMessage id="addUser" /></Button>
+                    </Col>
+                    <Col span={18}>
                     </Col>
                 </Row>
                 {
@@ -54,6 +96,7 @@ class Users extends Component{
                         <AddUser addUser={this.addUser} subjects={subjects} />
                     </Row>)
                 }
+                {/*<Table columns={this.getTableColumns} dataSource={this.formatUsers(users)} />*/}
                 <List
                     itemLayout="horizontal"
                     dataSource={users}
@@ -63,6 +106,7 @@ class Users extends Component{
                                 title={<Link to={match.url + '/' + item.id}>{item.username}</Link>}
                                 onClick={this.goDetail}
                             />
+                            {item.roles}
                         </List.Item>
                     )}
                 />

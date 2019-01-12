@@ -24,5 +24,8 @@ instance.interceptors.response.use(
         if (error.message === 'UnauthorizedError' && error.response.status === 401) {
             localStorage.removeItem('super_exams_token');
         }
+        if (error.message === 'Network Error')
+            localStorage.removeItem('super_exams_token');
+
         return Promise.reject(error);   // 返回接口返回的错误信息
     });

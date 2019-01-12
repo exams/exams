@@ -15,16 +15,18 @@ import IntlReducer from './components/core/IntlReducer';
 import RecordsReducer from './components/records/reducer';
 import UsersReducer from './components/users/reducer'
 import SubjectsReducer from './components/subjects/reducer'
+import QuestsReducer from './components/quests/reducer'
 
 // redux 注入操作
 const middleware = [thunk];
 
 const reducer = combineReducers({
     intl: IntlReducer,
+    core: CoreReducer,
     records: RecordsReducer,
     users: UsersReducer,
     subjects: SubjectsReducer,
-    core: CoreReducer,
+    quests: QuestsReducer,
     paperTemplates : paperTemplateReducer,
     papers: papersReducer
 })

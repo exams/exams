@@ -29,7 +29,7 @@ class AddUser extends Component{
 
         const children = [];
         subjects && subjects.map((item) => {
-            children.push(<Option key={item.subjectCode}>{item.name}</Option>);
+            children.push(<Option key={item._id}>{item.name}</Option>);
         })
 
         return (

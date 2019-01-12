@@ -73,7 +73,11 @@ export default {
       recordStatus: '状态',
       loading: '保存中',
       success: '成功',
-      failed: '失败'
+      failed: '失败',
+
+      // subjects
+      systemDefault: '系统内置',
+      userDefinition: '用户创建',
 
   }
 };

@@ -34,8 +34,11 @@ const CoreReducer = (state = initialState, action) => {
                 status: 'success'
             };
         case CORE_HTTP_ERROR :
+            const error = action.data;
+            console.log(error)
             return {
                 ...state,
+                error: error,
                 status: 'error'
             }
 
