@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import { Button, Row, Col, Icon } from 'antd';
 import { FormattedMessage } from 'react-intl';
 
-class BlankView extends Component{
+class MixingView extends Component{
 
     showStatus = () => {
         const { status } = this.props
@@ -30,7 +30,7 @@ class BlankView extends Component{
     }
 
     render() {
-        const { blank } = this.props
+        const { judge } = this.props
 
         return(
             <div>
@@ -55,13 +55,13 @@ class BlankView extends Component{
                         <FormattedMessage id={"subject"} style={{float: "right"}} />
                     </Col>
                     <Col span={8}>
-                        {this.getSubjects(blank.subject).name}
+                        {this.getSubjects(judge.subject).name}
                     </Col>
                     <Col span={4}>
                         <FormattedMessage id={"difficulty"} style={{float: "right"}} />
                     </Col>
                     <Col span={8}>
-                        {blank.difficulty}
+                        {judge.difficulty}
                     </Col>
                 </Row>
                 <Row>
@@ -69,7 +69,7 @@ class BlankView extends Component{
                         <FormattedMessage id={"stem"} style={{float: "right"}} />
                     </Col>
                     <Col span={20}>
-                        {blank.stem}
+                        {judge.stem}
                     </Col>
                 </Row>
                 <Row>
@@ -77,11 +77,7 @@ class BlankView extends Component{
                         <FormattedMessage id={"answer"} style={{float: "right"}} />
                     </Col>
                     <Col>
-                        {
-                            blank.answer.map((item) => {
-                                return(<span key={item.index}>{item.value}</span>);
-                            })
-                        }
+                        {judge.answer ? <FormattedMessage id={"right"} /> : <FormattedMessage id={"wrong"} />}
                     </Col>
                 </Row>
 
@@ -90,7 +86,7 @@ class BlankView extends Component{
                         <FormattedMessage id={"analysis"} />
                     </Col>
                     <Col>
-                        {blank.analysis}
+                        {judge.analysis}
                     </Col>
                 </Row>
                 <Row>
@@ -98,13 +94,13 @@ class BlankView extends Component{
                         <FormattedMessage id={"isReal"} style={{float: "right"}} />
                     </Col>
                     <Col span={8}>
-                        {blank.isReal}
+                        {judge.isReal}
                     </Col>
                     <Col span={4}>
                         <FormattedMessage id={"isRealDescription"} style={{float: "right"}} />
                     </Col>
                     <Col span={8}>
-                        {blank.description}
+                        {judge.description}
                     </Col>
                 </Row>
                 <Row>
@@ -129,4 +125,4 @@ class BlankView extends Component{
     }
 }
 
-export default BlankView
+export default MixingView

@@ -8,6 +8,7 @@ import MultiChoice from "./questType/MultiChoice";
 import Judge from './questType/Judge';
 import Blank from './questType/Blank'
 import QuestAnswer from './questType/QuestAnswer'
+import Mixing from './questType/Mixing'
 
 const TabPane = Tabs.TabPane;
 
@@ -39,7 +40,7 @@ class Records extends Component{
                     <QuestAnswer />
                 </TabPane>
                 <TabPane tab={<FormattedMessage id="mixing" />} key="mixing">
-                    Content of Tab mixing
+                    <Mixing />
                 </TabPane>
             </Tabs>
         );

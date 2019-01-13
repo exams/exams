@@ -29,7 +29,8 @@ class SingleChoiceInput extends Component{
 
     delChoiceItem = () => {
         const choiceItem = this.state.choiceNum;
-        this.setState({choiceNum: choiceItem - 1})
+        if (choiceItem > 2)
+            this.setState({choiceNum: choiceItem - 1})
     }
 
     handleSubmit = (e) => {

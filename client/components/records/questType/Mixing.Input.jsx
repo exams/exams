@@ -1,40 +1,13 @@
 import React, {Component} from 'react';
 import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
-import { Form, Rate, Input, Radio, Button, Row, Col, Select } from 'antd';
-import {getLabelByIndex} from "../../../utils/utils";
+import { Form, Rate, Input, Checkbox, Radio, Button, Row, Col } from 'antd';
+import {Select} from "antd/lib/index";
 
 const RadioGroup = Radio.Group
 const FormItem = Form.Item;
 const { TextArea } = Input;
 const Option = Select.Option;
-class BlankInput extends Component{
-
-    constructor(){
-        super();
-        this.state = {
-            answerNum: 1
-        }
-    }
-
-    addAnswerNum = () => {
-        const answerNumVal = this.state.answerNum;
-        this.setState({answerNum: answerNumVal + 1})
-    }
-
-    delAnswerNum = () => {
-        const answerNumVal = this.state.answerNum;
-        if (answerNumVal > 1)
-            this.setState({answerNum: answerNumVal- 1})
-    }
-
-    getAnswerItemArray = () => {
-        const answerNum = this.state.answerNum;
-        var answerNumRes = [];
-        for (var i = 1; i <= answerNum; i++){
-            answerNumRes.push({index: i})
-        }
-        return answerNumRes;
-    }
+class MixingInput extends Component{
 
     componentDidMount() {
         this.props.form.setFieldsValue({difficulty: 3, isReal: false})
@@ -42,20 +15,8 @@ class BlankInput extends Component{
 
     handleSubmit = (e) => {
         e.preventDefault();
-        const answerNum = this.state.answerNum;
         this.props.form.validateFields((err, values) => {
             if (!err) {
-                const answers = [];
-                for (var i = 1; i <= answerNum; i++){
-
-                    const obj = {}
-                    obj.index = i;
-                    obj.value = values[i]
-                    answers.push(obj);
-                    delete values[i];
-                }
-                values.answer = answers;
-                values.blankNumber = answers.length;
                 this.props.handleSummit(values)
             }
         });
@@ -125,34 +86,16 @@ class BlankInput extends Component{
                         </Col>
                     </Row>
                 </FormItem>
-                {
-                    this.getAnswerItemArray().map((item) => {
-                        const index = item.index;
-                        return(
-                            <FormItem {...formItemLayout} label={index.toString()} key={index}>
-                                <Row>
-                                    <Col span={20}>
-                                        {getFieldDecorator(index.toString(), {
-                                            rules: [{ required: true, message: this.props.intl.messages.answerPlaceholder }],
-                                        })(
-                                            <Input placeholder={this.props.intl.messages.answerPlaceholder} />
-                                        )}
-                                    </Col>
-                                    <Col span={1}>
-                                        {index > 1 && <Button icon={"minus"} onClick={this.delAnswerNum}  style={{marginLeft: '5px'}} />}
-                                    </Col>
-                                </Row>
-                            </FormItem>
-                        )
-                    })
-                }
-                <Row>
-                    <Col span={15} offset={4}>
-                        <Button icon={"plus"} onClick={this.addAnswerNum} style={{width: '100%'}}>
-                            <FormattedMessage id="addChoiceItem" />
-                        </Button>
-                    </Col>
-                </Row>
+                <FormItem {...formItemLayout} label={<FormattedMessage id="answer" />}>
+                    {getFieldDecorator('answer', {
+                        rules: [{ required: true, message: this.props.intl.messages.answerPlaceholder }],
+                    })(
+                        <RadioGroup initialValue={"false"} buttonStyle="solid">
+                            <Radio.Button value={true}><FormattedMessage id="right" /></Radio.Button>
+                            <Radio.Button value={false}><FormattedMessage id="wrong" /></Radio.Button>
+                        </RadioGroup>
+                    )}
+                </FormItem>
                 <FormItem {...formItemLayout} label={<FormattedMessage id="analysis" />}>
                     <Row>
                         <Col span={20}>
@@ -197,8 +140,8 @@ class BlankInput extends Component{
     }
 }
 
-BlankInput.propTypes = {
+MixingInput.propTypes = {
     intl: intlShape.isRequired
 };
 
-export default Form.create()(injectIntl(BlankInput))
+export default Form.create()(injectIntl(MixingInput))
