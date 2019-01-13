@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import { Button, Row, Col, Icon } from 'antd';
 import { FormattedMessage } from 'react-intl';
-import {connect} from "react-redux";
 
 class SingleChoiceView extends Component{
 
@@ -15,14 +14,6 @@ class SingleChoiceView extends Component{
         } else {
             return (<Icon type="loading" />)
         }
-    }
-
-    getLabel = () => {
-        return ['', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q'];
-    }
-
-    convertLabel = (label) => {
-        return this.getLabel()[label]
     }
 
     getSubjects = (subject) => {
@@ -84,9 +75,7 @@ class SingleChoiceView extends Component{
                         return(
                             <Row key={item.label}>
                                 <Col span={6}>
-                                    {
-                                        this.convertLabel(item.label)
-                                    }
+                                    {item.label}
                                 </Col>
                                 <Col span={18}>
                                     {item.value}
@@ -100,9 +89,7 @@ class SingleChoiceView extends Component{
                         <FormattedMessage id={"answer"} style={{float: "right"}} />
                     </Col>
                     <Col>
-                        {
-                            this.convertLabel(singleChoice.answer)
-                        }
+                        {singleChoice.answer}
                     </Col>
                 </Row>
 
@@ -150,4 +137,4 @@ class SingleChoiceView extends Component{
     }
 }
 
-export default connect()(SingleChoiceView)
+export default SingleChoiceView

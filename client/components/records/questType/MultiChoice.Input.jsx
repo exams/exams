@@ -1,14 +1,14 @@
 import React, {Component} from 'react';
 import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
-import { Form, Slider, Input, Checkbox, Radio, Button, Row, Col } from 'antd';
+import { Form, Rate, Input, Checkbox, Radio, Button, Row, Col, Select } from 'antd';
+import {getLabelByIndex} from "../../../utils/utils";
 
 const CheckboxGroup = Checkbox.Group;
 const RadioGroup = Radio.Group
 const FormItem = Form.Item;
 const { TextArea } = Input;
-
+const Option = Select.Option;
 class MultiChoiceInput extends Component{
-
     constructor(){
         super();
         this.state = {
@@ -38,11 +38,11 @@ class MultiChoiceInput extends Component{
         this.props.form.validateFields((err, values) => {
             if (!err) {
                 const choiceItems = [];
-                for (var i = 1; i <= choiceItem; i++){
-                    const label = i.toString()
+                for (var i = 0; i < choiceItem; i++){
+                    const label = getLabelByIndex(i)
                     const obj = {}
                     obj.label = label;
-                    obj.value = values[i]
+                    obj.value = values[label]
                     choiceItems.push(obj)
                 }
                 values.choiceItems = choiceItems;
@@ -54,46 +54,79 @@ class MultiChoiceInput extends Component{
     getChoiceItemArray = () => {
         const choiceItem = this.state.choiceNum;
         var choiceItemRes = [];
-        for (var i = 1; i <= choiceItem; i++){
-            choiceItemRes.push({key: i})
+        for (var i = 0; i < choiceItem; i++){
+            const label = getLabelByIndex(i)
+            choiceItemRes.push({label: label, index: i})
         }
         return choiceItemRes;
+    }
+
+    getChoiceItemLabel = () => {
+        const choiceItem = this.state.choiceNum;
+        var choiceItemRes = [];
+        for (var i = 0; i < choiceItem; i++){
+            const label = getLabelByIndex(i)
+            choiceItemRes.push(label)
+        }
+        return choiceItemRes;
+    }
+
+    getSubjects = () => {
+        const { subjects } = this.props
+        const childrenSubjects = [];
+        subjects && subjects.map((item) => {
+            childrenSubjects.push(<Option key={item._id}>{item.name}</Option>);
+        })
+        return childrenSubjects
     }
 
     render() {
         const { getFieldDecorator } = this.props.form;
 
         const formItemLayout = {
-            labelCol: { span: 6 },
+            labelCol: { span: 4 },
+            wrapperCol: { span: 18 },
+        }
+
+        const halfformItemLayout = {
+            labelCol: { span: 8 },
             wrapperCol: { span: 14 },
+        }
+        const halfformItemLayoutSecond = {
+            labelCol: { span: 3 },
+            wrapperCol: { span: 21 },
         }
 
         return(
             <Form onSubmit={this.handleSubmit}>
-                <FormItem {...formItemLayout} label={<FormattedMessage id="subject" />}>
-                    <Row>
-                        <Col span={10} offset={1}>
-                            {getFieldDecorator('subject')(
-                                <Input placeholder={this.props.intl.messages.subjectPlaceholder}/>
+                <Row>
+                    <Col span={12}>
+                        <FormItem {...halfformItemLayout} label={<FormattedMessage id="subject" />}>
+                            {getFieldDecorator('subject', {
+                                rules: [{ required: true, message: this.props.intl.messages.subjectPlaceholder }],
+                            })(
+                                <Select
+                                    placeholder={this.props.intl.messages.subjectPlaceholder}
+                                    style={{ width: '100%' }}
+                                >
+                                    {this.getSubjects()}
+                                </Select>
                             )}
-                        </Col>
-                    </Row>
-                </FormItem>
-                <FormItem {...formItemLayout} label={<FormattedMessage id="difficulty" />}>
-                    <Row>
-                        <Col span={10} offset={1}>
-                            {getFieldDecorator('difficulty')(
-                                <Slider step={1} min={1} max={5}/>
+                        </FormItem>
+                    </Col>
+                    <Col span={12}>
+                        <FormItem {...halfformItemLayoutSecond} label={<FormattedMessage id="difficulty" />}>
+                            {getFieldDecorator('difficulty', {
+                                rules: [{ required: true}],
+                            })(
+                                <Rate />
                             )}
-                        </Col>
-                        <Col span={10} offset={1}>
-                            <FormattedMessage id="difficultyDescription" />
-                        </Col>
-                    </Row>
-                </FormItem>
+                        </FormItem>
+                    </Col>
+                </Row>
                 <FormItem {...formItemLayout} label={<FormattedMessage id="stem" />}>
                     <Row>
-                        <Col span={21} offset={1}>
+                        <Col span={20}>
                             {getFieldDecorator('stem', {
                                 rules: [{ required: true, message: this.props.intl.messages.stemPlaceholder }],
                             })(
@@ -102,61 +135,45 @@ class MultiChoiceInput extends Component{
                         </Col>
                     </Row>
                 </FormItem>
-                <FormItem {...formItemLayout} label={<FormattedMessage id="choiceItem" />}>
+                {
+                    this.getChoiceItemArray().map((item) => {
+                        const index = item.index;
+                        return(
+                            <FormItem {...formItemLayout} label={item.label} key={item.label}>
+                                <Row>
+                                    <Col span={20}>
+                                        {getFieldDecorator(item.label, {
+                                            rules: [{ required: true, message: this.props.intl.messages.choiceItemPlaceholder }],
+                                        })(
+                                            <Input placeholder={this.props.intl.messages.choiceItemPlaceholder} />
+                                        )}
+                                    </Col>
+                                    <Col span={1}>
+                                        {index > 1 && <Button icon={"minus"} onClick={this.delChoiceItem}  style={{marginLeft: '5px'}} />}
+                                    </Col>
+                                </Row>
+                            </FormItem>
+                        )
+                    })
+                }
+                <Row>
+                    <Col span={15} offset={4}>
+                        <Button icon={"plus"} onClick={this.addChoiceItem} style={{width: '100%'}}>
+                            <FormattedMessage id="addChoiceItem" />
+                        </Button>
+                    </Col>
+                </Row>
+                <FormItem {...formItemLayout} label={<FormattedMessage id="answer" />}>
                     {getFieldDecorator('answer', {
-                        rules: [{ required: true, message: this.props.intl.messages.answerPlaceholder },],
+                        rules: [{ required: true, message: this.props.intl.messages.answerPlaceholder }],
                     })(
-                        <CheckboxGroup style={{width: '100%'}}>
-                            {
-                                this.getChoiceItemArray().map((item) => {
-                                    const key = item.key;
-                                    if (key <= 2){
-                                        return(
-                                            <Row key={key}>
-                                                <Col span={1}>
-                                                    <Checkbox value={key}></Checkbox>
-                                                </Col>
-                                                <Col span={21}>
-                                                    {getFieldDecorator(key.toString(), {
-                                                        rules: [{ required: true, message: this.props.intl.messages.choiceItemPlaceholder }],
-                                                    })(
-                                                        <Input placeholder={this.props.intl.messages.choiceItemPlaceholder} />
-                                                    )}
-                                                </Col>
-                                            </Row>
-                                        )
-                                    } else {
-                                        return(
-                                            <Row key={key}>
-                                                <Col span={1}>
-                                                    <Checkbox value={key}></Checkbox>
-                                                </Col>
-                                                <Col span={21}>
-                                                    {getFieldDecorator(key.toString())(
-                                                        <Input placeholder={this.props.intl.messages.choiceItemPlaceholder} />
-                                                    )}
-                                                </Col>
-                                                <Col span={1}>
-                                                    <Button icon={"minus"} onClick={this.delChoiceItem}  style={{marginLeft: '5px'}} />
-                                                </Col>
-                                            </Row>
-                                        )
-                                    }
-                                })
-                            }
-                            <Row>
-                                <Col span={21} offset={1}>
-                                    <Button icon={"plus"} onClick={this.addChoiceItem} style={{width: '100%'}}>
-                                        <FormattedMessage id="addChoiceItem" />
-                                    </Button>
-                                </Col>
-                            </Row>
+                        <CheckboxGroup options={this.getChoiceItemLabel()}>
                         </CheckboxGroup>
                     )}
                 </FormItem>
                 <FormItem {...formItemLayout} label={<FormattedMessage id="analysis" />}>
                     <Row>
-                        <Col span={21} offset={1}>
+                        <Col span={20}>
                             {getFieldDecorator('analysis')(
                                 <TextArea placeholder={this.props.intl.messages.analysisPlaceholder} autosize={{ minRows: 3}} />
                             )}
@@ -165,7 +182,7 @@ class MultiChoiceInput extends Component{
                 </FormItem>
                 <FormItem {...formItemLayout} label={<FormattedMessage id="isReal" />}>
                     <Row>
-                        <Col span={10} offset={1}>
+                        <Col span={10}>
                             {getFieldDecorator('isReal')(
                                 <RadioGroup initialValue={"false"} buttonStyle="solid">
                                     <Radio.Button value={true}><FormattedMessage id="isRealTrue" /></Radio.Button>
@@ -177,16 +194,16 @@ class MultiChoiceInput extends Component{
                 </FormItem>
                 <FormItem {...formItemLayout} label={<FormattedMessage id="isRealDescription" />}>
                     <Row>
-                        <Col span={10} offset={1}>
+                        <Col span={10}>
                             {getFieldDecorator('description')(
                                 <Input placeholder={this.props.intl.messages.descriptionPlaceholder}/>
                             )}
                         </Col>
                     </Row>
                 </FormItem>
-                <FormItem wrapperCol={{ span: 14, offset: 6 }}>
+                <FormItem wrapperCol={{ span: 15, offset: 4 }}>
                     <Row>
-                        <Col span={21} offset={1}>
+                        <Col span={20}>
                             <Button type="primary" htmlType="submit" style={{width: '100%'}}>
                                 <FormattedMessage id="submit"/>
                             </Button>

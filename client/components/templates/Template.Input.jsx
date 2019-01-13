@@ -1,44 +1,113 @@
 import React, {Component} from 'react';
-import {withRouter, Link} from "react-router-dom";
 import { connect } from 'react-redux'
-import { Row, Col, List, Icon, Button, Tag } from 'antd';
-import { addTemplate, listTemplate } from "./actions";
-import { FormattedMessage } from 'react-intl';
+import { Row, Col, List, Icon, Button, Tag, Select, Input, Layout } from 'antd';
+import { addTemplate } from "./actions";
+import {FormattedMessage, injectIntl, intlShape} from 'react-intl';
+import {Form} from "antd/lib/index";
 
-class Templates extends Component{
+const Option = Select.Option;
+const FormItem = Form.Item;
+class TemplateInput extends Component{
 
     constructor(){
         super();
         this.state = {
-            showAddUser: false
+            paparStructs: []
         }
     }
 
-    componentDidMount() {
+    componentDidMount = () => {
 
+    }
+
+    getSubjects = () => {
+        const { me } = this.props
+        const subjects = me.subjects;
+        const childrenSubjects = [];
+        subjects && subjects.map((item) => {
+            childrenSubjects.push(<Option key={item._id}>{item.name}</Option>);
+        })
+        return childrenSubjects
     }
 
 
     render() {
+        const { getFieldDecorator } = this.props.form;
+        const formItemLayout = {
+            labelCol: { span: 6 },
+            wrapperCol: { span: 16 },
+        }
 
         return (
-            <div>
+            <Layout>
                 <Row>
-                    <Col span={6}>
-                        <Button onClick={this.toggleAddUser} icon={"plus"}><FormattedMessage id="creatTemplate" /></Button>
-                    </Col>
                     <Col span={18}>
+                        <Form onSubmit={this.handleSubmit}>
+                            <FormItem {...formItemLayout} label={<FormattedMessage id="title" />}>
+                                <Row>
+                                    <Col>
+                                        {getFieldDecorator('title', {
+                                            rules: [{ required: true, message: this.props.intl.messages.titlePlaceholder }],
+                                        })(
+                                            <Input placeholder={this.props.intl.messages.titlePlaceholder}
+                                                   style={{ width: '100%' }}
+                                            />
+                                        )}
+                                    </Col>
+                                </Row>
+                            </FormItem>
+                            <FormItem {...formItemLayout} label={<FormattedMessage id="subject" />}>
+                                <Row>
+                                    <Col span={10}>
+                                        {getFieldDecorator('subject', {
+                                            rules: [{ required: true, message: this.props.intl.messages.subjectPlaceholder }],
+                                        })(
+                                            <Select
+                                                placeholder={this.props.intl.messages.subjectPlaceholder}
+                                                style={{ width: '100%' }}
+                                            >
+                                                {this.getSubjects()}
+                                            </Select>
+                                        )}
+                                    </Col>
+                                </Row>
+                            </FormItem>
+                            <FormItem wrapperCol={{ span: 14, offset: 6 }}>
+                                <Row>
+                                    <Col>
+                                        <Button type="primary" htmlType="submit" style={{width: '100%'}}>
+                                            <FormattedMessage id="submit"/>
+                                        </Button>
+                                    </Col>
+                                </Row>
+                            </FormItem>
+                        </Form>
+                    </Col>
+                    <Col span={5}>
+                        <Row>
+                            <Button icon={"plus"} onClick={this.addSingleChoice} style={{width: '100%'}}>
+                                <FormattedMessage id="addSingleChoice" />
+                            </Button>
+                        </Row>
+                        <Row>
+                            <Button icon={"plus"} onClick={this.addMultiChoice} style={{width: '100%'}}>
+                                <FormattedMessage id="addMultiChoice" />
+                            </Button>
+                        </Row>
                     </Col>
                 </Row>
-
-            </div>
+            </Layout>
         );
     }
 }
 
+TemplateInput.propTypes = {
+    intl: intlShape.isRequired
+};
+
 const mapStateToProps = (state) => {
     return {
-        status: state.users.status
+        me: state.core.me
     }
 }
 
@@ -46,4 +115,4 @@ const mapDispatchToProps = (dispatch) => ({
     addTemplate: (template) => dispatch(addTemplate(template))
 })
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Templates));
+export default connect(mapStateToProps, mapDispatchToProps)(Form.create()(injectIntl(TemplateInput)));

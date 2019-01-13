@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import MultiChoiceInput from './MultiChoice.Input'
 import MultiChoiceView from './MultiChoice.View'
-import { addSingleChoice, cleanSingleChoice } from '../actions'
+import { addMultiChoice, cleanMultiChoice } from '../actions'
 import { connect } from 'react-redux'
 
 class MultiChoice extends Component{
@@ -10,50 +10,51 @@ class MultiChoice extends Component{
         super();
         this.state = {
             showView: false,
-            newSingleChoice: null
+            newMultiChoice: null
         }
     }
 
-    formatSingleChoice = (singleChoice) => {
-        const newSingleChoice = {
-            title: singleChoice.stem,
-            difficulty: singleChoice.difficulty,
-            analysis: singleChoice.analysis,
-            answer: singleChoice.answer,
-            choiceItems: singleChoice.choiceItems,
-            isReal: singleChoice.isReal
+    formatMultiChoice = (multiChoice) => {
+        const newMultiChoice = {
+            subject: multiChoice.subject,
+            stem: multiChoice.stem,
+            difficulty: multiChoice.difficulty,
+            analysis: multiChoice.analysis,
+            answer: multiChoice.answer,
+            choiceItems: multiChoice.choiceItems,
+            isReal: multiChoice.isReal
         }
-        return newSingleChoice
+        return newMultiChoice
     }
 
-    handleSummit = (singleChoice) => {
-        const newSingleChoice = this.formatSingleChoice(singleChoice);
-        this.props.addSingleChoice(newSingleChoice);
+    handleSummit = (multiChoice) => {
+        const newMultiChoice = this.formatMultiChoice(multiChoice);
+        this.props.addMultiChoice(newMultiChoice);
         this.setState({
             showView: true,
-            newSingleChoice: newSingleChoice
+            newMultiChoice: newMultiChoice
         })
     }
 
     handleAddNew= () => {
-        this.props.cleanSingleChoice()
+        this.props.cleanMultiChoice()
         this.setState({
             showView: false,
-            newSingleChoice: null
+            newMultiChoice: null
         })
     }
 
     render() {
-        const { singleChoice, status } = this.props
-        const { showView, newSingleChoice } = this.state
+        const { multiChoice, status, me } = this.props
+        const { showView, newMultiChoice } = this.state
         // 为了乐观更新,先渲染Post的数据, 后再渲染post返回的数据
-        const singleChoiceData = singleChoice || newSingleChoice
+        const multiChoiceData = multiChoice || newMultiChoice
+        const subjects = me.subjects
 
-        console.log(singleChoiceData)
         if (showView) {
-            return(<MultiChoiceView status={status} singleChoice={singleChoiceData} handleAddNew={this.handleAddNew} />)
+            return(<MultiChoiceView status={status} subjects={subjects}  multiChoice={multiChoiceData} handleAddNew={this.handleAddNew} />)
         } else {
-            return(<MultiChoiceInput handleSummit={this.handleSummit} />)
+            return(<MultiChoiceInput subjects={subjects}  handleSummit={this.handleSummit} />)
         }
     }
 }
@@ -61,13 +62,14 @@ class MultiChoice extends Component{
 const mapStateToProps = (state) => {
     return {
         status: state.records.status,
-        singleChoice: state.records.singleChoice
+        multiChoice: state.records.multiChoice,
+        me: state.core.me
     }
 }
 
 const mapDispatchToProps = (dispatch) => ({
-    addSingleChoice: (singleChoice) => dispatch(addSingleChoice(singleChoice)),
-    cleanSingleChoice: () => dispatch(cleanSingleChoice())
+    addMultiChoice: (multiChoice) => dispatch(addMultiChoice(multiChoice)),
+    cleanMultiChoice: () => dispatch(cleanMultiChoice())
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(MultiChoice)

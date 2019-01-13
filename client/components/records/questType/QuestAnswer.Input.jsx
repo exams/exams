@@ -1,64 +1,24 @@
 import React, {Component} from 'react';
 import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
-import { Form, Rate, Input, Radio , Button, Row, Col, Select } from 'antd';
-import { getLabelByIndex } from '../../../utils/utils'
+import { Form, Rate, Input, Checkbox, Radio, Button, Row, Col, Select } from 'antd';
 
-const RadioGroup = Radio.Group;
+const RadioGroup = Radio.Group
 const FormItem = Form.Item;
 const { TextArea } = Input;
 const Option = Select.Option;
-class SingleChoiceInput extends Component{
-
-    constructor(){
-        super();
-        this.state = {
-            choiceNum: 4
-        }
-    }
+class QuestAnswerInput extends Component{
 
     componentDidMount() {
         this.props.form.setFieldsValue({difficulty: 3, isReal: false})
     }
 
-    addChoiceItem = () => {
-        const choiceItemVal = this.state.choiceNum;
-        if (choiceItemVal < 10){
-            this.setState({choiceNum: choiceItemVal + 1})
-        }
-    }
-
-    delChoiceItem = () => {
-        const choiceItem = this.state.choiceNum;
-        this.setState({choiceNum: choiceItem - 1})
-    }
-
     handleSubmit = (e) => {
         e.preventDefault();
-        const choiceItem = this.state.choiceNum;
         this.props.form.validateFields((err, values) => {
             if (!err) {
-                const choiceItems = [];
-                for (var i = 0; i < choiceItem; i++){
-                    const label = getLabelByIndex(i)
-                    const obj = {}
-                    obj.label = label;
-                    obj.value = values[label]
-                    choiceItems.push(obj)
-                }
-                values.choiceItems = choiceItems;
                 this.props.handleSummit(values)
             }
         });
-    }
-
-    getChoiceItemArray = () => {
-        const choiceItem = this.state.choiceNum;
-        var choiceItemRes = [];
-        for (var i = 0; i < choiceItem; i++){
-            const label = getLabelByIndex(i)
-            choiceItemRes.push({label: label, index: i})
-        }
-        return choiceItemRes;
     }
 
     getSubjects = () => {
@@ -125,46 +85,16 @@ class SingleChoiceInput extends Component{
                         </Col>
                     </Row>
                 </FormItem>
-                {
-                    this.getChoiceItemArray().map((item) => {
-                        const index = item.index;
-                        return(
-                            <FormItem {...formItemLayout} label={item.label} key={item.label}>
-                                <Row>
-                                    <Col span={20}>
-                                        {getFieldDecorator(item.label, {
-                                            rules: [{ required: true, message: this.props.intl.messages.choiceItemPlaceholder }],
-                                        })(
-                                            <Input placeholder={this.props.intl.messages.choiceItemPlaceholder} />
-                                        )}
-                                    </Col>
-                                    <Col span={1}>
-                                        {index > 1 && <Button icon={"minus"} onClick={this.delChoiceItem}  style={{marginLeft: '5px'}} />}
-                                    </Col>
-                                </Row>
-                            </FormItem>
-                        )
-                    })
-                }
-                <Row>
-                    <Col span={15} offset={4}>
-                        <Button icon={"plus"} onClick={this.addChoiceItem} style={{width: '100%'}}>
-                            <FormattedMessage id="addChoiceItem" />
-                        </Button>
-                    </Col>
-                </Row>
                 <FormItem {...formItemLayout} label={<FormattedMessage id="answer" />}>
-                    {getFieldDecorator('answer', {
-                        rules: [{ required: true, message: this.props.intl.messages.answerPlaceholder }],
-                    })(
-                        <RadioGroup buttonStyle="solid">
-                            {
-                                this.getChoiceItemArray().map((item) => {
-                                    return (<Radio.Button key={item.label} value={item.label}>{item.label}</Radio.Button>)
-                                })
-                            }
-                        </RadioGroup>
-                    )}
+                    <Row>
+                        <Col span={20}>
+                            {getFieldDecorator('answer', {
+                                rules: [{ required: true, message: this.props.intl.messages.answerPlaceholder }],
+                            })(
+                                <TextArea placeholder={this.props.intl.messages.answerPlaceholder} autosize={{ minRows: 3}} />
+                            )}
+                        </Col>
+                    </Row>
                 </FormItem>
                 <FormItem {...formItemLayout} label={<FormattedMessage id="analysis" />}>
                     <Row>
@@ -210,8 +140,8 @@ class SingleChoiceInput extends Component{
     }
 }
 
-SingleChoiceInput.propTypes = {
+QuestAnswerInput.propTypes = {
     intl: intlShape.isRequired
 };
 
-export default Form.create()(injectIntl(SingleChoiceInput))
+export default Form.create()(injectIntl(QuestAnswerInput))

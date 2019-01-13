@@ -8,6 +8,9 @@ export default {
             route: '/app/template', key: 'template', title: '模板', icon: 'snippets', component: 'Templates'
         },
         {
+            route: '/app/template2', key: 'template', title: '模板', icon: 'snippets', component: 'Template'
+        },
+        {
             route: '/app/papers', key: 'paper', title: '试卷', icon: 'file-text', component: 'Papers'
         },
         {

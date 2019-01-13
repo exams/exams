@@ -5,6 +5,9 @@ import { Tabs } from 'antd';
 import { FormattedMessage } from 'react-intl';
 import SingleChoice from "./questType/SingleChoice";
 import MultiChoice from "./questType/MultiChoice";
+import Judge from './questType/Judge';
+import Blank from './questType/Blank'
+import QuestAnswer from './questType/QuestAnswer'
 
 const TabPane = Tabs.TabPane;
 
@@ -27,13 +30,13 @@ class Records extends Component{
                     <MultiChoice />
                 </TabPane>
                 <TabPane tab={<FormattedMessage id="judge" />} key="judge">
-                    Content of Tab judge
+                    <Judge />
                 </TabPane>
                 <TabPane tab={<FormattedMessage id="blank" />} key="blank">
-                    Content of Tab blank
+                    <Blank />
                 </TabPane>
                 <TabPane tab={<FormattedMessage id="questAnswer" />} key="questAnswer">
-                    Content of Tab questAnswer
+                    <QuestAnswer />
                 </TabPane>
                 <TabPane tab={<FormattedMessage id="mixing" />} key="mixing">
                     Content of Tab mixing

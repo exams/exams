@@ -15,6 +15,9 @@ export default {
       signInTips : 'Please type in Username or Email!',
       signInPassTips : 'Please type in Password!',
 
+      title: 'Title',
+      titlePlaceholder: 'Please type in Title',
+
       //users
       edit: 'Edit',
       delete: 'Delete',
@@ -75,6 +78,8 @@ export default {
       loading: 'Saving',
       success: 'Success',
       failed: 'Failed',
+      right: 'Right',
+      wrong: 'Wrong',
 
       // subjects
       systemDefault: 'System Default',
@@ -82,5 +87,11 @@ export default {
 
       // templates
       creatTemplate: 'Create Template',
+      addSingleChoice: 'Add Single Choice',
+      addMultiChoice: 'add Multiple Choice',
+      addJudge: 'add Judge',
+      addBlank: 'add Blank',
+      addQuestAnswer: 'add Question&Answer',
+      addMixing: 'add Mixing'
   }
 };

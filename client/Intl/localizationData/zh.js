@@ -15,6 +15,9 @@ export default {
       signInTips : '请输入用户名或邮箱!',
       signInPassTips : '请输入密码!',
 
+      title: '标题',
+      titlePlaceholder: '请输入标题',
+
       //users
       edit: '修改',
       delete: '删除',
@@ -75,6 +78,8 @@ export default {
       loading: '保存中',
       success: '成功',
       failed: '失败',
+      right: '对',
+      wrong: '错',
 
       // subjects
       systemDefault: '系统内置',
@@ -82,5 +87,12 @@ export default {
 
       // templates
       creatTemplate: '创建模板',
+      addSingleChoice: '增加单择题',
+      addMultiChoice: '增加多选题',
+      addJudge: '增加判断题',
+      addBlank: '增加填空题',
+      addQuestAnswer: '增加问答题',
+      addMixing: '增加组合题'
+
   }
 };

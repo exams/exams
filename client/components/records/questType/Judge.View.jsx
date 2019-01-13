@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import { Button, Row, Col, Icon } from 'antd';
 import { FormattedMessage } from 'react-intl';
 
-class MultiChoiceView extends Component{
+class JudgeView extends Component{
 
     showStatus = () => {
         const { status } = this.props
@@ -30,7 +30,7 @@ class MultiChoiceView extends Component{
     }
 
     render() {
-        const { multiChoice } = this.props
+        const { judge } = this.props
 
         return(
             <div>
@@ -55,13 +55,13 @@ class MultiChoiceView extends Component{
                         <FormattedMessage id={"subject"} style={{float: "right"}} />
                     </Col>
                     <Col span={8}>
-                        {this.getSubjects(multiChoice.subject).name}
+                        {this.getSubjects(judge.subject).name}
                     </Col>
                     <Col span={4}>
                         <FormattedMessage id={"difficulty"} style={{float: "right"}} />
                     </Col>
                     <Col span={8}>
-                        {multiChoice.difficulty}
+                        {judge.difficulty}
                     </Col>
                 </Row>
                 <Row>
@@ -69,29 +69,15 @@ class MultiChoiceView extends Component{
                         <FormattedMessage id={"stem"} style={{float: "right"}} />
                     </Col>
                     <Col span={20}>
-                        {multiChoice.title}
+                        {judge.stem}
                     </Col>
                 </Row>
-                {
-                    multiChoice.choiceItems.map((item) => {
-                        return(
-                            <Row key={item.label}>
-                                <Col span={6}>
-                                    {item.label}
-                                </Col>
-                                <Col span={18}>
-                                    {item.value}
-                                </Col>
-                            </Row>
-                        )
-                    })
-                }
                 <Row>
                     <Col span={4}>
                         <FormattedMessage id={"answer"} style={{float: "right"}} />
                     </Col>
                     <Col>
-                        {multiChoice.answer}
+                        {judge.answer ? <FormattedMessage id={"right"} /> : <FormattedMessage id={"wrong"} />}
                     </Col>
                 </Row>
 
@@ -100,7 +86,7 @@ class MultiChoiceView extends Component{
                         <FormattedMessage id={"analysis"} />
                     </Col>
                     <Col>
-                        {multiChoice.analysis}
+                        {judge.analysis}
                     </Col>
                 </Row>
                 <Row>
@@ -108,13 +94,13 @@ class MultiChoiceView extends Component{
                         <FormattedMessage id={"isReal"} style={{float: "right"}} />
                     </Col>
                     <Col span={8}>
-                        {multiChoice.isReal}
+                        {judge.isReal}
                     </Col>
                     <Col span={4}>
                         <FormattedMessage id={"isRealDescription"} style={{float: "right"}} />
                     </Col>
                     <Col span={8}>
-                        {multiChoice.description}
+                        {judge.description}
                     </Col>
                 </Row>
                 <Row>
@@ -139,4 +125,4 @@ class MultiChoiceView extends Component{
     }
 }
 
-export default MultiChoiceView
+export default JudgeView

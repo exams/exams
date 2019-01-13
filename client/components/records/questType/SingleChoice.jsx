@@ -17,7 +17,7 @@ class SingleChoice extends Component{
     formatSingleChoice = (singleChoice) => {
         const newSingleChoice = {
             subject: singleChoice.subject,
-            title: singleChoice.stem,
+            stem: singleChoice.stem,
             difficulty: singleChoice.difficulty,
             analysis: singleChoice.analysis,
             answer: singleChoice.answer,
