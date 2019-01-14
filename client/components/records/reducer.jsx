@@ -11,7 +11,17 @@ import {
     ADD_QUESTANSWER_SUCCESS,
     CLEAN_QUESTANSWER_SUCCESS,
     ADD_MIXING_SUCCESS,
-    CLEAN_MIXING_SUCCESS
+    CLEAN_MIXING_SUCCESS,
+    ADD_MIXSINGLECHOICE_SUCCESS,
+    CLEAN_MIXSINGLECHOICE_SUCCESS,
+    ADD_MIXMULTICHOICE_SUCCESS,
+    CLEAN_MIXMULTICHOICE_SUCCESS,
+    ADD_MIXBLANK_SUCCESS,
+    CLEAN_MIXBLANK_SUCCESS,
+    ADD_MIXJUDGE_SUCCESS,
+    CLEAN_MIXJUDGE_SUCCESS,
+    ADD_MIXQUESTANSWER_SUCCESS,
+    CLEAN_MIXQUESTANSWER_SUCCESS
 } from './actions'
 
 // Initial State
@@ -61,6 +71,41 @@ const RecordsReducer = (state = initialState, action) => {
                 mixing,
                 status: 'success'
             }
+        case ADD_MIXSINGLECHOICE_SUCCESS:
+            const mixSingleChoice = action.data;
+            return {
+                ...state,
+                mixSingleChoice,
+                status: 'success'
+            }
+        case ADD_MIXMULTICHOICE_SUCCESS:
+            const mixMultiChoice = action.data;
+            return {
+                ...state,
+                mixMultiChoice,
+                status: 'success'
+            }
+        case ADD_MIXBLANK_SUCCESS:
+            const mixBlank = action.data;
+            return {
+                ...state,
+                mixBlank,
+                status: 'success'
+            }
+        case ADD_MIXJUDGE_SUCCESS:
+            const mixJudge = action.data;
+            return {
+                ...state,
+                mixJudge,
+                status: 'success'
+            }
+        case ADD_MIXQUESTANSWER_SUCCESS:
+            const mixQuestAnswer = action.data;
+            return {
+                ...state,
+                mixQuestAnswer,
+                status: 'success'
+            }
         case CLEAN_SINGECHOICE_SUCCESS:
             delete state.singleChoice;
             return {
@@ -93,6 +138,36 @@ const RecordsReducer = (state = initialState, action) => {
             }
         case CLEAN_MIXING_SUCCESS:
             delete state.mixing;
+            return {
+                ...state,
+                status: 'success'
+            }
+        case CLEAN_MIXSINGLECHOICE_SUCCESS:
+            delete state.mixSingleChoice;
+            return {
+                ...state,
+                status: 'success'
+            }
+        case CLEAN_MIXMULTICHOICE_SUCCESS:
+            delete state.mixMultiChoice;
+            return {
+                ...state,
+                status: 'success'
+            }
+        case CLEAN_MIXBLANK_SUCCESS:
+            delete state.mixBlank;
+            return {
+                ...state,
+                status: 'success'
+            }
+        case CLEAN_MIXJUDGE_SUCCESS:
+            delete state.mixJudge;
+            return {
+                ...state,
+                status: 'success'
+            }
+        case CLEAN_MIXQUESTANSWER_SUCCESS:
+            delete state.mixQuestAnswer;
             return {
                 ...state,
                 status: 'success'

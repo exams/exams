@@ -18,5 +18,10 @@ export const judgeApi = '/api/judges';
 export const blankApi = '/api/blanks';
 export const questAnswerApi = '/api/questAnswers';
 export const mixingApi = '/api/mixings';
+export const mixBlankApi = '/api/mixblanks'
+export const mixJudgeApi = '/api/mixjudges'
+export const mixMultiChoiceApi = '/api/mixmultichoices'
+export const mixQuestAnswerApi = '/api/mixquestanswers'
+export const mixSingleChoiceApi = '/api/mixsinglechoices'
 
 

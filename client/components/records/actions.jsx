@@ -1,5 +1,6 @@
 import { instance as axios } from '../../axios'
-import { singleChoiceApi, multiChoiceApi, judgeApi, blankApi, questAnswerApi, mixingApi } from '../../api/api'
+import { singleChoiceApi, multiChoiceApi, judgeApi, blankApi, questAnswerApi, mixingApi,
+    mixBlankApi, mixJudgeApi, mixMultiChoiceApi, mixQuestAnswerApi, mixSingleChoiceApi} from '../../api/api'
 
 export const RECORD_REQUEST_ERROR = 'RECORD_REQUEST_ERROR'
 
@@ -166,6 +167,146 @@ export const cleanMixing = () => {
     return (dispatch) => {
         dispatch({
             type: CLEAN_MIXING_SUCCESS
+        })
+    }
+}
+
+export const ADD_MIXSINGLECHOICE_SUCCESS = 'ADD_MIXSINGLECHOICE_SUCCESS'
+export const addMixSingleChoice = (mixSingleChoice) => {
+    return (dispatch) => {
+        axios.post(mixSingleChoiceApi, mixSingleChoice).then(response => {
+            dispatch({
+                type: ADD_MIXSINGLECHOICE_SUCCESS,
+                payload: response
+            })
+        }).catch(error => {
+            if (error.response || error.request){
+                dispatch({
+                    type: RECORD_REQUEST_ERROR,
+                    data: error
+                })
+            }
+        })
+    }
+}
+
+export const CLEAN_MIXSINGLECHOICE_SUCCESS = 'CLEAN_MIXSINGLECHOICE_SUCCESS'
+export const cleanMixSingleChoice = () => {
+    return (dispatch) => {
+        dispatch({
+            type: CLEAN_MIXSINGLECHOICE_SUCCESS
+        })
+    }
+}
+
+export const ADD_MIXMULTICHOICE_SUCCESS = 'ADD_MIXMULTICHOICE_SUCCESS'
+export const addMixMultiChoice = (mixMultiChoice) => {
+    return (dispatch) => {
+        axios.post(mixMultiChoiceApi, mixMultiChoice).then(response => {
+            dispatch({
+                type: ADD_MIXMULTICHOICE_SUCCESS,
+                payload: response
+            })
+        }).catch(error => {
+            if (error.response || error.request){
+                dispatch({
+                    type: RECORD_REQUEST_ERROR,
+                    data: error
+                })
+            }
+        })
+    }
+}
+
+export const CLEAN_MIXMULTICHOICE_SUCCESS = 'CLEAN_MIXMULTICHOICE_SUCCESS'
+export const cleanMixMultiChoice = () => {
+    return (dispatch) => {
+        dispatch({
+            type: CLEAN_MIXMULTICHOICE_SUCCESS
+        })
+    }
+}
+
+export const ADD_MIXBLANK_SUCCESS = 'ADD_MIXBLANK_SUCCESS'
+export const addMixBlank = (mixBlank) => {
+    return (dispatch) => {
+        axios.post(mixBlankApi, mixBlank).then(response => {
+            dispatch({
+                type: ADD_MIXBLANK_SUCCESS,
+                payload: response
+            })
+        }).catch(error => {
+            if (error.response || error.request){
+                dispatch({
+                    type: RECORD_REQUEST_ERROR,
+                    data: error
+                })
+            }
+        })
+    }
+}
+
+export const CLEAN_MIXBLANK_SUCCESS = 'CLEAN_MIXBLANK_SUCCESS'
+export const cleanMixBlank = () => {
+    return (dispatch) => {
+        dispatch({
+            type: CLEAN_MIXBLANK_SUCCESS
+        })
+    }
+}
+
+export const ADD_MIXJUDGE_SUCCESS = 'ADD_MIXJUDGE_SUCCESS'
+export const addMixJudge = (mixJudge) => {
+    return (dispatch) => {
+        axios.post(mixJudgeApi, mixJudge).then(response => {
+            dispatch({
+                type: ADD_MIXJUDGE_SUCCESS,
+                payload: response
+            })
+        }).catch(error => {
+            if (error.response || error.request){
+                dispatch({
+                    type: RECORD_REQUEST_ERROR,
+                    data: error
+                })
+            }
+        })
+    }
+}
+
+export const CLEAN_MIXJUDGE_SUCCESS = 'CLEAN_MIXJUDGE_SUCCESS'
+export const cleanMixJudge = () => {
+    return (dispatch) => {
+        dispatch({
+            type: CLEAN_MIXJUDGE_SUCCESS
+        })
+    }
+}
+
+export const ADD_MIXQUESTANSWER_SUCCESS = 'ADD_MIXQUESTANSWER_SUCCESS'
+export const addMixQuestAnswer = (mixQuestAnswer) => {
+    return (dispatch) => {
+        axios.post(mixQuestAnswerApi, mixQuestAnswer).then(response => {
+            dispatch({
+                type: ADD_MIXQUESTANSWER_SUCCESS,
+                payload: response
+            })
+        }).catch(error => {
+            if (error.response || error.request){
+                dispatch({
+                    type: RECORD_REQUEST_ERROR,
+                    data: error
+                })
+            }
+        })
+    }
+}
+
+export const CLEAN_MIXQUESTANSWER_SUCCESS = 'CLEAN_MIXQUESTANSWER_SUCCESS'
+export const cleanMixQuestAnswer = () => {
+    return (dispatch) => {
+        dispatch({
+            type: CLEAN_MIXQUESTANSWER_SUCCESS
         })
     }
 }
