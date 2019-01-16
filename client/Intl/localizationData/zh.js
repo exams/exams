@@ -3,6 +3,7 @@ export default {
   messages: {
       //common
       submit: '提交',
+      save: '保存',
       cancel: '取消',
       language: 'English',
       hello: '你好-',
@@ -92,7 +93,8 @@ export default {
       addJudge: '增加判断题',
       addBlank: '增加填空题',
       addQuestAnswer: '增加问答题',
-      addMixing: '增加组合题'
+      addMixing: '增加组合题',
+      addSubQuest: '新增子题目'
 
   }
 };

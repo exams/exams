@@ -6,7 +6,6 @@ class SingleChoiceView extends Component{
 
     showStatus = () => {
         const { status } = this.props
-        console.log(status)
         if ( status === 'success' )
             return(<Icon type="check" style={{color: "#52c41a"}} />)
         else if (status === 'failed'){

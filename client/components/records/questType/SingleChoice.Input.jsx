@@ -45,6 +45,7 @@ class SingleChoiceInput extends Component{
                     obj.label = label;
                     obj.value = values[label]
                     choiceItems.push(obj)
+                    delete values[label]
                 }
                 values.choiceItems = choiceItems;
                 this.props.handleSummit(values)

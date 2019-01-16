@@ -10,7 +10,9 @@ class Mixing extends Component{
         super();
         this.state = {
             showView: false,
-            newMixing: null
+            newMixing: null,
+            visible: false,
+            subQuest: []
         }
     }
 
@@ -32,7 +34,7 @@ class Mixing extends Component{
 
     render() {
         const { mixing, status, me } = this.props
-        const { showView, newMixing } = this.state
+        const { showView, subQuest, newMixing } = this.state
         // 为了乐观更新,先渲染Post的数据, 后再渲染post返回的数据
         const mixingData = mixing || newMixing
         const subjects = me.subjects

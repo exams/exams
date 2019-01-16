@@ -37,7 +37,7 @@ export const addMultiChoice = (multiChoice) => {
         axios.post(multiChoiceApi, multiChoice).then(response => {
             dispatch({
                 type: ADD_MULTICHOICE_SUCCESS,
-                payload: response
+                payload: response.data
             })
         }).catch(error => {
             if (error.response || error.request){
@@ -65,7 +65,7 @@ export const addJudge = (judge) => {
         axios.post(judgeApi, judge).then(response => {
             dispatch({
                 type: ADD_JUDGE_SUCCESS,
-                payload: response
+                data: response.data
             })
         }).catch(error => {
             if (error.response || error.request){
@@ -93,7 +93,7 @@ export const addBlank = (blank) => {
         axios.post(blankApi, blank).then(response => {
             dispatch({
                 type: ADD_BLANK_SUCCESS,
-                payload: response
+                data: response.data
             })
         }).catch(error => {
             if (error.response || error.request){
@@ -121,7 +121,7 @@ export const addQuestAnswer = (questAnswer) => {
         axios.post(questAnswerApi, questAnswer).then(response => {
             dispatch({
                 type: ADD_QUESTANSWER_SUCCESS,
-                payload: response
+                data: response.data
             })
         }).catch(error => {
             if (error.response || error.request){
@@ -149,7 +149,7 @@ export const addMixing = (mixing) => {
         axios.post(mixingApi, mixing).then(response => {
             dispatch({
                 type: ADD_MIXING_SUCCESS,
-                payload: response
+                data: response.data
             })
         }).catch(error => {
             if (error.response || error.request){
@@ -177,7 +177,7 @@ export const addMixSingleChoice = (mixSingleChoice) => {
         axios.post(mixSingleChoiceApi, mixSingleChoice).then(response => {
             dispatch({
                 type: ADD_MIXSINGLECHOICE_SUCCESS,
-                payload: response
+                data: response.data
             })
         }).catch(error => {
             if (error.response || error.request){
@@ -205,7 +205,7 @@ export const addMixMultiChoice = (mixMultiChoice) => {
         axios.post(mixMultiChoiceApi, mixMultiChoice).then(response => {
             dispatch({
                 type: ADD_MIXMULTICHOICE_SUCCESS,
-                payload: response
+                data: response.data
             })
         }).catch(error => {
             if (error.response || error.request){
@@ -233,7 +233,7 @@ export const addMixBlank = (mixBlank) => {
         axios.post(mixBlankApi, mixBlank).then(response => {
             dispatch({
                 type: ADD_MIXBLANK_SUCCESS,
-                payload: response
+                data: response.data
             })
         }).catch(error => {
             if (error.response || error.request){
@@ -261,7 +261,7 @@ export const addMixJudge = (mixJudge) => {
         axios.post(mixJudgeApi, mixJudge).then(response => {
             dispatch({
                 type: ADD_MIXJUDGE_SUCCESS,
-                payload: response
+                data: response.data
             })
         }).catch(error => {
             if (error.response || error.request){
@@ -289,7 +289,7 @@ export const addMixQuestAnswer = (mixQuestAnswer) => {
         axios.post(mixQuestAnswerApi, mixQuestAnswer).then(response => {
             dispatch({
                 type: ADD_MIXQUESTANSWER_SUCCESS,
-                payload: response
+                data: response.data
             })
         }).catch(error => {
             if (error.response || error.request){

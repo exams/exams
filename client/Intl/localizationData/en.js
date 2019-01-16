@@ -3,6 +3,7 @@ export default {
   messages: {
       //common
       submit: 'Submit',
+      save: 'Save',
       cancel: 'Cancel',
       language: '中文',
       hello: 'hello-',
@@ -88,10 +89,11 @@ export default {
       // templates
       creatTemplate: 'Create Template',
       addSingleChoice: 'Add Single Choice',
-      addMultiChoice: 'add Multiple Choice',
-      addJudge: 'add Judge',
-      addBlank: 'add Blank',
-      addQuestAnswer: 'add Question&Answer',
-      addMixing: 'add Mixing'
+      addMultiChoice: 'Add Multiple Choice',
+      addJudge: 'Add Judge',
+      addBlank: 'Add Blank',
+      addQuestAnswer: 'Add Question&Answer',
+      addMixing: 'Add Mixing',
+      addSubQuest: 'Add Sub Questions'
   }
 };
