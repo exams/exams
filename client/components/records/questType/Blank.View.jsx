@@ -6,7 +6,6 @@ class BlankView extends Component{
 
     showStatus = () => {
         const { status } = this.props
-        console.log(status)
         if ( status === 'success' )
             return(<Icon type="check" style={{color: "#52c41a"}} />)
         else if (status === 'failed'){
@@ -18,8 +17,6 @@ class BlankView extends Component{
 
     getSubjects = (subject) => {
         const { subjects } = this.props;
-        console.log(subjects)
-        console.log(subject)
         let newSubject = null;
         subjects && subjects.map((item) => {
             if (subject === item._id){

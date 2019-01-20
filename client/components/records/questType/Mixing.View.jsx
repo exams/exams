@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { Button, Row, Col, Icon } from 'antd';
+import { Button, Row, Col, Icon, List } from 'antd';
 import { FormattedMessage } from 'react-intl';
 
 class MixingView extends Component{
@@ -18,8 +18,6 @@ class MixingView extends Component{
 
     getSubjects = (subject) => {
         const { subjects } = this.props;
-        console.log(subjects)
-        console.log(subject)
         let newSubject = null;
         subjects && subjects.map((item) => {
             if (subject === item._id){
@@ -30,7 +28,7 @@ class MixingView extends Component{
     }
 
     render() {
-        const { judge } = this.props
+        const { mixing } = this.props
 
         return(
             <div>
@@ -55,13 +53,13 @@ class MixingView extends Component{
                         <FormattedMessage id={"subject"} style={{float: "right"}} />
                     </Col>
                     <Col span={8}>
-                        {this.getSubjects(judge.subject).name}
+                        {this.getSubjects(mixing.subject).name}
                     </Col>
                     <Col span={4}>
                         <FormattedMessage id={"difficulty"} style={{float: "right"}} />
                     </Col>
                     <Col span={8}>
-                        {judge.difficulty}
+                        {mixing.difficulty}
                     </Col>
                 </Row>
                 <Row>
@@ -69,15 +67,28 @@ class MixingView extends Component{
                         <FormattedMessage id={"stem"} style={{float: "right"}} />
                     </Col>
                     <Col span={20}>
-                        {judge.stem}
+                        {mixing.stem}
                     </Col>
                 </Row>
                 <Row>
                     <Col span={4}>
-                        <FormattedMessage id={"answer"} style={{float: "right"}} />
+                        <FormattedMessage id={"subQuest"} style={{float: "right"}} />
                     </Col>
-                    <Col>
-                        {judge.answer ? <FormattedMessage id={"right"} /> : <FormattedMessage id={"wrong"} />}
+                    <Col span={20}>
+                        {
+                            mixing.subQuests.length > 0 && <List
+                                itemLayout="horizontal"
+                                dataSource={mixing.subQuests}
+                                renderItem={item => (
+                                    <List.Item>
+                                        <List.Item.Meta
+                                            title={item.value.stem}
+                                        />
+                                        <span><FormattedMessage id={item.value.questType} /></span>
+                                    </List.Item>
+                                )}
+                            />
+                        }
                     </Col>
                 </Row>
 
@@ -86,7 +97,7 @@ class MixingView extends Component{
                         <FormattedMessage id={"analysis"} />
                     </Col>
                     <Col>
-                        {judge.analysis}
+                        {mixing.analysis}
                     </Col>
                 </Row>
                 <Row>
@@ -94,13 +105,13 @@ class MixingView extends Component{
                         <FormattedMessage id={"isReal"} style={{float: "right"}} />
                     </Col>
                     <Col span={8}>
-                        {judge.isReal}
+                        {mixing.isReal}
                     </Col>
                     <Col span={4}>
                         <FormattedMessage id={"isRealDescription"} style={{float: "right"}} />
                     </Col>
                     <Col span={8}>
-                        {judge.description}
+                        {mixing.description}
                     </Col>
                 </Row>
                 <Row>

@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
-import { Form, Rate, Input, Checkbox, Radio, Button, Row, Col, Select, Layout } from 'antd';
+import { Form, Rate, Input, List, Radio, Button, Row, Col, Select, Icon, Layout } from 'antd';
 import ModalAddSub from './ModalAddSub'
 import {
     addMixSingleChoice,
@@ -22,7 +22,7 @@ class MixingInput extends Component{
         this.state = {
             visible: false,
             questType: '',
-            subQuest: []
+            subQuests: []
         }
     }
 
@@ -30,30 +30,116 @@ class MixingInput extends Component{
         this.props.form.setFieldsValue({difficulty: 3, isReal: false})
     }
 
-    componentDidUpdate() {
-        const { questType, subQuest } = this.state
-
+    componentWillReceiveProps = (nextProps) => {
+        const { questType, subQuests } = this.state
+        let needed = true
         if ("singleChoice" === questType){
-            const { mixSingleChoice } = this.props
+            const { mixSingleChoice } = nextProps
             if (!mixSingleChoice)
                 return
             mixSingleChoice.questType = questType
-            for (var quest in subQuest){
-                if (quest.questType === questType && quest._id !== mixSingleChoice._id)
-                    subQuest.push({index: subQuest.length, value: mixSingleChoice})
+            if (subQuests.length == 0){
+                subQuests.push({index: subQuests.length + 1, value: mixSingleChoice})
+                return
             }
 
-            this.setState({
-                subQuest: subQuest
-            })
-            console.log(mixSingleChoice)
+            for (var i = 0; i < subQuests.length; i++){
+                if (mixSingleChoice._id === subQuests[i].value._id){
+                    needed = false;
+                    break;
+                }
+            }
+            if (needed)
+                subQuests.push({index: subQuests.length + 1, value: mixSingleChoice})
         }
+        if ("multiChoice" === questType){
+            const { mixMultiChoice } = nextProps
+            if (!mixMultiChoice)
+                return
+            mixMultiChoice.questType = questType
+            if (subQuests.length == 0){
+                subQuests.push({index: subQuests.length + 1, value: mixMultiChoice})
+                return
+            }
+
+            for (var i = 0; i < subQuests.length; i++){
+                if (mixMultiChoice._id === subQuests[i].value._id){
+                    needed = false;
+                    break;
+                }
+            }
+            if (needed)
+                subQuests.push({index: subQuests.length + 1, value: mixMultiChoice})
+        }
+        if ("judge" === questType){
+            const { mixJudge } = nextProps
+            if (!mixJudge)
+                return
+            mixJudge.questType = questType
+            if (subQuests.length == 0){
+                subQuests.push({index: subQuests.length + 1, value: mixJudge})
+                return
+            }
+
+            for (var i = 0; i < subQuests.length; i++){
+                if (mixJudge._id === subQuests[i].value._id){
+                    needed = false;
+                    break;
+                }
+            }
+            if (needed)
+                subQuests.push({index: subQuests.length + 1, value: mixJudge})
+        }
+        if ("blank" === questType){
+            const { mixBlank } = nextProps
+            if (!mixBlank)
+                return
+            mixBlank.questType = questType
+            if (subQuests.length == 0){
+                subQuests.push({index: subQuests.length + 1, value: mixBlank})
+                return
+            }
+
+            for (var i = 0; i < subQuests.length; i++){
+                if (mixBlank._id === subQuests[i].value._id){
+                    needed = false;
+                    break;
+                }
+            }
+            if (needed)
+                subQuests.push({index: subQuests.length + 1, value: mixBlank})
+        }
+        if ("questAnswer" === questType){
+            const { mixQuestAnswer } = nextProps
+            if (!mixQuestAnswer)
+                return
+            mixQuestAnswer.questType = questType
+            if (subQuests.length == 0){
+                subQuests.push({index: subQuests.length + 1, value: mixQuestAnswer})
+                return
+            }
+
+            for (var i = 0; i < subQuests.length; i++){
+                if (mixQuestAnswer._id === subQuests[i].value._id){
+                    needed = false;
+                    break;
+                }
+            }
+            if (needed)
+                subQuests.push({index: subQuests.length + 1, value: mixQuestAnswer})
+        }
+
+        this.setState({
+            subQuests: subQuests
+        })
     }
 
     handleSubmit = (e) => {
         e.preventDefault();
         this.props.form.validateFields((err, values) => {
             if (!err) {
+                const { subQuests } = this.state
+                values.subQuests = subQuests;
                 this.props.handleSummit(values)
             }
         });
@@ -84,11 +170,18 @@ class MixingInput extends Component{
     }
 
     handleSave = (values) => {
-        console.log(values)
         this.setState({ questType: values.questType });
-        if ("singleChoice" === values.questType){
+        if ("singleChoice" === values.questType)
             this.props.addMixSingleChoice(values)
-        }
+        if ("multiChoice" === values.questType)
+            this.props.addMixMultiChoice(values)
+        if ("judge" === values.questType)
+            this.props.addMixJudge(values)
+        if ("blank" === values.questType)
+            this.props.addMixBlank(values)
+        if ("questAnswer" === values.questType)
+            this.props.addMixQuestAnswer(values)
+
         this.setState({ visible: false });
     };
 
@@ -110,8 +203,7 @@ class MixingInput extends Component{
             wrapperCol: { span: 21 },
         }
 
-        const { subQuest } = this.state
-        console.log(subQuest)
+        const { subQuests } = this.state
 
         return(
             <Layout>
@@ -153,6 +245,24 @@ class MixingInput extends Component{
                             </Col>
                         </Row>
                     </FormItem>
+                    <Row>
+                        <Col span={15} offset={4}>
+                            {
+                                subQuests.length > 0 && <List
+                                    itemLayout="horizontal"
+                                    dataSource={subQuests}
+                                    renderItem={item => (
+                                        <List.Item actions={[<a><Icon type={"edit"} /> <FormattedMessage id="edit" /></a>, <a><Icon type={"delete"} /> <FormattedMessage id="delete" /></a>]}>
+                                            <List.Item.Meta
+                                                title={item.value.stem}
+                                            />
+                                            <span><FormattedMessage id={item.value.questType} /></span>
+                                        </List.Item>
+                                    )}
+                                />
+                            }
+                        </Col>
+                    </Row>
                     <Row>
                         <Col span={18} offset={4}>
                             <Row>
@@ -214,15 +324,21 @@ MixingInput.propTypes = {
 };
 
 const mapStateToProps = (state) => {
-    console.log(state.records.mixSingleChoice)
     return {
         mixSingleChoice: state.records.mixSingleChoice,
+        mixMultiChoice: state.records.mixMultiChoice,
+        mixJudge: state.records.mixJudge,
+        mixBlank: state.records.mixBlank,
+        mixQuestAnswer: state.records.mixQuestAnswer,
     }
 }
 
 const mapDispatchToProps = (dispatch) => ({
     addMixSingleChoice: (mixSingleChoice) => dispatch(addMixSingleChoice(mixSingleChoice)),
     addMixMultiChoice: (mixMultiChoice) => dispatch(addMixMultiChoice(mixMultiChoice)),
+    addMixQuestAnswer: (questAnswer) => dispatch(addMixQuestAnswer(questAnswer)),
+    addMixJudge: (judge) => dispatch(addMixJudge(judge)),
+    addMixBlank: (blank) => dispatch(addMixBlank(blank))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Form.create()(injectIntl(MixingInput)))

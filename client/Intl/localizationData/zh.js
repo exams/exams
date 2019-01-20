@@ -85,6 +85,8 @@ export default {
       // subjects
       systemDefault: '系统内置',
       userDefinition: '用户创建',
+      tagManagement: '标签管理',
+      tagManagementNotes: '标签用于对题型做更细致的分类,比如问答题下可以设置"证明题"标签,组合题下可以设置"短文阅读"标签',
 
       // templates
       creatTemplate: '创建模板',
@@ -94,7 +96,8 @@ export default {
       addBlank: '增加填空题',
       addQuestAnswer: '增加问答题',
       addMixing: '增加组合题',
-      addSubQuest: '新增子题目'
-
+      addSubQuest: '新增子题目',
+      subQuest: "子题目",
+      addQuestType: '新增题型',
   }
 };

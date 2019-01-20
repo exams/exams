@@ -18,8 +18,6 @@ class JudgeView extends Component{
 
     getSubjects = (subject) => {
         const { subjects } = this.props;
-        console.log(subjects)
-        console.log(subject)
         let newSubject = null;
         subjects && subjects.map((item) => {
             if (subject === item._id){

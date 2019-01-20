@@ -1,15 +1,9 @@
 import React from 'react';
 import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
 import { Modal, Radio, Row, Col} from 'antd';
-import MixSingleChoiceInput from './MixSingleChoice.Input'
-import MixMultiChoiceInput from './MixMultiChoice.Input'
-import MixQuestAnswerInput from './MixQuestAnswer.Input'
-import MixJudgeInput from './MixJudge.Input'
-import MixBlankInput from './MixBlank.Input'
-import {getLabelByIndex} from "../../../utils/utils";
 
 const RadioGroup = Radio.Group;
-class ModalAddSub extends React.Component {
+class ModalAddQuest extends React.Component {
 
     constructor(){
         super();
@@ -36,33 +30,6 @@ class ModalAddSub extends React.Component {
             if (err) {
                 return;
             }
-            values.questType = questType
-            if ("singleChoice" === questType || "multiChoice" === questType){
-                const choiceNum = values.choiceNum;
-                const choiceItems = [];
-                for (var i = 0; i < choiceNum; i++){
-                    const label = getLabelByIndex(i)
-                    const obj = {}
-                    obj.label = label;
-                    obj.value = values[label]
-                    choiceItems.push(obj)
-                    delete values[label]
-                }
-                values.choiceItems = choiceItems;
-            }
-            if ("blank" === questType){
-                const answerNum = values.answerNum;
-                const answers = [];
-                for (var i = 1; i <= answerNum; i++){
-                    const obj = {}
-                    obj.index = i;
-                    obj.value = values[i]
-                    answers.push(obj);
-                    delete values[i];
-                }
-                values.answer = answers;
-                values.blankNumber = answers.length;
-            }
             this.props.handleSave(values)
             form.resetFields()
         });
@@ -70,16 +37,7 @@ class ModalAddSub extends React.Component {
 
     getQuestTypeInput = () => {
         const { questType } = this.state
-        if ("singleChoice" === questType)
-            return (<MixSingleChoiceInput wrappedComponentRef={this.saveFormRef} />)
-        if ("multiChoice" === questType)
-            return (<MixMultiChoiceInput wrappedComponentRef={this.saveFormRef} />)
-        if ("questAnswer" === questType)
-            return (<MixQuestAnswerInput  wrappedComponentRef={this.saveFormRef} />)
-        if ("judge" === questType)
-            return (<MixJudgeInput  wrappedComponentRef={this.saveFormRef} />)
-        if ("blank" === questType)
-            return (<MixBlankInput  wrappedComponentRef={this.saveFormRef} />)
+
     }
 
     render() {
@@ -102,6 +60,7 @@ class ModalAddSub extends React.Component {
                             <Radio.Button value={"judge"}><FormattedMessage id="judge" /></Radio.Button>
                             <Radio.Button value={"blank"}><FormattedMessage id="blank" /></Radio.Button>
                             <Radio.Button value={"questAnswer"}><FormattedMessage id="questAnswer" /></Radio.Button>
+                            <Radio.Button value={"mixing"}><FormattedMessage id="mixing" /></Radio.Button>
                         </RadioGroup>
                     </Col>
                 </Row>
@@ -113,4 +72,4 @@ class ModalAddSub extends React.Component {
     }
 }
 
-export default ModalAddSub
+export default ModalAddQuest

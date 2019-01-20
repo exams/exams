@@ -85,6 +85,7 @@ export default {
       // subjects
       systemDefault: 'System Default',
       userDefinition: 'User Definition',
+      tagManagement: 'Tag Management',
 
       // templates
       creatTemplate: 'Create Template',
@@ -94,6 +95,8 @@ export default {
       addBlank: 'Add Blank',
       addQuestAnswer: 'Add Question&Answer',
       addMixing: 'Add Mixing',
-      addSubQuest: 'Add Sub Questions'
+      addSubQuest: 'Add Sub Questions',
+      subQuest: "Sub Quest",
+      addQuestType: 'Add Question type',
   }
 };

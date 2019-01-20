@@ -1,18 +1,21 @@
 import React, {Component} from 'react';
 import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
-import { Form, Input, Radio , Button, Row, Col } from 'antd';
-import { getLabelByIndex } from '../../../utils/utils'
+import { Form, Input, Checkbox, Button, Row, Col } from 'antd';
+import {getLabelByIndex} from "../../../utils/utils";
 
-const RadioGroup = Radio.Group;
+const CheckboxGroup = Checkbox.Group;
 const FormItem = Form.Item;
 const { TextArea } = Input;
-class MixSingleChoiceInput extends Component{
-
+class MixMultiChoiceInput extends Component{
     constructor(){
         super();
         this.state = {
             choiceNum: 4
         }
+    }
+
+    componentDidMount() {
+        this.props.form.setFieldsValue({choiceNum: this.state.choiceNum})
     }
 
     addChoiceItem = () => {
@@ -41,10 +44,19 @@ class MixSingleChoiceInput extends Component{
         return choiceItemRes;
     }
 
+    getChoiceItemLabel = () => {
+        const choiceItem = this.state.choiceNum;
+        var choiceItemRes = [];
+        for (var i = 0; i < choiceItem; i++){
+            const label = getLabelByIndex(i)
+            choiceItemRes.push(label)
+        }
+        return choiceItemRes;
+    }
 
     render() {
         const { getFieldDecorator } = this.props.form;
-        const { choiceNum } = this.state
+
         const formItemLayout = {
             labelCol: { span: 4 },
             wrapperCol: { span: 18 },
@@ -53,7 +65,7 @@ class MixSingleChoiceInput extends Component{
         return(
             <Form>
                 {getFieldDecorator('choiceNum')(
-                    <Input type='hidden' value={choiceNum}/>
+                    <Input type='hidden'/>
                 )}
                 <FormItem {...formItemLayout} label={<FormattedMessage id="stem" />}>
                     <Row>
@@ -96,13 +108,8 @@ class MixSingleChoiceInput extends Component{
                     {getFieldDecorator('answer', {
                         rules: [{ required: true, message: this.props.intl.messages.answerPlaceholder }],
                     })(
-                        <RadioGroup buttonStyle="solid">
-                            {
-                                this.getChoiceItemArray().map((item) => {
-                                    return (<Radio.Button key={item.label} value={item.label}>{item.label}</Radio.Button>)
-                                })
-                            }
-                        </RadioGroup>
+                        <CheckboxGroup options={this.getChoiceItemLabel()}>
+                        </CheckboxGroup>
                     )}
                 </FormItem>
                 <FormItem {...formItemLayout} label={<FormattedMessage id="analysis" />}>
@@ -119,8 +126,8 @@ class MixSingleChoiceInput extends Component{
     }
 }
 
-MixSingleChoiceInput.propTypes = {
+MixMultiChoiceInput.propTypes = {
     intl: intlShape.isRequired
 };
 
-export default Form.create()(injectIntl(MixSingleChoiceInput))
+export default Form.create()(injectIntl(MixMultiChoiceInput))
