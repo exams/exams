@@ -11,6 +11,7 @@ export const userApi = '/api/users'
 
 export const subjectsApi = '/api/subjects';
 export const tagsApi = '/api/tags'
+export const tagApi = '/api/tags/:tagId'
 export const templatesApi = '/api/templates';
 
 export const singleChoiceApi = '/api/singlechoices';

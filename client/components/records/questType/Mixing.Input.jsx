@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
-import { Form, Rate, Input, List, Radio, Button, Row, Col, Select, Icon, Layout } from 'antd';
+import { Form, Rate, Input, List, Radio, Button, Row, Col, Select, Tag, Icon, Layout } from 'antd';
 import ModalAddSub from './ModalAddSub'
 import {
     addMixSingleChoice,
@@ -10,19 +10,24 @@ import {
     addMixBlank
 } from '../actions'
 import {connect} from "react-redux";
+import ModalTagSelector from './ModalTagSelector'
 
 const RadioGroup = Radio.Group
 const FormItem = Form.Item;
 const { TextArea } = Input;
 const Option = Select.Option;
+const CheckableTag = Tag.CheckableTag;
 class MixingInput extends Component{
 
     constructor(){
         super();
         this.state = {
             visible: false,
+            tagModalVisible: false,
             questType: '',
-            subQuests: []
+            subQuests: [],
+            selectTags: [],
+            selectedSubjectId: ''
         }
     }
 
@@ -138,8 +143,9 @@ class MixingInput extends Component{
         e.preventDefault();
         this.props.form.validateFields((err, values) => {
             if (!err) {
-                const { subQuests } = this.state
+                const { subQuests, selectTags } = this.state
                 values.subQuests = subQuests;
+                values.tags = selectTags;
                 this.props.handleSummit(values)
             }
         });
@@ -154,6 +160,12 @@ class MixingInput extends Component{
         return childrenSubjects
     }
 
+    onChange = (value) => {
+        this.setState({
+            selectedSubjectId: value
+        })
+    }
+
     OpenModal = () => {
         this.setState({
             visible: true
@@ -162,6 +174,17 @@ class MixingInput extends Component{
     onCancel = () => {
         this.setState({
             visible: false
+        })
+    }
+
+    OpenTagModal = () => {
+        this.setState({
+            tagModalVisible: true
+        })
+    }
+    onTagModalCancel = () => {
+        this.setState({
+            tagModalVisible: false
         })
     }
 
@@ -185,9 +208,17 @@ class MixingInput extends Component{
         this.setState({ visible: false });
     };
 
+    handleSelect = (selectTags) => {
+        console.log(selectTags);
+        this.setState({
+            tagModalVisible: false,
+            selectTags: selectTags
+        })
+    }
+
     render() {
         const { getFieldDecorator } = this.props.form;
-        const { visible } = this.state
+        const { visible, subQuests, tagModalVisible, selectTags } = this.state
 
         const formItemLayout = {
             labelCol: { span: 4 },
@@ -203,8 +234,6 @@ class MixingInput extends Component{
             wrapperCol: { span: 21 },
         }
 
-        const { subQuests } = this.state
-
         return(
             <Layout>
             <Row>
@@ -215,7 +244,7 @@ class MixingInput extends Component{
                                 {getFieldDecorator('subject', {
                                     rules: [{ required: true, message: this.props.intl.messages.subjectPlaceholder }],
                                 })(
-                                    <Select
+                                    <Select onChange={this.onChange}
                                         placeholder={this.props.intl.messages.subjectPlaceholder}
                                         style={{ width: '100%' }}
                                     >
@@ -266,12 +295,24 @@ class MixingInput extends Component{
                     <Row>
                         <Col span={18} offset={4}>
                             <Row>
-                                <Col span={4}>
+                                <Col span={8}>
                                     <Button icon={"plus"} onClick={this.OpenModal}>
                                         <FormattedMessage id="addSubQuest" />
                                     </Button>
                                 </Col>
                             </Row>
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col span={18} offset={4}>
+                            {
+                                selectTags && selectTags.map((tag) => {
+                                    return (<CheckableTag key={tag._id} checked={true}>{tag.name}</CheckableTag>);
+                                })
+                            }
+                            <Button icon={"plus"} onClick={this.OpenTagModal}>
+                                <FormattedMessage id="selectTags" />
+                            </Button>
                         </Col>
                     </Row>
                     <FormItem {...formItemLayout} label={<FormattedMessage id="isReal" />}>
@@ -314,6 +355,16 @@ class MixingInput extends Component{
                     handleSave={this.handleSave}
                     onCancel={this.onCancel}
                 />
+
+                {
+                    tagModalVisible && <ModalTagSelector
+                        title={[<FormattedMessage id="selectTags"/>]}
+                        visible={tagModalVisible}
+                        subjectId={this.state.selectedSubjectId}
+                        handleSelect={this.handleSelect}
+                        onCancel={this.onTagModalCancel}
+                    />
+                }
             </Layout>
         )
     }

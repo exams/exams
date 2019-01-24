@@ -3,7 +3,8 @@ import {
     ADD_SUBJECT_SUCCESS,
     LIST_SUBJECT_SUCCESS,
     ADD_TAG_SUCCESS,
-    LIST_TAG_SUCCESS
+    LIST_TAG_SUCCESS,
+    DELETE_TAG_SUCCESS
 } from './actions'
 
 // Initial State
@@ -30,6 +31,11 @@ const SubjectsReducer = (state = initialState, action) => {
             return {
                 ...state,
                 tag,
+                status: 'success'
+            };
+        case DELETE_TAG_SUCCESS:
+            return {
+                ...state,
                 status: 'success'
             };
         case LIST_TAG_SUCCESS:

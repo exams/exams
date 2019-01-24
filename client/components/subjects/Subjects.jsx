@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {withRouter, Link} from "react-router-dom";
 import { connect } from 'react-redux'
-import { List, Icon, Layout } from 'antd';
+import { List, Icon, Layout, Collapse, Row, Col } from 'antd';
 import {addSubject, listSubjects} from "./actions";
 import { FormattedMessage } from 'react-intl';
 import ModalTagManager from './ModalTagManager'
@@ -11,7 +11,8 @@ class Subjects extends Component{
     constructor(){
         super();
         this.state = {
-            visible: false
+            visible: false,
+            editSubject: null
         }
     }
 
@@ -19,45 +20,49 @@ class Subjects extends Component{
         this.props.listSubjects()
     }
 
-    openModal = () => {
-        console.log(123)
+    openModal = (subject) => {
         this.setState({
-            visible: true
+            visible: true,
+            editSubject: subject
         })
     }
 
     onCancel = () => {
         this.setState({
-            visible: false
+            visible: false,
+            editSubject: null
         })
     }
 
+
+
     render() {
-        const { subjects, match } = this.props
-        const { visible } = this.state
+        const { subjects } = this.props
+        const { visible, editSubject } = this.state;
+
         return (
             <Layout>
                 <List
                     itemLayout="horizontal"
                     dataSource={subjects}
                     renderItem={item => (
-                        <List.Item actions={[<a onClick={this.openModal}><Icon type={"tags"} /> <FormattedMessage id="tagManagement" /></a>, <a><Icon type={"edit"} /> <FormattedMessage id="edit" /></a>, <a><Icon type={"delete"} /> <FormattedMessage id="delete" /></a>]}>
+                        <List.Item actions={[<a onClick={() => {this.openModal(item);}}><Icon type={"tags"} /> <FormattedMessage id="tagManagement" /></a>, <a><Icon type={"edit"} /> <FormattedMessage id="edit" /></a>, <a><Icon type={"delete"} /> <FormattedMessage id="delete" /></a>]}>
                             <List.Item.Meta
-                                title={<Link to={match.url + '/' + item.id}>{item.name}</Link>}
-                                onClick={this.goDetail}
+                                title={item.name}
                             />
                             <span>{item.isDefault ? <FormattedMessage id="systemDefault" />: <FormattedMessage id="userDefinition" />}</span>
                         </List.Item>
                     )}
                 />
-                <ModalTagManager
-                    title={<FormattedMessage id="tagManagement" />}
-                    wrappedComponentRef={this.saveFormRef}
-                    visible={visible}
-                    ref={this.saveFormRef}
-                    handleSave={this.handleSave}
-                    onCancel={this.onCancel}
-                />
+
+                {
+                    visible && <ModalTagManager
+                        title={[<FormattedMessage id="tagManagement"/>, ' - ' + editSubject.name]}
+                        visible={visible}
+                        subject={editSubject}
+                        onCancel={this.onCancel}
+                    />
+                }
             </Layout>
         );
     }

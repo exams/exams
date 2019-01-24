@@ -5,6 +5,7 @@ export default {
       submit: '提交',
       save: '保存',
       cancel: '取消',
+      close: '关闭',
       language: 'English',
       hello: '你好-',
       signIn: '登录',
@@ -87,7 +88,7 @@ export default {
       userDefinition: '用户创建',
       tagManagement: '标签管理',
       tagManagementNotes: '标签用于对题型做更细致的分类,比如问答题下可以设置"证明题"标签,组合题下可以设置"短文阅读"标签',
-
+      newTag: '新建标签',
       // templates
       creatTemplate: '创建模板',
       addSingleChoice: '增加单择题',
@@ -99,5 +100,7 @@ export default {
       addSubQuest: '新增子题目',
       subQuest: "子题目",
       addQuestType: '新增题型',
+      tag: '标签',
+      selectTags: '选择标签',
   }
 };

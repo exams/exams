@@ -36,6 +36,7 @@ class ModalAddSub extends React.Component {
             if (err) {
                 return;
             }
+            form.resetFields()
             values.questType = questType
             if ("singleChoice" === questType || "multiChoice" === questType){
                 const choiceNum = values.choiceNum;
@@ -49,6 +50,7 @@ class ModalAddSub extends React.Component {
                     delete values[label]
                 }
                 values.choiceItems = choiceItems;
+                form.setFieldsValue({choiceNum: choiceNum})
             }
             if ("blank" === questType){
                 const answerNum = values.answerNum;
@@ -62,9 +64,9 @@ class ModalAddSub extends React.Component {
                 }
                 values.answer = answers;
                 values.blankNumber = answers.length;
+                form.setFieldsValue({answerNum: answerNum})
             }
             this.props.handleSave(values)
-            form.resetFields()
         });
     };
 

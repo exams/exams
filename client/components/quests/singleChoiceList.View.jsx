@@ -22,7 +22,6 @@ class SingleChoiceListView extends Component{
                     pageSize: 10,
                 }}
                 dataSource={singleChoices}
-                footer={<div><b>ant design</b> footer part</div>}
                 renderItem={item => (
                     <List.Item
                         key={item._id}

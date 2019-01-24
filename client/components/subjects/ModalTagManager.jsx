@@ -1,58 +1,114 @@
 import React from 'react';
-import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
-import { Modal, Radio, Row, Col} from 'antd';
+import { FormattedMessage } from 'react-intl';
+import { Modal, Tag, Input, Icon, Button} from 'antd';
+import {addTag, listTags, deleteTag} from "./actions";
+import {connect} from "react-redux";
 
-const RadioGroup = Radio.Group;
 class ModalTagManager extends React.Component {
 
     constructor(){
         super();
         this.state = {
-            questType: 'singleChoice'
+            inputVisible: false,
+            inputValue: '',
+        };
+    }
+
+    componentDidMount = () => {
+        const { subject } = this.props;
+        if (!subject)
+            return;
+        this.props.listTags(subject._id);
+    }
+
+    handleClose = (removedTag) => {
+        console.log(removedTag)
+        this.props.deleteTag(removedTag)
+    }
+
+    showInput = () => {
+        this.setState({ inputVisible: true }, () => this.input.focus());
+    }
+
+    handleInputChange = (e) => {
+        this.setState({ inputValue: e.target.value });
+    }
+
+    handleInputConfirm = () => {
+        const { inputValue } = this.state;
+        const { subject, tags } = this.props;
+        if (inputValue) {
+            let tag = {name: inputValue}
+            tag.subject = subject._id;
+            this.props.addTag(tag)
+            tags.push(tag)
         }
-    }
-
-    onChange = (e) => {
-        const questType = e.target.value;
         this.setState({
-            questType: questType
-        })
-    }
-
-    saveFormRef = (formRef) => {
-        this.formRef = formRef;
-    }
-
-    handleSave = () => {
-        const form = this.formRef.props.form;
-        const { questType } = this.state
-        form.validateFields((err, values) => {
-            if (err) {
-                return;
-            }
-            this.props.handleSave(values)
-            form.resetFields()
+            inputVisible: false,
+            inputValue: '',
         });
-    };
+    }
 
-
+    saveInputRef = input => this.input = input
 
     render() {
+        const { tags } = this.props;
+        const { inputVisible, inputValue } = this.state;
+
         return (
             <Modal
-                width={800}
+                width={760}
                 title={this.props.title}
                 visible={this.props.visible}
-                confirmLoading={this.props.confirmLoading}
-                onOk={this.handleSave}
-                okText={<FormattedMessage id={"save"}/>}
-                cancelText={<FormattedMessage id={"cancel"}/>}
                 onCancel={this.props.onCancel}
+                footer={<Button onClick={this.props.onCancel}><FormattedMessage id={"close"} /></Button>}
             >
-                <p><FormattedMessage id={"tagManagementNotes"}/></p>
+                <p><FormattedMessage id={"tagManagementNotes"} /></p>
+
+                {
+                    tags && tags.map((tag) => {
+                        return (
+                            <Tag key={tag._id} closable={true} afterClose={() => this.handleClose(tag)}>
+                                {tag.name}
+                            </Tag>
+                        );
+                    })
+                }
+                {inputVisible && (
+                    <Input
+                        ref={this.saveInputRef}
+                        type="text"
+                        size="small"
+                        style={{ width: 78 }}
+                        value={inputValue}
+                        onChange={this.handleInputChange}
+                        onBlur={this.handleInputConfirm}
+                        onPressEnter={this.handleInputConfirm}
+                    />
+                )}
+                {!inputVisible && (
+                    <Tag
+                        onClick={this.showInput}
+                        style={{ background: '#fff', borderStyle: 'dashed' }}
+                    >
+                        <Icon type="plus" /><FormattedMessage id={"newTag"}/>
+                    </Tag>
+                )}
             </Modal>
         );
     }
 }
 
-export default ModalTagManager
+const mapStateToProps = (state) => {
+    return {
+        tags: state.subjects.tags
+    }
+}
+
+const mapDispatchToProps = (dispatch) => ({
+    listTags: (subjectId) => dispatch(listTags(subjectId)),
+    addTag: (tag) => dispatch(addTag(tag)),
+    deleteTag: (tag) => dispatch(deleteTag(tag))
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(ModalTagManager)

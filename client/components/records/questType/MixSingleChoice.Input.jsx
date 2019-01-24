@@ -15,6 +15,10 @@ class MixSingleChoiceInput extends Component{
         }
     }
 
+    componentDidMount() {
+        this.props.form.setFieldsValue({choiceNum: this.state.choiceNum})
+    }
+
     addChoiceItem = () => {
         const choiceItemVal = this.state.choiceNum;
         if (choiceItemVal < 10){
@@ -44,7 +48,6 @@ class MixSingleChoiceInput extends Component{
 
     render() {
         const { getFieldDecorator } = this.props.form;
-        const { choiceNum } = this.state
         const formItemLayout = {
             labelCol: { span: 4 },
             wrapperCol: { span: 18 },
@@ -53,7 +56,7 @@ class MixSingleChoiceInput extends Component{
         return(
             <Form>
                 {getFieldDecorator('choiceNum')(
-                    <Input type='hidden' value={choiceNum}/>
+                    <Input type='hidden'/>
                 )}
                 <FormItem {...formItemLayout} label={<FormattedMessage id="stem" />}>
                     <Row>

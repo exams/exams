@@ -5,6 +5,7 @@ export default {
       submit: 'Submit',
       save: 'Save',
       cancel: 'Cancel',
+      close: 'Close',
       language: '中文',
       hello: 'hello-',
       signIn: 'Sign In',
@@ -86,6 +87,8 @@ export default {
       systemDefault: 'System Default',
       userDefinition: 'User Definition',
       tagManagement: 'Tag Management',
+      tagManagementNotes: '标签用于对题型做更细致的分类,比如问答题下可以设置"证明题"标签,组合题下可以设置"短文阅读"标签',
+      newTag: 'New Tag',
 
       // templates
       creatTemplate: 'Create Template',
@@ -98,5 +101,7 @@ export default {
       addSubQuest: 'Add Sub Questions',
       subQuest: "Sub Quest",
       addQuestType: 'Add Question type',
+      tag: 'Tag',
+      selectTags: 'Select Tags',
   }
 };
