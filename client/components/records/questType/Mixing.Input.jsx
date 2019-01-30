@@ -10,9 +10,8 @@ import {
     addMixBlank
 } from '../actions'
 import {connect} from "react-redux";
-import ModalTagSelector from './ModalTagSelector'
+import ModalTagSelector from '../../subjects/ModalTagSelector'
 
-const RadioGroup = Radio.Group
 const FormItem = Form.Item;
 const { TextArea } = Input;
 const Option = Select.Option;
@@ -29,10 +28,6 @@ class MixingInput extends Component{
             selectTags: [],
             selectedSubjectId: ''
         }
-    }
-
-    componentDidMount() {
-        this.props.form.setFieldsValue({difficulty: 3, isReal: false})
     }
 
     componentWillReceiveProps = (nextProps) => {
@@ -209,7 +204,6 @@ class MixingInput extends Component{
     };
 
     handleSelect = (selectTags) => {
-        console.log(selectTags);
         this.setState({
             tagModalVisible: false,
             selectTags: selectTags
@@ -256,6 +250,7 @@ class MixingInput extends Component{
                         <Col span={12}>
                             <FormItem {...halfformItemLayoutSecond} label={<FormattedMessage id="difficulty" />}>
                                 {getFieldDecorator('difficulty', {
+                                    initialValue: 3,
                                     rules: [{ required: true}],
                                 })(
                                     <Rate />
@@ -315,18 +310,6 @@ class MixingInput extends Component{
                             </Button>
                         </Col>
                     </Row>
-                    <FormItem {...formItemLayout} label={<FormattedMessage id="isReal" />}>
-                        <Row>
-                            <Col span={10}>
-                                {getFieldDecorator('isReal')(
-                                    <RadioGroup initialValue={"false"} buttonStyle="solid">
-                                        <Radio.Button value={true}><FormattedMessage id="isRealTrue" /></Radio.Button>
-                                        <Radio.Button value={false}><FormattedMessage id="isRealFalse" /></Radio.Button>
-                                    </RadioGroup>
-                                )}
-                            </Col>
-                        </Row>
-                    </FormItem>
                     <FormItem {...formItemLayout} label={<FormattedMessage id="isRealDescription" />}>
                         <Row>
                             <Col span={10}>

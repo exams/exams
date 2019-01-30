@@ -1,5 +1,5 @@
 import {
-    TEMPLATE_HTTP_FAILED, ADD_TEMPLATE_SUCCESS, LIST_TEMPLATE_SUCCESS
+    TEMPLATE_HTTP_FAILED, ADD_TEMPLATE_SUCCESS, LIST_TEMPLATE_SUCCESS, DELETE_TEMPLATE_SUCCESS
 } from './actions'
 
 // Initial State
@@ -20,6 +20,11 @@ const TemplatesReducer = (state = initialState, action) => {
             return {
                 ...state,
                 template,
+                status: 'success'
+            };
+        case DELETE_TEMPLATE_SUCCESS:
+            return {
+                ...state,
                 status: 'success'
             };
         case TEMPLATE_HTTP_FAILED :

@@ -1,5 +1,5 @@
 import { instance as axios } from '../../axios'
-import { templatesApi } from '../../api/api'
+import {templatesApi, templateApi} from '../../api/api'
 
 export const TEMPLATE_HTTP_FAILED = 'TEMPLATE_HTTP_FAILED'
 
@@ -22,6 +22,28 @@ export const addTemplate = (template) => {
         })
     }
 }
+
+export const DELETE_TEMPLATE_SUCCESS = 'DELETE_TEMPLATE_SUCCESS'
+
+export const deleteTemplate = (template) => {
+    return (dispatch) => {
+        const deleteApi = templateApi.replace(':templateId', template._id)
+        axios.delete(deleteApi).then(response => {
+            dispatch({
+                type: DELETE_TEMPLATE_SUCCESS,
+                data: response.data
+            })
+        }).catch(error => {
+            if (error.response || error.request){
+                dispatch({
+                    type: TEMPLATE_HTTP_FAILED,
+                    data: error
+                })
+            }
+        })
+    }
+}
+
 
 export const LIST_TEMPLATE_SUCCESS = 'LIST_TEMPLATE_SUCCESS'
 

@@ -82,6 +82,7 @@ export default {
       failed: '失败',
       right: '对',
       wrong: '错',
+      questType: "题型",
 
       // subjects
       systemDefault: '系统内置',
@@ -89,6 +90,7 @@ export default {
       tagManagement: '标签管理',
       tagManagementNotes: '标签用于对题型做更细致的分类,比如问答题下可以设置"证明题"标签,组合题下可以设置"短文阅读"标签',
       newTag: '新建标签',
+
       // templates
       creatTemplate: '创建模板',
       addSingleChoice: '增加单择题',
@@ -102,5 +104,14 @@ export default {
       addQuestType: '新增题型',
       tag: '标签',
       selectTags: '选择标签',
+      moveUp: "上移",
+      moveDown: "下移",
+      questTypeSet: "题型设置",
+      number: "数量",
+      score: "分数",
+      offset: "偏移量",
+      createPaper: "生成试卷",
+      copy: "复制",
+      subQuestNum: "子题数量"
   }
 };

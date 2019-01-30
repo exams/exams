@@ -4,7 +4,6 @@ import { Form, Rate, Input, Checkbox, Radio, Button, Row, Col, Select } from 'an
 import {getLabelByIndex} from "../../../utils/utils";
 
 const CheckboxGroup = Checkbox.Group;
-const RadioGroup = Radio.Group
 const FormItem = Form.Item;
 const { TextArea } = Input;
 const Option = Select.Option;
@@ -14,10 +13,6 @@ class MultiChoiceInput extends Component{
         this.state = {
             choiceNum: 4
         }
-    }
-
-    componentDidMount() {
-        this.props.form.setFieldsValue({difficulty: 3, isReal: false})
     }
 
     addChoiceItem = () => {
@@ -119,6 +114,7 @@ class MultiChoiceInput extends Component{
                     <Col span={12}>
                         <FormItem {...halfformItemLayoutSecond} label={<FormattedMessage id="difficulty" />}>
                             {getFieldDecorator('difficulty', {
+                                initialValue: 3,
                                 rules: [{ required: true}],
                             })(
                                 <Rate />
@@ -178,18 +174,6 @@ class MultiChoiceInput extends Component{
                         <Col span={20}>
                             {getFieldDecorator('analysis')(
                                 <TextArea placeholder={this.props.intl.messages.analysisPlaceholder} autosize={{ minRows: 3}} />
-                            )}
-                        </Col>
-                    </Row>
-                </FormItem>
-                <FormItem {...formItemLayout} label={<FormattedMessage id="isReal" />}>
-                    <Row>
-                        <Col span={10}>
-                            {getFieldDecorator('isReal')(
-                                <RadioGroup initialValue={"false"} buttonStyle="solid">
-                                    <Radio.Button value={true}><FormattedMessage id="isRealTrue" /></Radio.Button>
-                                    <Radio.Button value={false}><FormattedMessage id="isRealFalse" /></Radio.Button>
-                                </RadioGroup>
                             )}
                         </Col>
                     </Row>

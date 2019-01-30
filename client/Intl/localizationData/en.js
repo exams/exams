@@ -82,6 +82,7 @@ export default {
       failed: 'Failed',
       right: 'Right',
       wrong: 'Wrong',
+      questType: "Question Type",
 
       // subjects
       systemDefault: 'System Default',
@@ -103,5 +104,14 @@ export default {
       addQuestType: 'Add Question type',
       tag: 'Tag',
       selectTags: 'Select Tags',
+      moveUp: "Move Up",
+      moveDown: "Move Down",
+      questTypeSet: "Set Questions",
+      number: "Number",
+      score: "Score",
+      offset: "Offset",
+      createPaper: "Creat Paper",
+      copy: "Copy",
+      subQuestNum: "Sub Question Number"
   }
 };

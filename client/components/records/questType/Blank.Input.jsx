@@ -1,9 +1,7 @@
 import React, {Component} from 'react';
 import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
 import { Form, Rate, Input, Radio, Button, Row, Col, Select } from 'antd';
-import {getLabelByIndex} from "../../../utils/utils";
 
-const RadioGroup = Radio.Group
 const FormItem = Form.Item;
 const { TextArea } = Input;
 const Option = Select.Option;
@@ -34,10 +32,6 @@ class BlankInput extends Component{
             answerNumRes.push({index: i})
         }
         return answerNumRes;
-    }
-
-    componentDidMount() {
-        this.props.form.setFieldsValue({difficulty: 3, isReal: false})
     }
 
     handleSubmit = (e) => {
@@ -107,6 +101,7 @@ class BlankInput extends Component{
                     <Col span={12}>
                         <FormItem {...halfformItemLayoutSecond} label={<FormattedMessage id="difficulty" />}>
                             {getFieldDecorator('difficulty', {
+                                initialValue: 3,
                                 rules: [{ required: true}],
                             })(
                                 <Rate />
@@ -158,18 +153,6 @@ class BlankInput extends Component{
                         <Col span={20}>
                             {getFieldDecorator('analysis')(
                                 <TextArea placeholder={this.props.intl.messages.analysisPlaceholder} autosize={{ minRows: 3}} />
-                            )}
-                        </Col>
-                    </Row>
-                </FormItem>
-                <FormItem {...formItemLayout} label={<FormattedMessage id="isReal" />}>
-                    <Row>
-                        <Col span={10}>
-                            {getFieldDecorator('isReal')(
-                                <RadioGroup initialValue={"false"} buttonStyle="solid">
-                                    <Radio.Button value={true}><FormattedMessage id="isRealTrue" /></Radio.Button>
-                                    <Radio.Button value={false}><FormattedMessage id="isRealFalse" /></Radio.Button>
-                                </RadioGroup>
                             )}
                         </Col>
                     </Row>

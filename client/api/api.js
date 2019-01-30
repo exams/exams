@@ -13,6 +13,7 @@ export const subjectsApi = '/api/subjects';
 export const tagsApi = '/api/tags'
 export const tagApi = '/api/tags/:tagId'
 export const templatesApi = '/api/templates';
+export const templateApi = '/api/templates/:templateId';
 
 export const singleChoiceApi = '/api/singlechoices';
 export const multiChoiceApi = '/api/multichoices';

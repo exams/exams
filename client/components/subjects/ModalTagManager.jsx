@@ -22,7 +22,6 @@ class ModalTagManager extends React.Component {
     }
 
     handleClose = (removedTag) => {
-        console.log(removedTag)
         this.props.deleteTag(removedTag)
     }
 

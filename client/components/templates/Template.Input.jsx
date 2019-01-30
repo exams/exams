@@ -1,24 +1,28 @@
 import React, {Component} from 'react';
 import { connect } from 'react-redux'
-import { Row, Col, List, Icon, Button, Tag, Select, Input, Layout, Form } from 'antd';
+import { Row, Col, List, Icon, Button, Tag, Select, Input, Card, Form } from 'antd';
 import { addTemplate } from "./actions";
 import {FormattedMessage, injectIntl, intlShape} from 'react-intl';
-import ModalAddQuest from './ModalAddQuest'
+import { listQuestTypes } from "../quests/actions";
+import ModalTagSelector from '../subjects/ModalTagSelector'
 
 const Option = Select.Option;
 const FormItem = Form.Item;
+const CheckableTag = Tag.CheckableTag;
 class TemplateInput extends Component{
 
     constructor(){
         super();
         this.state = {
-            visible: false,
+            tagModalVisible: false,
+            selectedSubjectId: '',
+            openModalIndex: 0,
             paparStructs: []
         }
     }
 
-    componentDidMount = () => {
-
+    componentDidMount() {
+        this.props.listQuestTypes();
     }
 
     getSubjects = () => {
@@ -32,30 +36,135 @@ class TemplateInput extends Component{
     }
 
 
-    OpenModal = () => {
+    getQuestTypesChildren = () => {
+        const { questTypes } = this.props
+        const childrenQuestTypes = [];
+        questTypes && questTypes.map((item) => {
+            childrenQuestTypes.push(<Option key={item.questType}><FormattedMessage id={item.questType} /></Option>);
+        })
+        return childrenQuestTypes
+    }
+
+    onChange = (value) => {
         this.setState({
-            visible: true
+            selectedSubjectId: value
+        })
+    }
+
+    handleSelect = (selectTags) => {
+        this.setState({
+            tagModalVisible: false,
+        })
+        const { openModalIndex, paparStructs } = this.state
+        const questSet = paparStructs[openModalIndex];
+        questSet.tags = selectTags;
+    }
+
+    OpenModal = (index) => {
+        this.setState({
+            openModalIndex: index,
+            tagModalVisible: true
         })
     }
     onCancel = () => {
         this.setState({
-            visible: false
+            tagModalVisible: false
         })
     }
 
-    saveFormRef = (formRef) => {
-        this.formRef = formRef;
+    addQuestType = () => {
+        const questSet = {
+            questType: 'singleChoice',
+            subQuestNum: 1,
+            difficulty: 3,
+            offset: 1,
+            number: 10,
+            score: 2,
+            tags: []
+        }
+        const { paparStructs } = this.state
+        paparStructs.push(questSet)
+        this.setState({
+            paparStructs: paparStructs
+        })
+    }
+
+    getSelectTags = (index) => {
+        const { paparStructs } = this.state
+        const selectTags = paparStructs[index].tags;
+        const tags = [];
+        selectTags && selectTags.map((item, index) => {
+            tags.push(<Tag key={index}>{item.name}</Tag>)
+        })
+        return tags
+    }
+
+    delete = (index) => {
+        const { paparStructs } = this.state
+        paparStructs.splice(index, 1);
+        this.setState({
+            paparStructs: paparStructs
+        })
+    }
+
+    handleSubmit = (e) => {
+        e.preventDefault();
+        const { paparStructs } = this.state
+        this.props.form.validateFields((err, values) => {
+            if (!err) {
+                values.paparStructs = paparStructs;
+                this.props.addTemplate(values)
+                console.log(values)
+            }
+        });
+    }
+
+    onQuestTypesChange = (value, index) => {
+        const { paparStructs } = this.state
+        const questSet = paparStructs[index];
+        questSet.questType = value;
+
+    }
+
+    onNumberChange = (e, index) => {
+        const { paparStructs } = this.state
+        const questSet = paparStructs[index];
+        questSet.number = e.target.value;
+    }
+
+    onScoreChange = (e, index) => {
+        const { paparStructs } = this.state
+        const questSet = paparStructs[index];
+        questSet.score = e.target.value;
+    }
+
+    onDifficultyChange = (e, index) => {
+        const { paparStructs } = this.state
+        const questSet = paparStructs[index];
+        questSet.difficulty = e.target.value;
+    }
+
+    onOffsetChange = (e, index) => {
+        const { paparStructs } = this.state
+        const questSet = paparStructs[index];
+        questSet.offset = e.target.value
+    }
+
+    onSubQuestNumChange = (e, index) => {
+        const { paparStructs } = this.state
+        const questSet = paparStructs[index];
+        questSet.subQuestNum = e.target.value
     }
 
     render() {
         const { getFieldDecorator } = this.props.form;
         const formItemLayout = {
-            labelCol: { span: 6 },
-            wrapperCol: { span: 16 },
+            labelCol: { span: 8 },
+            wrapperCol: { span: 14 },
         }
-        const { paparStructs, visible } = this.state
+        const { paparStructs, tagModalVisible, selectTags } = this.state
         return (
-            <Layout>
+            <Card>
                 <Form onSubmit={this.handleSubmit}>
                     <FormItem {...formItemLayout} label={<FormattedMessage id="title" />}>
                         <Row>
@@ -75,6 +184,7 @@ class TemplateInput extends Component{
                                     rules: [{ required: true, message: this.props.intl.messages.subjectPlaceholder }],
                                 })(
                                     <Select
+                                        onChange={this.onChange}
                                         placeholder={this.props.intl.messages.subjectPlaceholder}
                                         style={{ width: '100%' }}
                                     >
@@ -85,21 +195,90 @@ class TemplateInput extends Component{
                         </Row>
                     </FormItem>
                     {
-                        paparStructs.length > 0 && <List
-                            itemLayout="horizontal"
-                            dataSource={paparStructs}
-                            renderItem={item => (
-                                <List.Item actions={[<a><Icon type={"edit"} /> <FormattedMessage id="edit" /></a>, <a><Icon type={"delete"} /> <FormattedMessage id="delete" /></a>]}>
-                                    <List.Item.Meta
-                                        title={item.number}
-                                    />
-                                </List.Item>
-                            )}
-                        />
+                        paparStructs.map((item, index) => {
+                            const tags = this.getSelectTags(index)
+                            tags.unshift(<span style={{marginRight: 16}} key={-1}><FormattedMessage id="questTypeSet" /></span>)
+                            return (
+                                <Card key={index}
+                                      title={tags}
+                                      extra={[
+                                          <Button key={"selectTags"} onClick={() => {this.OpenModal(index)}}><FormattedMessage id="selectTags" /></Button>,
+                                          <Button key={"delete"} icon="delete" onClick={() => {this.delete(index);}} title={<FormattedMessage id="delete" />} />
+                                      ]}
+                                      style={{margin: 10}}
+                                >
+                                    <Row>
+                                        <Col span={4}>
+                                            <FormItem {...formItemLayout} label={<FormattedMessage id="questType" />}>
+                                                {getFieldDecorator('questType' + index.toString(), {
+                                                    initialValue: item.questType,
+                                                    rules: [{ required: true, message: this.props.intl.messages.subjectPlaceholder }],
+                                                })(
+                                                    <Select onChange={(value) => {this.onQuestTypesChange(value, index);}}>
+                                                        {this.getQuestTypesChildren()}
+                                                    </Select>
+                                                )
+                                                }
+                                            </FormItem>
+                                        </Col>
+                                        <Col span={4}>
+                                            <FormItem {...formItemLayout} label={<FormattedMessage id="number" />}>
+                                                {getFieldDecorator('number' + index.toString(), {
+                                                    initialValue: item.number,
+                                                    rules: [{ required: true, message: this.props.intl.messages.titlePlaceholder }],
+                                                })(
+                                                    <Input placeholder={this.props.intl.messages.titlePlaceholder} onChange={(e) => {this.onNumberChange(e, index);}} />
+                                                )}
+                                            </FormItem>
+                                        </Col>
+                                        <Col span={4}>
+                                            <FormItem {...formItemLayout} label={<FormattedMessage id="score" />}>
+                                                {getFieldDecorator('score' + index.toString(), {
+                                                    initialValue: item.score,
+                                                    rules: [{ required: true, message: this.props.intl.messages.titlePlaceholder }],
+                                                })(
+                                                    <Input placeholder={this.props.intl.messages.titlePlaceholder} onChange={(e) => {this.onScoreChange(e, index);}} />
+                                                )}
+                                            </FormItem>
+                                        </Col>
+                                        <Col span={4}>
+                                            <FormItem {...formItemLayout} label={<FormattedMessage id="difficulty" />}>
+                                                {getFieldDecorator('difficulty' + index.toString(), {
+                                                    initialValue: item.difficulty,
+                                                    rules: [{ required: true, message: this.props.intl.messages.titlePlaceholder }],
+                                                })(
+                                                    <Input placeholder={this.props.intl.messages.titlePlaceholder} onChange={(e) => {this.onDifficultyChange(e, index);}} />
+                                                )}
+                                            </FormItem>
+                                        </Col>
+                                        <Col span={4}>
+                                            <FormItem {...formItemLayout} label={<FormattedMessage id="offset" />}>
+                                                {getFieldDecorator('offset' + index.toString(), {
+                                                    initialValue: item.offset,
+                                                    rules: [{ required: true, message: this.props.intl.messages.titlePlaceholder }],
+                                                })(
+                                                    <Input placeholder={this.props.intl.messages.titlePlaceholder} onChange={(e) => {this.onOffsetChange(e, index);}} />
+                                                )}
+                                            </FormItem>
+                                        </Col>
+                                        <Col span={4}>
+                                            <FormItem {...formItemLayout} label={<FormattedMessage id="subQuestNum" />}>
+                                                {getFieldDecorator('subQuestNum' + index.toString(), {
+                                                    initialValue: item.subQuestNum,
+                                                    rules: [{ required: true, message: this.props.intl.messages.titlePlaceholder }],
+                                                })(
+                                                    <Input placeholder={this.props.intl.messages.titlePlaceholder} onChange={(e) => {this.onSubQuestNumChange(e, index);}} />
+                                                )}
+                                            </FormItem>
+                                        </Col>
+                                    </Row>
+                                </Card>
+                            )
+                        })
                     }
                     <Row>
                         <Col span={15} offset={6}>
-                            <Button icon={"plus"} onClick={this.OpenModal} style={{width: '100%'}}>
+                            <Button icon={"plus"} onClick={this.addQuestType} style={{width: '100%'}}>
                                 <FormattedMessage id="addQuestType" />
                             </Button>
                         </Col>
@@ -114,15 +293,16 @@ class TemplateInput extends Component{
                         </Row>
                     </FormItem>
                 </Form>
-                <ModalAddQuest
-                    title={<FormattedMessage id="addSubQuest" />}
-                    wrappedComponentRef={this.saveFormRef}
-                    visible={visible}
-                    ref={this.saveFormRef}
-                    handleSave={this.handleSave}
-                    onCancel={this.onCancel}
-                />
-            </Layout>
+                {
+                    tagModalVisible && <ModalTagSelector
+                        title={[<FormattedMessage id="selectTags"/>]}
+                        visible={tagModalVisible}
+                        subjectId={this.state.selectedSubjectId}
+                        handleSelect={this.handleSelect}
+                        onCancel={this.onTagModalCancel}
+                    />
+                }
+            </Card>
         );
     }
 }
@@ -133,12 +313,14 @@ TemplateInput.propTypes = {
 
 const mapStateToProps = (state) => {
     return {
-        me: state.core.me
+        me: state.core.me,
+        questTypes: state.quests.questTypes,
     }
 }
 
 const mapDispatchToProps = (dispatch) => ({
-    addTemplate: (template) => dispatch(addTemplate(template))
+    addTemplate: (template) => dispatch(addTemplate(template)),
+    listQuestTypes: () => dispatch(listQuestTypes())
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Form.create()(injectIntl(TemplateInput)));
