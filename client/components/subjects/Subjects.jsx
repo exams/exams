@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
-import {withRouter, Link} from "react-router-dom";
+import {withRouter} from "react-router-dom";
 import { connect } from 'react-redux'
-import { List, Icon, Layout, Collapse, Row, Col } from 'antd';
+import { List, Icon, Layout, Row, Col, Button } from 'antd';
 import {addSubject, listSubjects} from "./actions";
 import { FormattedMessage } from 'react-intl';
 import ModalTagManager from './ModalTagManager'
@@ -12,7 +12,8 @@ class Subjects extends Component{
         super();
         this.state = {
             visible: false,
-            editSubject: null
+            editSubject: null,
+            shared: true
         }
     }
 
@@ -27,21 +28,39 @@ class Subjects extends Component{
         })
     }
 
-    onCancel = () => {
+    openSharedModal = () => {
         this.setState({
-            visible: false,
-            editSubject: null
+            visible: true,
+            editSubject: null,
+            shared: true
         })
     }
 
+    onCancel = () => {
+        this.setState({
+            visible: false,
+            editSubject: null,
+            shared: false
+        })
+    }
 
+    getTitle = () => {
+        const { editSubject, shared } = this.state;
+        if (shared)
+            return (<FormattedMessage id="sharedTagManagement"/>)
+        else
+            return ([<FormattedMessage id="tagManagement"/>, ' - ' + editSubject.name])
+    }
 
     render() {
         const { subjects } = this.props
-        const { visible, editSubject } = this.state;
+        const { visible, editSubject, shared } = this.state;
 
         return (
             <Layout>
+                <Row>
+                    <Button onClick={this.openSharedModal} icon={"plus"}><FormattedMessage id="sharedTagManagement"/></Button>
+                </Row>
                 <List
                     itemLayout="horizontal"
                     dataSource={subjects}
@@ -57,9 +76,10 @@ class Subjects extends Component{
 
                 {
                     visible && <ModalTagManager
-                        title={[<FormattedMessage id="tagManagement"/>, ' - ' + editSubject.name]}
+                        title={this.getTitle()}
                         visible={visible}
                         subject={editSubject}
+                        shared={shared}
                         onCancel={this.onCancel}
                     />
                 }

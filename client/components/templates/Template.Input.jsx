@@ -5,6 +5,7 @@ import { addTemplate } from "./actions";
 import {FormattedMessage, injectIntl, intlShape} from 'react-intl';
 import { listQuestTypes } from "../quests/actions";
 import ModalTagSelector from '../subjects/ModalTagSelector'
+import ModalAliasSetter from './ModalAliasSetter'
 
 const Option = Select.Option;
 const FormItem = Form.Item;
@@ -15,6 +16,7 @@ class TemplateInput extends Component{
         super();
         this.state = {
             tagModalVisible: false,
+            aliasModalVisible: false,
             selectedSubjectId: '',
             openModalIndex: 0,
             paparStructs: []
@@ -66,9 +68,28 @@ class TemplateInput extends Component{
             tagModalVisible: true
         })
     }
+
+    OpenAliasModal = (index) => {
+        this.setState({
+            openModalIndex: index,
+            aliasModalVisible: true
+        })
+    }
+
+    setAlias = (value) => {
+        const { paparStructs, openModalIndex } = this.state
+        const questSet = paparStructs[openModalIndex];
+        questSet.alias = value;
+        console.log(questSet)
+        this.setState({
+            aliasModalVisible: false,
+        })
+    }
+
     onCancel = () => {
         this.setState({
-            tagModalVisible: false
+            tagModalVisible: false,
+            aliasModalVisible: false,
         })
     }
 
@@ -80,6 +101,7 @@ class TemplateInput extends Component{
             offset: 1,
             number: 10,
             score: 2,
+            alias: "",
             tags: []
         }
         const { paparStructs } = this.state
@@ -123,7 +145,6 @@ class TemplateInput extends Component{
         const { paparStructs } = this.state
         const questSet = paparStructs[index];
         questSet.questType = value;
-
     }
 
     onNumberChange = (e, index) => {
@@ -162,7 +183,7 @@ class TemplateInput extends Component{
             labelCol: { span: 8 },
             wrapperCol: { span: 14 },
         }
-        const { paparStructs, tagModalVisible, selectTags } = this.state
+        const { paparStructs, tagModalVisible, aliasModalVisible } = this.state
         return (
             <Card>
                 <Form onSubmit={this.handleSubmit}>
@@ -197,11 +218,13 @@ class TemplateInput extends Component{
                     {
                         paparStructs.map((item, index) => {
                             const tags = this.getSelectTags(index)
-                            tags.unshift(<span style={{marginRight: 16}} key={-1}><FormattedMessage id="questTypeSet" /></span>)
+                            tags.unshift(<span style={{marginRight: 16}} key={-1}>{item.alias}</span>)
+                            tags.unshift(<span style={{marginRight: 16}} key={-2}><FormattedMessage id="questTypeSet" /></span>)
                             return (
                                 <Card key={index}
                                       title={tags}
                                       extra={[
+                                          <Button key={"setAlias"} onClick={() => {this.OpenAliasModal(index)}}><FormattedMessage id="setAlias" /></Button>,
                                           <Button key={"selectTags"} onClick={() => {this.OpenModal(index)}}><FormattedMessage id="selectTags" /></Button>,
                                           <Button key={"delete"} icon="delete" onClick={() => {this.delete(index);}} title={<FormattedMessage id="delete" />} />
                                       ]}
@@ -295,11 +318,17 @@ class TemplateInput extends Component{
                 </Form>
                 {
                     tagModalVisible && <ModalTagSelector
-                        title={[<FormattedMessage id="selectTags"/>]}
                         visible={tagModalVisible}
                         subjectId={this.state.selectedSubjectId}
                         handleSelect={this.handleSelect}
-                        onCancel={this.onTagModalCancel}
+                        onCancel={this.onCancel}
+                    />
+                }
+                {
+                    aliasModalVisible && <ModalAliasSetter
+                        visible={aliasModalVisible}
+                        setAlias={this.setAlias}
+                        onCancel={this.onCancel}
                     />
                 }
             </Card>

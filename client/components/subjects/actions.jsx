@@ -87,11 +87,12 @@ export const deleteTag = (tag) => {
 
 export const LIST_TAG_SUCCESS = 'LIST_TAG_SUCCESS'
 
-export const listTags = (subjectId) => {
+export const listTags = (subjectId, shared) => {
     return (dispatch) => {
         axios.get(tagsApi, {
             params: {
-                subjectId: subjectId
+                subjectId: subjectId,
+                shared: shared
             }
         }).then(response => {
             dispatch({

@@ -1,6 +1,6 @@
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
-import { Modal, Tag, Icon, Button} from 'antd';
+import { Modal, Tag, Icon, Button, Row, Col} from 'antd';
 import { listTags } from "./actions";
 import {connect} from "react-redux";
 
@@ -31,29 +31,59 @@ class ModalTagSelector extends React.Component {
         const { subjectId } = this.props;
         if (!subjectId)
             return;
-        this.props.listTags(subjectId);
+        this.props.listTags(subjectId, true);
     }
 
     render() {
         const { tags } = this.props;
+        const sharedTags = [];
+        const subjectTags = [];
+        tags && tags.map((tag) => {
+            console.log(tag)
+            if (tag.subject)
+                subjectTags.push(tag)
+            else
+                sharedTags.push(tag)
+        })
+
         const { selectedTags } = this.state;
         return (
             <Modal
                 width={760}
-                title={this.props.title}
+                title={<FormattedMessage id="selectTags"/>}
                 visible={this.props.visible}
                 onCancel={this.props.onCancel}
                 footer={<Button onClick={this.saveSelectTags}><FormattedMessage id={"close"} /></Button>}
             >
-                {
-                    tags && tags.map((tag) => {
-                        return (
-                            <CheckableTag key={tag._id} checked={selectedTags.indexOf(tag) > -1}
-                                          onChange={checked => this.handleChange(tag, checked)}
-                            >{tag.name}</CheckableTag>
-                        );
-                    })
-                }
+                <Row>
+                    <Col span={3}><FormattedMessage id={"sharedTag"} /></Col>
+                    <Col span={21}>
+                        {
+                            sharedTags && sharedTags.map((tag) => {
+                                return (
+                                    <CheckableTag key={tag._id} checked={selectedTags.indexOf(tag) > -1}
+                                                  onChange={checked => this.handleChange(tag, checked)}
+                                    >{tag.name}</CheckableTag>
+                                );
+                            })
+                        }
+                    </Col>
+                </Row>
+                <Row>
+                    <Col span={3}><FormattedMessage id={"subjectTag"} /></Col>
+                    <Col span={20}>
+                        {
+                            subjectTags && subjectTags.map((tag) => {
+                                return (
+                                    <CheckableTag key={tag._id} checked={selectedTags.indexOf(tag) > -1}
+                                                  onChange={checked => this.handleChange(tag, checked)}
+                                    >{tag.name}</CheckableTag>
+                                );
+                            })
+                        }
+                    </Col>
+                </Row>
+
             </Modal>
         );
     }
@@ -66,7 +96,7 @@ const mapStateToProps = (state) => {
 }
 
 const mapDispatchToProps = (dispatch) => ({
-    listTags: (subjectId) => dispatch(listTags(subjectId))
+    listTags: (subjectId, shared) => dispatch(listTags(subjectId, shared))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(ModalTagSelector)

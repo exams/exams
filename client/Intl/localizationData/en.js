@@ -90,6 +90,9 @@ export default {
       tagManagement: 'Tag Management',
       tagManagementNotes: '标签用于对题型做更细致的分类,比如问答题下可以设置"证明题"标签,组合题下可以设置"短文阅读"标签',
       newTag: 'New Tag',
+      sharedTagManagement: 'Shared Tag Management',
+      sharedTag: 'Shared Tags',
+      subjectTag: 'Subject Tags',
 
       // templates
       creatTemplate: 'Create Template',
@@ -112,6 +115,7 @@ export default {
       offset: "Offset",
       createPaper: "Creat Paper",
       copy: "Copy",
-      subQuestNum: "Sub Question Number"
+      subQuestNum: "Sub Question Number",
+      setAlias: "Set Alias",
   }
 };

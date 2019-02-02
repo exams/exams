@@ -15,7 +15,12 @@ class ModalTagManager extends React.Component {
     }
 
     componentDidMount = () => {
-        const { subject } = this.props;
+        const { subject, shared } = this.props;
+        if (shared){
+            this.props.listTags(null, true);
+            return
+        }
+
         if (!subject)
             return;
         this.props.listTags(subject._id);
@@ -35,10 +40,11 @@ class ModalTagManager extends React.Component {
 
     handleInputConfirm = () => {
         const { inputValue } = this.state;
-        const { subject, tags } = this.props;
+        const { subject, tags, shared } = this.props;
         if (inputValue) {
             let tag = {name: inputValue}
-            tag.subject = subject._id;
+            if (!shared)
+                tag.subject = subject._id;
             this.props.addTag(tag)
             tags.push(tag)
         }
@@ -105,7 +111,7 @@ const mapStateToProps = (state) => {
 }
 
 const mapDispatchToProps = (dispatch) => ({
-    listTags: (subjectId) => dispatch(listTags(subjectId)),
+    listTags: (subjectId, shared) => dispatch(listTags(subjectId, shared)),
     addTag: (tag) => dispatch(addTag(tag)),
     deleteTag: (tag) => dispatch(deleteTag(tag))
 })

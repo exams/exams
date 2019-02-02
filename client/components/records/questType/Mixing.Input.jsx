@@ -341,7 +341,6 @@ class MixingInput extends Component{
 
                 {
                     tagModalVisible && <ModalTagSelector
-                        title={[<FormattedMessage id="selectTags"/>]}
                         visible={tagModalVisible}
                         subjectId={this.state.selectedSubjectId}
                         handleSelect={this.handleSelect}
