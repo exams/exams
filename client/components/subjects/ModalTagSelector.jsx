@@ -39,7 +39,6 @@ class ModalTagSelector extends React.Component {
         const sharedTags = [];
         const subjectTags = [];
         tags && tags.map((tag) => {
-            console.log(tag)
             if (tag.subject)
                 subjectTags.push(tag)
             else

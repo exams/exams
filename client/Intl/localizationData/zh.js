@@ -87,8 +87,10 @@ export default {
       // subjects
       systemDefault: '系统内置',
       userDefinition: '用户创建',
+      tagUsage: "标签作用",
       tagManagement: '标签管理',
-      tagManagementNotes: '标签用于对题型做更细致的分类,比如问答题下可以设置"证明题"标签,组合题下可以设置"短文阅读"标签',
+      tagManagementNotes1: '标签可用于设置试题的属性,在生成试卷时匹配更精确地题型',
+      tagManagementNotes2: '标签用于对题型做更细致的分类,比如问答题下可以设置"证明题"标签,组合题下可以设置"短文阅读"标签',
       newTag: '新建标签',
       sharedTagManagement: '共享标签管理',
       sharedTag: '共享标签',
@@ -117,5 +119,7 @@ export default {
       copy: "复制",
       subQuestNum: "子题数量",
       setAlias: "设置别名",
+      AliasDescription: '设置在试卷上展示的试题名称,如组合题可以设置为阅读理解',
+      scoreTotal: "总分",
   }
 };

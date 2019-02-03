@@ -8,7 +8,6 @@ import thunk from 'redux-thunk';
 import { AppContainer } from 'react-hot-loader';
 import IntlWrapper from './components/core/IntlWrapper';
 import Router from './Router';
-import { reducer as paperTemplateReducer } from './components/paperTemplate/reducer';
 import { reducer as papersReducer } from './components/paper/reducer';
 import CoreReducer from './components/core/reducer';
 import IntlReducer from './components/core/IntlReducer';
@@ -29,7 +28,6 @@ const reducer = combineReducers({
     subjects: SubjectsReducer,
     quests: QuestsReducer,
     template: TemplatesReducer,
-    paperTemplates : paperTemplateReducer,
     papers: papersReducer
 })
 

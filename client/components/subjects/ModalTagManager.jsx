@@ -68,7 +68,9 @@ class ModalTagManager extends React.Component {
                 onCancel={this.props.onCancel}
                 footer={<Button onClick={this.props.onCancel}><FormattedMessage id={"close"} /></Button>}
             >
-                <p><FormattedMessage id={"tagManagementNotes"} /></p>
+                <p><FormattedMessage id={"tagUsage"} /></p>
+                <p>1. <FormattedMessage id={"tagManagementNotes1"} /></p>
+                <p>2. <FormattedMessage id={"tagManagementNotes2"} /></p>
 
                 {
                     tags && tags.map((tag) => {

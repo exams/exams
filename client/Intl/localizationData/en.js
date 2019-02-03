@@ -88,7 +88,8 @@ export default {
       systemDefault: 'System Default',
       userDefinition: 'User Definition',
       tagManagement: 'Tag Management',
-      tagManagementNotes: '标签用于对题型做更细致的分类,比如问答题下可以设置"证明题"标签,组合题下可以设置"短文阅读"标签',
+      tagManagementNotes1: '标签可用于设置试题的属性,在生成试卷时匹配更精确地题型',
+      tagManagementNotes2: '标签用于对题型做更细致的分类,比如问答题下可以设置"证明题"标签,组合题下可以设置"短文阅读"标签',
       newTag: 'New Tag',
       sharedTagManagement: 'Shared Tag Management',
       sharedTag: 'Shared Tags',
@@ -117,5 +118,7 @@ export default {
       copy: "Copy",
       subQuestNum: "Sub Question Number",
       setAlias: "Set Alias",
+      AliasDescription: 'Set the name of the question displayed on the paper, such as the combination question can be set to Reading Comprehension',
+      scoreTotal: "Total",
   }
 };

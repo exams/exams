@@ -26,12 +26,15 @@ class ModalAliasSetter extends React.Component {
         const { alias } = this.state;
         return (
             <Modal
-                width={360}
+                width={420}
                 title={<FormattedMessage id={"setAlias"} />}
                 visible={this.props.visible}
                 onCancel={this.props.onCancel}
                 footer={<Button onClick={this.setAlias}><FormattedMessage id={"close"} /></Button>}
             >
+                <Row>
+                    <FormattedMessage id={"AliasDescription"} />
+                </Row>
                 <Row>
                     <Col span={6}><FormattedMessage id={"setAlias"} /></Col>
                     <Col span={18}>
