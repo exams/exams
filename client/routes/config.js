@@ -2,9 +2,6 @@ export default {
     menus: [    // 菜单相关路由
         { route: '/app/dashboard/index', key: 'home', title: '首页', icon: 'home', component: 'Dashboard' },
         {
-            route: '/app/todos', key: 'todos', title: 'todos', icon: 'snippets', component: 'App'
-        },
-        {
             route: '/app/template', key: 'template', title: '模板', icon: 'snippets', component: 'Templates'
         },
         {

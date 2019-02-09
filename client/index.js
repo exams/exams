@@ -16,7 +16,6 @@ import SubjectsReducer from './components/subjects/reducer'
 import QuestsReducer from './components/quests/reducer'
 import TemplatesReducer from './components/templates/reducer'
 import PapersReducer from './components/papers/reducer'
-import toDoReducer from './components/todos/reducers/todos'
 
 // redux 注入操作
 const middleware = [thunk];
@@ -30,7 +29,6 @@ const reducer = combineReducers({
     quests: QuestsReducer,
     template: TemplatesReducer,
     papers: PapersReducer,
-    todos: toDoReducer
 })
 
 const store = createStore(reducer, applyMiddleware(...middleware));
