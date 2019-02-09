@@ -8,7 +8,6 @@ import thunk from 'redux-thunk';
 import { AppContainer } from 'react-hot-loader';
 import IntlWrapper from './components/core/IntlWrapper';
 import Router from './Router';
-import { reducer as papersReducer } from './components/paper/reducer';
 import CoreReducer from './components/core/reducer';
 import IntlReducer from './components/core/IntlReducer';
 import RecordsReducer from './components/records/reducer';
@@ -16,6 +15,8 @@ import UsersReducer from './components/users/reducer'
 import SubjectsReducer from './components/subjects/reducer'
 import QuestsReducer from './components/quests/reducer'
 import TemplatesReducer from './components/templates/reducer'
+import PapersReducer from './components/papers/reducer'
+import toDoReducer from './components/todos/reducers/todos'
 
 // redux 注入操作
 const middleware = [thunk];
@@ -28,7 +29,8 @@ const reducer = combineReducers({
     subjects: SubjectsReducer,
     quests: QuestsReducer,
     template: TemplatesReducer,
-    papers: papersReducer
+    papers: PapersReducer,
+    todos: toDoReducer
 })
 
 const store = createStore(reducer, applyMiddleware(...middleware));

@@ -5,6 +5,7 @@ export default {
       submit: 'Submit',
       save: 'Save',
       cancel: 'Cancel',
+      sure: 'Sure',
       close: 'Close',
       language: '中文',
       hello: 'hello-',
@@ -16,6 +17,7 @@ export default {
       register: 'Go Register Now!',
       signInTips : 'Please type in Username or Email!',
       signInPassTips : 'Please type in Password!',
+      sureToDelete: "Sure To Delete?",
 
       title: 'Title',
       titlePlaceholder: 'Please type in Title',
@@ -83,6 +85,7 @@ export default {
       right: 'Right',
       wrong: 'Wrong',
       questType: "Question Type",
+      recordQuests: 'Record Questions',
 
       // subjects
       systemDefault: 'System Default',
@@ -94,6 +97,7 @@ export default {
       sharedTagManagement: 'Shared Tag Management',
       sharedTag: 'Shared Tags',
       subjectTag: 'Subject Tags',
+      createSubject: 'Create Subject',
 
       // templates
       creatTemplate: 'Create Template',
@@ -120,5 +124,8 @@ export default {
       setAlias: "Set Alias",
       AliasDescription: 'Set the name of the question displayed on the paper, such as the combination question can be set to Reading Comprehension',
       scoreTotal: "Total",
+
+      //paper
+      createAnswerCard: "Create Answer Card"
   }
 };

@@ -2,6 +2,9 @@ export default {
     menus: [    // 菜单相关路由
         { route: '/app/dashboard/index', key: 'home', title: '首页', icon: 'home', component: 'Dashboard' },
         {
+            route: '/app/todos', key: 'todos', title: 'todos', icon: 'snippets', component: 'App'
+        },
+        {
             route: '/app/template', key: 'template', title: '模板', icon: 'snippets', component: 'Templates'
         },
         {
@@ -11,7 +14,7 @@ export default {
             route: '/app/papers', key: 'paper', title: '试卷', icon: 'file-text', component: 'Papers'
         },
         {
-            route: '/app/papers/:id', visible: false, title: '试卷', icon: 'star', component: 'Paper'
+            route: '/app/papers/create', visible: false, title: '试卷', icon: 'star', component: 'Paper'
         },
         {
             route: '/app/quests', key:'quests',  title: '题库', icon: 'star', component: 'Quests'

@@ -7,10 +7,7 @@ import {
     DELETE_TAG_SUCCESS
 } from './actions'
 
-// Initial State
-const initialState = { data: [] };
-
-const SubjectsReducer = (state = initialState, action) => {
+const SubjectsReducer = (state = {}, action) => {
     switch (action.type) {
         case ADD_SUBJECT_SUCCESS :
             const subject = action.data

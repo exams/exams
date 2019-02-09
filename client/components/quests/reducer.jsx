@@ -1,6 +1,7 @@
 import {
     QUESTS_HTTP_FAILED,
     LIST_QUESTTYPE_SUCCESS,
+    DELETE_SINGLECHOICE_SUCCESS,
     LIST_SINGLECHOICE_SUCCESS,
     LIST_MULTICHOICE_SUCCESS,
     LIST_JUDGE_SUCCESS,
@@ -26,6 +27,11 @@ const QuestsReducer = (state = initialState, action) => {
             return {
                 ...state,
                 singleChoices,
+                status: 'success'
+            };
+        case DELETE_SINGLECHOICE_SUCCESS:
+            return {
+                ...state,
                 status: 'success'
             };
         case LIST_MULTICHOICE_SUCCESS:

@@ -1,13 +1,13 @@
 import { instance as axios } from '../../axios'
-import { singleChoiceApi, multiChoiceApi, judgeApi, blankApi, questAnswerApi, mixingApi,
-    mixBlankApi, mixJudgeApi, mixMultiChoiceApi, mixQuestAnswerApi, mixSingleChoiceApi} from '../../api/api'
+import { singleChoicesApi, multiChoicesApi, judgesApi, blanksApi, questAnswersApi, mixingsApi,
+    mixBlanksApi, mixJudgesApi, mixMultiChoicesApi, mixQuestAnswersApi, mixSingleChoicesApi} from '../../api/api'
 
 export const RECORD_REQUEST_ERROR = 'RECORD_REQUEST_ERROR'
 
 export const ADD_SINGECHOICE_SUCCESS = 'ADD_SINGECHOICE_SUCCESS'
 export const addSingleChoice = (singleChoice) => {
     return (dispatch) => {
-        axios.post(singleChoiceApi, singleChoice).then(response => {
+        axios.post(singleChoicesApi, singleChoice).then(response => {
             dispatch({
                 type: ADD_SINGECHOICE_SUCCESS,
                 data: response.data
@@ -34,7 +34,7 @@ export const cleanSingleChoice = () => {
 export const ADD_MULTICHOICE_SUCCESS = 'ADD_MULTICHOICE_SUCCESS'
 export const addMultiChoice = (multiChoice) => {
     return (dispatch) => {
-        axios.post(multiChoiceApi, multiChoice).then(response => {
+        axios.post(multiChoicesApi, multiChoice).then(response => {
             dispatch({
                 type: ADD_MULTICHOICE_SUCCESS,
                 payload: response.data
@@ -62,7 +62,7 @@ export const cleanMultiChoice = () => {
 export const ADD_JUDGE_SUCCESS = 'ADD_JUDGE_SUCCESS'
 export const addJudge = (judge) => {
     return (dispatch) => {
-        axios.post(judgeApi, judge).then(response => {
+        axios.post(judgesApi, judge).then(response => {
             dispatch({
                 type: ADD_JUDGE_SUCCESS,
                 data: response.data
@@ -90,7 +90,7 @@ export const cleanJudge = () => {
 export const ADD_BLANK_SUCCESS = 'ADD_BLANK_SUCCESS'
 export const addBlank = (blank) => {
     return (dispatch) => {
-        axios.post(blankApi, blank).then(response => {
+        axios.post(blanksApi, blank).then(response => {
             dispatch({
                 type: ADD_BLANK_SUCCESS,
                 data: response.data
@@ -118,7 +118,7 @@ export const cleanBlank = () => {
 export const ADD_QUESTANSWER_SUCCESS = 'ADD_QUESTANSWER_SUCCESS'
 export const addQuestAnswer = (questAnswer) => {
     return (dispatch) => {
-        axios.post(questAnswerApi, questAnswer).then(response => {
+        axios.post(questAnswersApi, questAnswer).then(response => {
             dispatch({
                 type: ADD_QUESTANSWER_SUCCESS,
                 data: response.data
@@ -146,7 +146,7 @@ export const cleanQuestAnswer = () => {
 export const ADD_MIXING_SUCCESS = 'ADD_MIXING_SUCCESS'
 export const addMixing = (mixing) => {
     return (dispatch) => {
-        axios.post(mixingApi, mixing).then(response => {
+        axios.post(mixingsApi, mixing).then(response => {
             dispatch({
                 type: ADD_MIXING_SUCCESS,
                 data: response.data
@@ -174,7 +174,7 @@ export const cleanMixing = () => {
 export const ADD_MIXSINGLECHOICE_SUCCESS = 'ADD_MIXSINGLECHOICE_SUCCESS'
 export const addMixSingleChoice = (mixSingleChoice) => {
     return (dispatch) => {
-        axios.post(mixSingleChoiceApi, mixSingleChoice).then(response => {
+        axios.post(mixSingleChoicesApi, mixSingleChoice).then(response => {
             dispatch({
                 type: ADD_MIXSINGLECHOICE_SUCCESS,
                 data: response.data
@@ -202,7 +202,7 @@ export const cleanMixSingleChoice = () => {
 export const ADD_MIXMULTICHOICE_SUCCESS = 'ADD_MIXMULTICHOICE_SUCCESS'
 export const addMixMultiChoice = (mixMultiChoice) => {
     return (dispatch) => {
-        axios.post(mixMultiChoiceApi, mixMultiChoice).then(response => {
+        axios.post(mixMultiChoicesApi, mixMultiChoice).then(response => {
             dispatch({
                 type: ADD_MIXMULTICHOICE_SUCCESS,
                 data: response.data
@@ -230,7 +230,7 @@ export const cleanMixMultiChoice = () => {
 export const ADD_MIXBLANK_SUCCESS = 'ADD_MIXBLANK_SUCCESS'
 export const addMixBlank = (mixBlank) => {
     return (dispatch) => {
-        axios.post(mixBlankApi, mixBlank).then(response => {
+        axios.post(mixBlanksApi, mixBlank).then(response => {
             dispatch({
                 type: ADD_MIXBLANK_SUCCESS,
                 data: response.data
@@ -258,7 +258,7 @@ export const cleanMixBlank = () => {
 export const ADD_MIXJUDGE_SUCCESS = 'ADD_MIXJUDGE_SUCCESS'
 export const addMixJudge = (mixJudge) => {
     return (dispatch) => {
-        axios.post(mixJudgeApi, mixJudge).then(response => {
+        axios.post(mixJudgesApi, mixJudge).then(response => {
             dispatch({
                 type: ADD_MIXJUDGE_SUCCESS,
                 data: response.data
@@ -286,7 +286,7 @@ export const cleanMixJudge = () => {
 export const ADD_MIXQUESTANSWER_SUCCESS = 'ADD_MIXQUESTANSWER_SUCCESS'
 export const addMixQuestAnswer = (mixQuestAnswer) => {
     return (dispatch) => {
-        axios.post(mixQuestAnswerApi, mixQuestAnswer).then(response => {
+        axios.post(mixQuestAnswersApi, mixQuestAnswer).then(response => {
             dispatch({
                 type: ADD_MIXQUESTANSWER_SUCCESS,
                 data: response.data

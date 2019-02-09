@@ -16,6 +16,10 @@ class AddUser extends Component{
                 values.lastName = 'mmmmm' + Math.random()*10;
                 const subjects = this.getSubjects(values.subjects);
                 values.subjects = subjects;
+                values.username = values.username_create;
+                values.password = values.password_create;
+                delete values.username_create;
+                delete values.password_create;
                 this.props.addUser(values)
             }
         });
@@ -48,23 +52,23 @@ class AddUser extends Component{
         return (
             <Form onSubmit={this.handleSubmit}>
                 <Row>
-                    <Col span={12}>
+                    <Col span={6}>
                         <FormItem {...formItemLayout} label={<FormattedMessage id="username" />}>
-                            {getFieldDecorator('username')(
-                                <Input placeholder={this.props.intl.messages.usernamePlaceholder}/>
+                            {getFieldDecorator('username_create')(
+                                <Input placeholder={this.props.intl.messages.usernamePlaceHolder}/>
                             )}
                         </FormItem>
                     </Col>
 
-                    <Col span={12}>
+                    <Col span={6}>
                         <FormItem {...formItemLayout} label={<FormattedMessage id="password" />}>
-                            {getFieldDecorator('password')(
+                            {getFieldDecorator('password_create')(
                                 <Input type={"password"} placeholder={this.props.intl.messages.passwordPlaceHolder} />
                             )}
                         </FormItem>
                     </Col>
 
-                    <Col span={12}>
+                    <Col span={5}>
                         <FormItem {...formItemLayout} label={<FormattedMessage id="role" />}>
                             {getFieldDecorator('roles')(
                                 <Select
@@ -79,7 +83,7 @@ class AddUser extends Component{
                         </FormItem>
                     </Col>
 
-                    <Col span={12}>
+                    <Col span={5}>
                         <FormItem {...formItemLayout} label={<FormattedMessage id="subject" />}>
                             {getFieldDecorator('subjects')(
                                 <Select
@@ -92,9 +96,9 @@ class AddUser extends Component{
                             )}
                         </FormItem>
                     </Col>
-                </Row>
-                <Row>
-                    <Button onClick={this.addUser} icon={"plus"}><FormattedMessage id="submit"/></Button>
+                    <Col span={2}>
+                        <Button onClick={this.addUser} icon={"plus"}><FormattedMessage id="submit"/></Button>
+                    </Col>
                 </Row>
             </Form>
         );

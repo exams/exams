@@ -4,12 +4,12 @@ import { FormattedMessage } from 'react-intl';
 
 class SingleChoiceListView extends Component{
 
+    delete = (singleChoice) =>{
+        this.props.deleteSingleChoice(singleChoice);
+    }
+
     render() {
         const { singleChoices } = this.props
-
-        const IconText = ({ type, text }) => (
-            <span><Icon type={type} style={{ marginRight: 8 }} />{text}</span>
-        );
 
         return (
             <List
@@ -25,7 +25,11 @@ class SingleChoiceListView extends Component{
                 renderItem={item => (
                     <List.Item
                         key={item._id}
-                        actions={[<IconText type="edit" text={<FormattedMessage id={"edit"} />} />, <IconText type="delete" text={<FormattedMessage id={"delete"} />} />]}
+                        actions={[<span><Icon type="edit" style={{ marginRight: 8 }} /><FormattedMessage id={"edit"} /></span>,
+                            <span onClick={() => {this.delete(item)}}><Icon type="delete" style={{ marginRight: 8 }} />
+                                <FormattedMessage id={"delete"} />
+                            </span>
+                            ]}
                     >
                         <a href={item.href}>{item.title}</a>
                     </List.Item>

@@ -59,7 +59,8 @@ class Subjects extends Component{
         return (
             <Layout>
                 <Row>
-                    <Button onClick={this.openSharedModal} icon={"plus"}><FormattedMessage id="sharedTagManagement"/></Button>
+                    <Button onClick={this.openSharedModal}><FormattedMessage id="createSubject"/></Button>
+                    <Button onClick={this.openSharedModal}><FormattedMessage id="sharedTagManagement"/></Button>
                 </Row>
                 <List
                     itemLayout="horizontal"

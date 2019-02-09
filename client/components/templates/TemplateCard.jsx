@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import { Link } from 'react-router-dom'
-import { Card, Row, Col, List, Button, Tag } from 'antd';
+import { Card, Col, List, Button, Tag } from 'antd';
 import PropTypes from 'prop-types';
 import {FormattedMessage, injectIntl} from 'react-intl';
 
@@ -20,11 +20,11 @@ class TemplateCard extends Component{
         var score = 0;
         var difficulty = 0;
         var itemScore = 0;
-        template.paparStructs.forEach((item) => {
+        template.paperStructs.forEach((item) => {
             itemScore = item.score * item.number * item.subQuestNum;
             score += itemScore;
         });
-        template.paparStructs.forEach((item) => {
+        template.paperStructs.forEach((item) => {
             itemScore = item.score * item.number * item.subQuestNum;
             difficulty += itemScore / score * item.difficulty;
         });
@@ -56,16 +56,16 @@ class TemplateCard extends Component{
         const { template } = this.props;
         const { score, difficulty } = this.state;
         const titleLabels = [];
-        titleLabels.push(<span>{template.title}</span>)
-        titleLabels.push(<span style={{marginLeft: 20, color:"red"}}><FormattedMessage id={"scoreTotal"} />{score}</span>)
-        titleLabels.push(<span style={{marginLeft: 20}}><FormattedMessage id={"difficulty"} />{difficulty}</span>)
+        titleLabels.push(<span key={"title"}>{template.title}</span>)
+        titleLabels.push(<span key={"scoreTotal"} style={{marginLeft: 20, color:"red"}}><FormattedMessage id={"scoreTotal"} />{score}</span>)
+        titleLabels.push(<span key={"difficulty"} style={{marginLeft: 20}}><FormattedMessage id={"difficulty"} />{difficulty}</span>)
         return titleLabels
     }
 
     render() {
         const { template } = this.props;
         const path = {
-            pathname:'/app/papers',
+            pathname:'/app/papers/create',
             state: template
         }
 
@@ -75,7 +75,7 @@ class TemplateCard extends Component{
                 title={this.getTitle()}
                 extra={[
                         <Link to={path} key="create">
-                            <Button type="primary" onClick={this.create} style={{marginRight: 20}}><FormattedMessage id={"createPaper"} /></Button>
+                            <Button type="primary" style={{marginRight: 20}}><FormattedMessage id={"createPaper"} /></Button>
                         </Link>,
                         <Button.Group key="edit">
                             <Button icon="edit" onClick={this.edit} title={this.props.intl.messages.edit} />
@@ -87,7 +87,7 @@ class TemplateCard extends Component{
             >
                 <List
                     itemLayout="horizontal"
-                    dataSource={template.paparStructs}
+                    dataSource={template.paperStructs}
                     renderItem={item => (
                         <List.Item>
                             <List.Item.Meta

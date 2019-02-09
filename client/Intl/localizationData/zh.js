@@ -5,6 +5,7 @@ export default {
       submit: '提交',
       save: '保存',
       cancel: '取消',
+      sure: '确定',
       close: '关闭',
       language: 'English',
       hello: '你好-',
@@ -16,6 +17,7 @@ export default {
       register: '现在就去注册!',
       signInTips : '请输入用户名或邮箱!',
       signInPassTips : '请输入密码!',
+      sureToDelete: "确定删除吗？",
 
       title: '标题',
       titlePlaceholder: '请输入标题',
@@ -83,6 +85,7 @@ export default {
       right: '对',
       wrong: '错',
       questType: "题型",
+      recordQuests: '录入试题',
 
       // subjects
       systemDefault: '系统内置',
@@ -95,6 +98,7 @@ export default {
       sharedTagManagement: '共享标签管理',
       sharedTag: '共享标签',
       subjectTag: '科目标签',
+      createSubject: '新建科目',
 
       // templates
       creatTemplate: '创建模板',
@@ -121,5 +125,8 @@ export default {
       setAlias: "设置别名",
       AliasDescription: '设置在试卷上展示的试题名称,如组合题可以设置为阅读理解',
       scoreTotal: "总分",
+
+      //paper
+      createAnswerCard: "生成答题卡"
   }
 };

@@ -19,7 +19,7 @@ class TemplateInput extends Component{
             aliasModalVisible: false,
             selectedSubjectId: '',
             openModalIndex: 0,
-            paparStructs: []
+            paperStructs: []
         }
     }
 
@@ -57,8 +57,8 @@ class TemplateInput extends Component{
         this.setState({
             tagModalVisible: false,
         })
-        const { openModalIndex, paparStructs } = this.state
-        const questSet = paparStructs[openModalIndex];
+        const { openModalIndex, paperStructs } = this.state
+        const questSet = paperStructs[openModalIndex];
         questSet.tags = selectTags;
     }
 
@@ -77,8 +77,8 @@ class TemplateInput extends Component{
     }
 
     setAlias = (value) => {
-        const { paparStructs, openModalIndex } = this.state
-        const questSet = paparStructs[openModalIndex];
+        const { paperStructs, openModalIndex } = this.state
+        const questSet = paperStructs[openModalIndex];
         questSet.alias = value;
         console.log(questSet)
         this.setState({
@@ -104,16 +104,16 @@ class TemplateInput extends Component{
             alias: "",
             tags: []
         }
-        const { paparStructs } = this.state
-        paparStructs.push(questSet)
+        const { paperStructs } = this.state
+        paperStructs.push(questSet)
         this.setState({
-            paparStructs: paparStructs
+            paperStructs: paperStructs
         })
     }
 
     getSelectTags = (index) => {
-        const { paparStructs } = this.state
-        const selectTags = paparStructs[index].tags;
+        const { paperStructs } = this.state
+        const selectTags = paperStructs[index].tags;
         const tags = [];
         selectTags && selectTags.map((item, index) => {
             tags.push(<Tag key={index}>{item.name}</Tag>)
@@ -122,19 +122,19 @@ class TemplateInput extends Component{
     }
 
     delete = (index) => {
-        const { paparStructs } = this.state
-        paparStructs.splice(index, 1);
+        const { paperStructs } = this.state
+        paperStructs.splice(index, 1);
         this.setState({
-            paparStructs: paparStructs
+            paperStructs: paperStructs
         })
     }
 
     handleSubmit = (e) => {
         e.preventDefault();
-        const { paparStructs } = this.state
+        const { paperStructs } = this.state
         this.props.form.validateFields((err, values) => {
             if (!err) {
-                values.paparStructs = paparStructs;
+                values.paperStructs = paperStructs;
                 this.props.addTemplate(values)
                 console.log(values)
             }
@@ -142,38 +142,38 @@ class TemplateInput extends Component{
     }
 
     onQuestTypesChange = (value, index) => {
-        const { paparStructs } = this.state
-        const questSet = paparStructs[index];
+        const { paperStructs } = this.state
+        const questSet = paperStructs[index];
         questSet.questType = value;
     }
 
     onNumberChange = (e, index) => {
-        const { paparStructs } = this.state
-        const questSet = paparStructs[index];
+        const { paperStructs } = this.state
+        const questSet = paperStructs[index];
         questSet.number = e.target.value;
     }
 
     onScoreChange = (e, index) => {
-        const { paparStructs } = this.state
-        const questSet = paparStructs[index];
+        const { paperStructs } = this.state
+        const questSet = paperStructs[index];
         questSet.score = e.target.value;
     }
 
     onDifficultyChange = (e, index) => {
-        const { paparStructs } = this.state
-        const questSet = paparStructs[index];
+        const { paperStructs } = this.state
+        const questSet = paperStructs[index];
         questSet.difficulty = e.target.value;
     }
 
     onOffsetChange = (e, index) => {
-        const { paparStructs } = this.state
-        const questSet = paparStructs[index];
+        const { paperStructs } = this.state
+        const questSet = paperStructs[index];
         questSet.offset = e.target.value
     }
 
     onSubQuestNumChange = (e, index) => {
-        const { paparStructs } = this.state
-        const questSet = paparStructs[index];
+        const { paperStructs } = this.state
+        const questSet = paperStructs[index];
         questSet.subQuestNum = e.target.value
     }
 
@@ -183,7 +183,7 @@ class TemplateInput extends Component{
             labelCol: { span: 8 },
             wrapperCol: { span: 14 },
         }
-        const { paparStructs, tagModalVisible, aliasModalVisible } = this.state
+        const { paperStructs, tagModalVisible, aliasModalVisible } = this.state
         return (
             <Card>
                 <Form onSubmit={this.handleSubmit}>
@@ -216,7 +216,7 @@ class TemplateInput extends Component{
                         </Row>
                     </FormItem>
                     {
-                        paparStructs.map((item, index) => {
+                        paperStructs.map((item, index) => {
                             const tags = this.getSelectTags(index)
                             tags.unshift(<span style={{marginRight: 16}} key={-1}>{item.alias}</span>)
                             tags.unshift(<span style={{marginRight: 16}} key={-2}><FormattedMessage id="questTypeSet" /></span>)
