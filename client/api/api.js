@@ -9,6 +9,7 @@ export const usersApi = '/api/users';
 export const userApi = '/api/users/:userId';
 
 export const subjectsApi = '/api/subjects';
+export const subjectApi = '/api/subjects/:subjectId';
 export const tagsApi = '/api/tags';
 export const tagApi = '/api/tags/:tagId';
 export const templatesApi = '/api/templates';

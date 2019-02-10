@@ -99,6 +99,10 @@ export default {
       sharedTag: '共享标签',
       subjectTag: '科目标签',
       createSubject: '新建科目',
+      subjectName: '科目名称',
+      subjectNamePlaceholder: '请输入科目名称',
+      subjectCode: '科目编码',
+      subjectCodePlaceholder: '请输入科目编码',
 
       // templates
       creatTemplate: '创建模板',

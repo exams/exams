@@ -32,11 +32,10 @@ class ModalAliasSetter extends React.Component {
                 onCancel={this.props.onCancel}
                 footer={<Button onClick={this.setAlias}><FormattedMessage id={"close"} /></Button>}
             >
-                <Row>
+                <Row span={18}>
                     <FormattedMessage id={"AliasDescription"} />
                 </Row>
                 <Row>
-                    <Col span={6}><FormattedMessage id={"setAlias"} /></Col>
                     <Col span={18}>
                         <Input
                             ref={this.saveInputRef}

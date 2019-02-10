@@ -1,5 +1,5 @@
 import { instance as axios } from '../../axios'
-import {subjectsApi, tagsApi, tagApi} from '../../api/api'
+import {subjectsApi, subjectApi, tagsApi, tagApi} from '../../api/api'
 
 export const SUBJECT_HTTP_FAILED = 'SUBJECT_HTTP_FAILED'
 
@@ -10,6 +10,28 @@ export const addSubject = (subject) => {
         axios.post(subjectsApi, subject).then(response => {
             dispatch({
                 type: ADD_SUBJECT_SUCCESS,
+                data: response.data
+            })
+        }).catch(error => {
+            if (error.response || error.request){
+                dispatch({
+                    type: SUBJECT_HTTP_FAILED,
+                    data: error
+                })
+            }
+        })
+    }
+}
+
+export const DELETE_SUBJECT_SUCCESS = 'DELETE_SUBJECT_SUCCESS'
+
+export const deleteSubject = (subject) => {
+    return (dispatch) => {
+        const deleteSubjectApi = subjectApi.replace(':subjectId', subject._id)
+        axios.delete(deleteSubjectApi).then(response => {
+            console.log(response)
+            dispatch({
+                type: DELETE_SUBJECT_SUCCESS,
                 data: response.data
             })
         }).catch(error => {

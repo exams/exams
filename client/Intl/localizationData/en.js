@@ -98,6 +98,10 @@ export default {
       sharedTag: 'Shared Tags',
       subjectTag: 'Subject Tags',
       createSubject: 'Create Subject',
+      subjectName: 'Subject Name',
+      subjectNamePlaceholder: 'Please Type in Subject Name',
+      subjectCode: 'Subject Code',
+      subjectCodePlaceholder: 'Please Type in Subject Code',
 
       // templates
       creatTemplate: 'Create Template',

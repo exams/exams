@@ -54,7 +54,7 @@ class AddUser extends Component{
                 <Row>
                     <Col span={6}>
                         <FormItem {...formItemLayout} label={<FormattedMessage id="username" />}>
-                            {getFieldDecorator('username_create')(
+                            {getFieldDecorator('user_create')(
                                 <Input placeholder={this.props.intl.messages.usernamePlaceHolder}/>
                             )}
                         </FormItem>

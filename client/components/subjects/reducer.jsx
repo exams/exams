@@ -1,6 +1,7 @@
 import {
     SUBJECT_HTTP_FAILED,
     ADD_SUBJECT_SUCCESS,
+    DELETE_SUBJECT_SUCCESS,
     LIST_SUBJECT_SUCCESS,
     ADD_TAG_SUCCESS,
     LIST_TAG_SUCCESS,
@@ -10,10 +11,18 @@ import {
 const SubjectsReducer = (state = {}, action) => {
     switch (action.type) {
         case ADD_SUBJECT_SUCCESS :
-            const subject = action.data
+            state.subjects = [
+                action.data,
+                ...state.subjects
+            ]
             return {
                 ...state,
-                subject,
+                status: 'success'
+            };
+        case DELETE_SUBJECT_SUCCESS:
+            state.subjects = state.subjects.filter(subject => subject._id !== action.data._id)
+            return {
+                ...state,
                 status: 'success'
             };
         case LIST_SUBJECT_SUCCESS:

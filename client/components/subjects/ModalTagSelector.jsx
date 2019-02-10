@@ -1,6 +1,6 @@
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
-import { Modal, Tag, Icon, Button, Row, Col} from 'antd';
+import { Modal, Tag, Button, Row, Col} from 'antd';
 import { listTags } from "./actions";
 import {connect} from "react-redux";
 
