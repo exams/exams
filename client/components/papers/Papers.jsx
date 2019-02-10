@@ -3,7 +3,7 @@ import {withRouter, Link} from "react-router-dom";
 import { listPapers, deletePaper } from "./actions";
 import { connect } from 'react-redux'
 import { List, Icon, Col } from 'antd';
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, FormattedDate } from 'react-intl';
 
 class Papers extends Component{
     componentDidMount() {
@@ -31,6 +31,7 @@ class Papers extends Component{
                                 state: item
                             }}>{item.title}</Link>}
                         />
+                        <Col span={6}><FormattedDate value={item.created} /></Col>
                         <Col span={4}>{item.subject}</Col>
                     </List.Item>
                 )}

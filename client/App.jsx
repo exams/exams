@@ -34,17 +34,13 @@ class App extends Component {
         }
 
         if (me) {
-            console.log(me)
             return (
-                <Layout>
+                <div style={{height: "inherit"}}>
                     <HeaderCustom user={ me } intl={ intl } logout={this.logout} switchLanguage={lang => this.props.switchLanguage(lang)} />
-                    <Content style={{ margin: '0 16px', overflow: 'initial', flex: '1 1 0' }}>
+                    <Content style={{ margin: '0 16px', overflow: 'initial', flex: '1 1 0', height: "inherit" }}>
                         <Routes auth={ me } />
                     </Content>
-                    <Footer style={{ textAlign: 'center' }}>
-
-                    </Footer>
-                </Layout>
+                </div>
             );
         }
 
