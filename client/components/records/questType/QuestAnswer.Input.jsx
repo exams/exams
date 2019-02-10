@@ -101,23 +101,10 @@ class QuestAnswerInput extends Component{
                         </Col>
                     </Row>
                 </FormItem>
-                <FormItem {...formItemLayout} label={<FormattedMessage id="isRealDescription" />}>
-                    <Row>
-                        <Col span={10}>
-                            {getFieldDecorator('description')(
-                                <Input placeholder={this.props.intl.messages.descriptionPlaceholder}/>
-                            )}
-                        </Col>
-                    </Row>
-                </FormItem>
                 <FormItem wrapperCol={{ span: 15, offset: 4 }}>
-                    <Row>
-                        <Col span={20}>
-                            <Button type="primary" htmlType="submit" style={{width: '100%'}}>
-                                <FormattedMessage id="submit"/>
-                            </Button>
-                        </Col>
-                    </Row>
+                    <Button type="primary" htmlType="submit" style={{width: '100%'}}>
+                        <FormattedMessage id="submit"/>
+                    </Button>>
                 </FormItem>
             </Form>
         )

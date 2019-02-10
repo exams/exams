@@ -4,7 +4,6 @@
 import React from 'react';
 import { Breadcrumb, Switch, Icon } from 'antd';
 import { Link } from 'react-router-dom';
-import themes from '../style/theme';
 
 class BreadcrumbCustom extends React.Component {
     state = {
@@ -19,28 +18,14 @@ class BreadcrumbCustom extends React.Component {
         ],
     };
     componentDidMount() {
-        this.state.themes.forEach(val => {
-            val.checked && this.setState({
-                theme: themes['theme' + val.type] || null
-            });
-        })
+
     }
     switcherOn = () => {
         this.setState({
             switcherOn: !this.state.switcherOn
         })
     };
-    themeChange = (v) => {
-        this.setState({
-            themes: this.state.themes.map((t, i) => {
-                (t.type === v.type && (t.checked = !t.checked)) || (t.checked = false);
-                return t;
-            }),
-            theme: (v.checked && themes['theme' + v.type]) || null
-        }, () => {
-            localStorage.setItem('themes', JSON.stringify(this.state.themes));
-        })
-    };
+
     render() {
         const themesTag = this.state.themes.map((v, i) => (
             <div className="pull-left y-center mr-m mb-s" key={i}>

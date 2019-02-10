@@ -229,7 +229,7 @@ class MixingInput extends Component{
         }
 
         return(
-            <Layout>
+            <div>
             <Row>
                 <Form onSubmit={this.handleSubmit}>
                     <Row>
@@ -290,8 +290,8 @@ class MixingInput extends Component{
                     <Row>
                         <Col span={18} offset={4}>
                             <Row>
-                                <Col span={8}>
-                                    <Button icon={"plus"} onClick={this.OpenModal}>
+                                <Col span={6}>
+                                    <Button icon={"plus"} onClick={this.OpenModal} style={{width: 150}}>
                                         <FormattedMessage id="addSubQuest" />
                                     </Button>
                                 </Col>
@@ -299,34 +299,21 @@ class MixingInput extends Component{
                         </Col>
                     </Row>
                     <Row>
-                        <Col span={18} offset={4}>
+                        <Col span={14} offset={4}>
                             {
                                 selectTags && selectTags.map((tag) => {
                                     return (<CheckableTag key={tag._id} checked={true}>{tag.name}</CheckableTag>);
                                 })
                             }
-                            <Button icon={"plus"} onClick={this.OpenTagModal}>
+                            <Button icon={"plus"} onClick={this.OpenTagModal} style={{width: 150}}>
                                 <FormattedMessage id="selectTags" />
                             </Button>
                         </Col>
                     </Row>
-                    <FormItem {...formItemLayout} label={<FormattedMessage id="isRealDescription" />}>
-                        <Row>
-                            <Col span={10}>
-                                {getFieldDecorator('description')(
-                                    <Input placeholder={this.props.intl.messages.descriptionPlaceholder}/>
-                                )}
-                            </Col>
-                        </Row>
-                    </FormItem>
                     <FormItem wrapperCol={{ span: 15, offset: 4 }}>
-                        <Row>
-                            <Col span={20}>
-                                <Button type="primary" htmlType="submit" style={{width: '100%'}}>
-                                    <FormattedMessage id="submit"/>
-                                </Button>
-                            </Col>
-                        </Row>
+                        <Button type="primary" htmlType="submit" style={{width: '100%'}}>
+                            <FormattedMessage id="submit"/>
+                        </Button>
                     </FormItem>
                 </Form>
             </Row>
@@ -338,16 +325,16 @@ class MixingInput extends Component{
                     handleSave={this.handleSave}
                     onCancel={this.onCancel}
                 />
-
                 {
-                    tagModalVisible && <ModalTagSelector
+                    tagModalVisible &&
+                    <ModalTagSelector
                         visible={tagModalVisible}
                         subjectId={this.state.selectedSubjectId}
                         handleSelect={this.handleSelect}
                         onCancel={this.onTagModalCancel}
                     />
                 }
-            </Layout>
+            </div>
         )
     }
 }

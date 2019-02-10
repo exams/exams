@@ -11,13 +11,13 @@ export default {
             route: '/app/papers', key: 'paper', title: '试卷', icon: 'file-text', component: 'Papers'
         },
         {
-            route: '/app/papers/create', visible: false, title: '试卷', icon: 'star', component: 'Paper'
+            route: '/app/papers/create', visible: false, title: '试卷', component: 'Paper'
         },
         {
             route: '/app/quests', key:'quests',  title: '题库', icon: 'star', component: 'Quests'
         },
         {
-            route: '/app/records', key: 'record', title: '录入', icon: 'file-done', component: 'Records'
+            route: '/app/records', visible: false, key: 'record', title: '录入', component: 'Records'
         },
         {
             route: '/app/subjects', key: 'subject', title: '科目', icon: 'cluster', component: 'Subjects'
