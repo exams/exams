@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {withRouter} from "react-router-dom";
 import { connect } from 'react-redux'
-import { List, Icon, Layout, Row, Col, Button } from 'antd';
+import { List, Icon, Row, Button } from 'antd';
 import {addSubject, listSubjects} from "./actions";
 import { FormattedMessage } from 'react-intl';
 import ModalTagManager from './ModalTagManager'
@@ -57,7 +57,7 @@ class Subjects extends Component{
         const { visible, editSubject, shared } = this.state;
 
         return (
-            <Layout>
+            <div>
                 <Row>
                     <Button onClick={this.openSharedModal}><FormattedMessage id="createSubject"/></Button>
                     <Button onClick={this.openSharedModal}><FormattedMessage id="sharedTagManagement"/></Button>
@@ -74,9 +74,9 @@ class Subjects extends Component{
                         </List.Item>
                     )}
                 />
-
                 {
-                    visible && <ModalTagManager
+                    visible &&
+                    <ModalTagManager
                         title={this.getTitle()}
                         visible={visible}
                         subject={editSubject}
@@ -84,7 +84,7 @@ class Subjects extends Component{
                         onCancel={this.onCancel}
                     />
                 }
-            </Layout>
+            </div>
         );
     }
 }

@@ -30,7 +30,9 @@ class Templates extends Component{
             <div>
                 <Row>
                     <Col span={6}>
-                        <Button onClick={this.toggleAddUser} icon={"plus"}><FormattedMessage id="creatTemplate" /></Button>
+                        <Link to={'/app/template/create'}>
+                            <Button onClick={this.toggleAddUser} icon={"plus"}><FormattedMessage id="creatTemplate" /></Button>
+                        </Link>
                     </Col>
                     <Col span={18}>
                     </Col>
