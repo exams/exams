@@ -1,7 +1,7 @@
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
 import { Modal, Tag, Input, Icon, Button} from 'antd';
-import {addTag, listTags, deleteTag} from "./actions";
+import {addTag, listTags, deleteTag} from "../actions";
 import {connect} from "react-redux";
 
 class ModalTagManager extends React.Component {

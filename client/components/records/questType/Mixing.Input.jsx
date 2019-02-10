@@ -10,7 +10,7 @@ import {
     addMixBlank
 } from '../actions'
 import {connect} from "react-redux";
-import ModalTagSelector from '../../subjects/ModalTagSelector'
+import ModalTagSelector from '../../subjects/components/ModalTagSelector'
 
 const FormItem = Form.Item;
 const { TextArea } = Input;

@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { List, Icon, Row, Col } from 'antd';
+import { List, Icon, Popconfirm } from 'antd';
 import { FormattedMessage } from 'react-intl';
 
 class SingleChoiceListView extends Component{
@@ -26,9 +26,14 @@ class SingleChoiceListView extends Component{
                     <List.Item
                         key={item._id}
                         actions={[<span><Icon type="edit" style={{ marginRight: 8 }} /><FormattedMessage id={"edit"} /></span>,
-                            <span onClick={() => {this.delete(item)}}><Icon type="delete" style={{ marginRight: 8 }} />
-                                <FormattedMessage id={"delete"} />
-                            </span>
+                            <Popconfirm title={<FormattedMessage id="sureToDelete" />}
+                                        onConfirm={() => {this.delete(item)}}
+                                        okText={<FormattedMessage id="sure" />}
+                                        cancelText={<FormattedMessage id="cancel" />}>
+                                <span><Icon type="delete" style={{ marginRight: 8 }} />
+                                    <FormattedMessage id={"delete"} />
+                                </span>
+                            </Popconfirm>
                             ]}
                     >
                         <a href={item.href}>{item.title}</a>

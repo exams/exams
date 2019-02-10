@@ -4,8 +4,8 @@ import { connect } from 'react-redux'
 import { List, Icon, Row, Popconfirm, Button } from 'antd';
 import {addSubject, listSubjects, deleteSubject} from "./actions";
 import { FormattedMessage } from 'react-intl';
-import ModalTagManager from './ModalTagManager'
-import ModalSubjectCreator from './ModalSubjectCreator'
+import ModalTagManager from './components/ModalTagManager'
+import ModalSubjectCreator from './components/ModalSubjectCreator'
 
 class Subjects extends Component{
 

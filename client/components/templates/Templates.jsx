@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import { Row, Col, List, Icon, Button, Tag } from 'antd';
 import { listTemplate, deleteTemplate } from "./actions";
 import { FormattedMessage } from 'react-intl';
-import TemplateCard from "./TemplateCard";
+import TemplateCard from "./components/TemplateCard";
 
 class Templates extends Component{
 

@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {withRouter, Link} from "react-router-dom";
 import { listPapers, deletePaper } from "./actions";
 import { connect } from 'react-redux'
-import { List, Icon, Col } from 'antd';
+import { List, Icon, Col, Popconfirm } from 'antd';
 import { FormattedMessage, FormattedDate } from 'react-intl';
 
 class Papers extends Component{
@@ -23,7 +23,12 @@ class Papers extends Component{
                 renderItem={(item, index) => (
                     <List.Item actions={[<a><Icon type={"delete"} /> <FormattedMessage id="delete" /></a>,
                         <a><Icon type={"edit"} /> <FormattedMessage id="edit" /></a>,
-                        <a onClick={() => {this.delete(item, index)}}><Icon type={"delete"} /> <FormattedMessage id="delete" /></a>]}
+                        <Popconfirm title={<FormattedMessage id="sureToDelete" />}
+                                    onConfirm={() => {this.delete(item, index)}}
+                                    okText={<FormattedMessage id="sure" />}
+                                    cancelText={<FormattedMessage id="cancel" />}>
+                            <a><Icon type={"delete"} /><FormattedMessage id="delete" /></a>
+                        </Popconfirm>]}
                     >
                         <List.Item.Meta
                             title={<Link to={{

@@ -40,7 +40,8 @@ class Quests extends Component{
             <div>
                 <QuestsFilterContainer />
                 {
-                    'singleChoice' === questType && singleChoices && <SingleChoiceListView deleteSingleChoice={this.deleteSingleChoice} singleChoices = {singleChoices} />
+                    'singleChoice' === questType && singleChoices &&
+                    <SingleChoiceListView deleteSingleChoice={this.deleteSingleChoice} singleChoices = {singleChoices} />
                 }
             </div>
         );

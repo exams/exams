@@ -1,7 +1,7 @@
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
 import { Modal, Tag, Button, Row, Col} from 'antd';
-import { listTags } from "./actions";
+import { listTags } from "../actions";
 import {connect} from "react-redux";
 
 const CheckableTag = Tag.CheckableTag;

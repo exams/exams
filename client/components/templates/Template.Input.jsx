@@ -4,8 +4,8 @@ import { Row, Col, List, Icon, Button, Tag, Select, Input, Card, Form } from 'an
 import { addTemplate } from "./actions";
 import {FormattedMessage, injectIntl, intlShape} from 'react-intl';
 import { listQuestTypes } from "../quests/actions";
-import ModalTagSelector from '../subjects/ModalTagSelector'
-import ModalAliasSetter from './ModalAliasSetter'
+import ModalTagSelector from '../subjects/components/ModalTagSelector'
+import ModalAliasSetter from './components/ModalAliasSetter'
 
 const Option = Select.Option;
 const FormItem = Form.Item;
@@ -15,6 +15,8 @@ class TemplateInput extends Component{
     constructor(){
         super();
         this.state = {
+            difficulty: 0,
+            scoreTotal: 0,
             tagModalVisible: false,
             aliasModalVisible: false,
             selectedSubjectId: '',
@@ -109,6 +111,7 @@ class TemplateInput extends Component{
         this.setState({
             paperStructs: paperStructs
         })
+        this.calculateScoreAndDifficulty();
     }
 
     getSelectTags = (index) => {
@@ -151,56 +154,70 @@ class TemplateInput extends Component{
         const { paperStructs } = this.state
         const questSet = paperStructs[index];
         questSet.number = e.target.value;
+        this.calculateScoreAndDifficulty();
     }
 
     onScoreChange = (e, index) => {
         const { paperStructs } = this.state
         const questSet = paperStructs[index];
         questSet.score = e.target.value;
+        this.calculateScoreAndDifficulty();
     }
 
     onDifficultyChange = (e, index) => {
         const { paperStructs } = this.state
         const questSet = paperStructs[index];
         questSet.difficulty = e.target.value;
+        this.calculateScoreAndDifficulty();
     }
 
     onOffsetChange = (e, index) => {
         const { paperStructs } = this.state
         const questSet = paperStructs[index];
-        questSet.offset = e.target.value
+        questSet.offset = e.target.value;
+        this.calculateScoreAndDifficulty();
     }
 
     onSubQuestNumChange = (e, index) => {
         const { paperStructs } = this.state
         const questSet = paperStructs[index];
-        questSet.subQuestNum = e.target.value
+        questSet.subQuestNum = e.target.value;
+        this.calculateScoreAndDifficulty();
+    }
+
+    calculateScoreAndDifficulty = () => {
+        var score = 0;
+        var difficulty = 0;
+        var itemScore = 0;
+        const { paperStructs } = this.state
+        paperStructs.forEach((item) => {
+            itemScore = item.score * item.number * item.subQuestNum;
+            score += itemScore;
+        });
+        paperStructs.forEach((item) => {
+            itemScore = item.score * item.number * item.subQuestNum;
+            difficulty += itemScore / score * item.difficulty;
+        });
+        this.setState({
+            scoreTotal: score,
+            difficulty: difficulty.toFixed(1)
+        })
     }
 
     render() {
+        const {difficulty, scoreTotal} = this.state;
         const { getFieldDecorator } = this.props.form;
         const formItemLayout = {
-            labelCol: { span: 8 },
-            wrapperCol: { span: 14 },
+            labelCol: { span: 6 },
+            wrapperCol: { span: 18 },
         }
         const { paperStructs, tagModalVisible, aliasModalVisible } = this.state
         return (
             <Card>
                 <Form onSubmit={this.handleSubmit}>
-                    <FormItem {...formItemLayout} label={<FormattedMessage id="title" />}>
-                        <Row>
-                            <Col>
-                                {getFieldDecorator('title', {
-                                    rules: [{ required: true, message: this.props.intl.messages.titlePlaceholder }],
-                                })(
-                                    <Input placeholder={this.props.intl.messages.titlePlaceholder} />
-                                )}
-                            </Col>
-                        </Row>
-                    </FormItem>
-                    <FormItem {...formItemLayout} label={<FormattedMessage id="subject" />}>
-                        <Row>
-                            <Col span={10}>
+                    <Row>
+                        <Col span={4}>
+                            <FormItem {...formItemLayout} label={<FormattedMessage id="subject" />}>
                                 {getFieldDecorator('subject', {
                                     rules: [{ required: true, message: this.props.intl.messages.subjectPlaceholder }],
                                 })(
@@ -212,9 +229,28 @@ class TemplateInput extends Component{
                                         {this.getSubjects()}
                                     </Select>
                                 )}
-                            </Col>
-                        </Row>
-                    </FormItem>
+                            </FormItem>
+                        </Col>
+                        <Col span={12}>
+                            <FormItem {...formItemLayout} label={<FormattedMessage id="title" />}>
+                                {getFieldDecorator('title', {
+                                    rules: [{ required: true, message: this.props.intl.messages.titlePlaceholder }],
+                                })(
+                                    <Input placeholder={this.props.intl.messages.titlePlaceholder} />
+                                )}
+                            </FormItem>
+                        </Col>
+                        <Col span={3} offset={1}>
+                            <FormItem {...formItemLayout} label={<FormattedMessage id="difficulty" />}>
+                                {difficulty}
+                            </FormItem>
+                        </Col>
+                        <Col span={3} offset={1}>
+                            <FormItem {...formItemLayout} label={<FormattedMessage id="scoreTotal" />}>
+                                {scoreTotal}
+                            </FormItem>
+                        </Col>
+                    </Row>
                     {
                         paperStructs.map((item, index) => {
                             const tags = this.getSelectTags(index)
@@ -300,21 +336,17 @@ class TemplateInput extends Component{
                         })
                     }
                     <Row>
-                        <Col span={15} offset={6}>
+                        <Col span={12}>
                             <Button icon={"plus"} onClick={this.addQuestType} style={{width: '100%'}}>
                                 <FormattedMessage id="addQuestType" />
                             </Button>
                         </Col>
+                        <Col span={12}>
+                            <Button type="primary" htmlType="submit" style={{width: '100%'}}>
+                                <FormattedMessage id="submit"/>
+                            </Button>
+                        </Col>
                     </Row>
-                    <FormItem wrapperCol={{ span: 14, offset: 6 }}>
-                        <Row>
-                            <Col>
-                                <Button type="primary" htmlType="submit" style={{width: '100%'}}>
-                                    <FormattedMessage id="submit"/>
-                                </Button>
-                            </Col>
-                        </Row>
-                    </FormItem>
                 </Form>
                 {
                     tagModalVisible && <ModalTagSelector
