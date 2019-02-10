@@ -130,6 +130,11 @@ export default {
       scoreTotal: "Total",
 
       //paper
-      createAnswerCard: "Create Answer Card"
+      createAnswerCard: "Create Answer Card",
+      createPaperTips: "Paper Creating",
+      sumPrefix: "共",
+      questSuffix: "题",
+      perQuestPrefix: "每题",
+      scoreSuffix: "分",
   }
 };

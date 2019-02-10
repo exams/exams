@@ -9,7 +9,6 @@ import ModalAliasSetter from './components/ModalAliasSetter'
 
 const Option = Select.Option;
 const FormItem = Form.Item;
-const CheckableTag = Tag.CheckableTag;
 class TemplateInput extends Component{
 
     constructor(){
@@ -21,7 +20,16 @@ class TemplateInput extends Component{
             aliasModalVisible: false,
             selectedSubjectId: '',
             openModalIndex: 0,
-            paperStructs: []
+            paperStructs: [{
+                questType: 'singleChoice',
+                subQuestNum: 1,
+                difficulty: 3,
+                offset: 1,
+                number: 10,
+                score: 2,
+                alias: "",
+                tags: []
+            }]
         }
     }
 
@@ -105,7 +113,7 @@ class TemplateInput extends Component{
             score: 2,
             alias: "",
             tags: []
-        }
+        };
         const { paperStructs } = this.state
         paperStructs.push(questSet)
         this.setState({
@@ -139,7 +147,6 @@ class TemplateInput extends Component{
             if (!err) {
                 values.paperStructs = paperStructs;
                 this.props.addTemplate(values)
-                console.log(values)
             }
         });
     }
@@ -213,7 +220,13 @@ class TemplateInput extends Component{
         }
         const { paperStructs, tagModalVisible, aliasModalVisible } = this.state
         return (
-            <Card>
+            <Card title={<FormattedMessage id="creatTemplate" />}
+                  style={{marginTop: 16}}
+                  extra={[
+                      <Button key={"addQuestType"} onClick={this.addQuestType}><FormattedMessage id="addQuestType" /></Button>,
+                      <Button key={"submit"} type="primary" onClick={this.handleSubmit}><FormattedMessage id="submit" /></Button>
+                  ]}
+            >
                 <Form onSubmit={this.handleSubmit}>
                     <Row>
                         <Col span={4}>
@@ -335,18 +348,6 @@ class TemplateInput extends Component{
                             )
                         })
                     }
-                    <Row>
-                        <Col span={12}>
-                            <Button icon={"plus"} onClick={this.addQuestType} style={{width: '100%'}}>
-                                <FormattedMessage id="addQuestType" />
-                            </Button>
-                        </Col>
-                        <Col span={12}>
-                            <Button type="primary" htmlType="submit" style={{width: '100%'}}>
-                                <FormattedMessage id="submit"/>
-                            </Button>
-                        </Col>
-                    </Row>
                 </Form>
                 {
                     tagModalVisible && <ModalTagSelector

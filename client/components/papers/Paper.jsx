@@ -3,6 +3,9 @@ import {withRouter, Link} from "react-router-dom";
 import { createPaper } from "./actions";
 import { connect } from 'react-redux'
 import { List, Layout } from 'antd';
+import { FormattedMessage } from 'react-intl';
+import QuestionSetHeader from './components/QuestionSetHeader'
+import QuestionSetView from './components/QuestionSetView'
 
 class Paper extends Component{
     componentDidMount() {
@@ -13,15 +16,23 @@ class Paper extends Component{
     render() {
         const {paper} = this.props;
         console.log(paper)
-        return (
-
-            <Layout>
-                { paper && <p>{paper.title}</p> }
-                <span></span>
-            </Layout>
-
-
-        )
+        if (paper)
+            return (
+                <div>
+                    <p className={"text-center"}>{paper.title}</p>
+                    {
+                        paper.questions.map(item => {
+                            return(
+                                <div>
+                                    <QuestionSetHeader QuestionSet={item} />
+                                    <QuestionSetView QuestionSet={item} />
+                                </div>)
+                        })
+                    }
+                </div>
+            )
+        else
+            return (<p><FormattedMessage id={"createPaperTips"} /></p>)
     }
 }
 

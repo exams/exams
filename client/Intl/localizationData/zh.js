@@ -131,6 +131,11 @@ export default {
       scoreTotal: "总分",
 
       //paper
-      createAnswerCard: "生成答题卡"
+      createAnswerCard: "生成答题卡",
+      createPaperTips: "试卷生成中",
+      sumPrefix: "共",
+      questSuffix: "题",
+      perQuestPrefix: "每题",
+      scoreSuffix: "分",
   }
 };
