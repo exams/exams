@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import { Link } from 'react-router-dom'
-import { Card, Col, List, Button, Tag } from 'antd';
+import { Card, Col, List, Button, Tag, Popconfirm } from 'antd';
 import PropTypes from 'prop-types';
 import {FormattedMessage, injectIntl} from 'react-intl';
 
@@ -48,10 +48,6 @@ class TemplateCard extends Component{
 
     }
 
-    delete = (template) => {
-        this.props.delete(template)
-    }
-
     getTitle = () => {
         const { template } = this.props;
         const { score, difficulty } = this.state;
@@ -80,7 +76,12 @@ class TemplateCard extends Component{
                         <Button.Group key="edit">
                             <Button icon="edit" onClick={this.edit} title={this.props.intl.messages.edit} />
                             <Button icon="copy" onClick={this.copy} title={this.props.intl.messages.copy} />
-                            <Button icon="delete" onClick={() => {this.delete(template)}} title={this.props.intl.messages.delete} />
+                            <Popconfirm title={<FormattedMessage id="sureToDelete" />}
+                                        onConfirm={() => {this.props.delete(template)}}
+                                        okText={<FormattedMessage id="sure" />}
+                                        cancelText={<FormattedMessage id="cancel" />}>
+                            <Button icon="delete" title={this.props.intl.messages.delete} />
+                            </Popconfirm>
                         </Button.Group>
                     ]}
                 style={{ margin: 10 }}

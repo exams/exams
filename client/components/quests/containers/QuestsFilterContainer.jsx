@@ -10,6 +10,15 @@ class QuestsFilterContainer extends Component{
 
     componentDidMount() {
         this.props.listQuestTypes();
+
+    }
+
+    componentDidUpdate() {
+        const { questTypes } = this.props;
+        const { me } = this.props;
+        const subjects = me.subjects;
+        console.log(questTypes);
+        console.log(subjects)
     }
 
     getSubjectsChildren = () => {

@@ -21,10 +21,10 @@ class Paper extends Component{
                 <div>
                     <p className={"text-center"}>{paper.title}</p>
                     {
-                        paper.questions.map(item => {
+                        paper.questions.map((item, questionSetIndex) => {
                             return(
                                 <div>
-                                    <QuestionSetHeader QuestionSet={item} />
+                                    <QuestionSetHeader QuestionSet={item} questionSetIndex={questionSetIndex} />
                                     <QuestionSetView QuestionSet={item} />
                                 </div>)
                         })

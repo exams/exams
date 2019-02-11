@@ -1,13 +1,18 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import SingleChoice from './SingleChoice'
-import { FormattedMessage } from 'react-intl';
+import Choice from './Choice'
+
+let questIndex = 0;
+const getQuestIndex = () => {
+    return ++questIndex;
+}
 
 const QuestionSetView = ({ QuestionSet }) => (
   <div>
       {
-          QuestionSet.questType === "singleChoice" && QuestionSet.questions.map(item => {
-              return (<SingleChoice SingleChoice={item} />)
+          (QuestionSet.questType === "singleChoice")
+          && QuestionSet.questions.map((item) => {
+              return (<Choice Choice={item} questIndex={getQuestIndex()}/>)
           })
       }
   </div>

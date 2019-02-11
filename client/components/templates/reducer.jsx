@@ -23,6 +23,7 @@ const TemplatesReducer = (state = initialState, action) => {
                 status: 'success'
             };
         case DELETE_TEMPLATE_SUCCESS:
+            state.templates = state.templates.filter(template => template._id !== action.data._id)
             return {
                 ...state,
                 status: 'success'

@@ -2,11 +2,11 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { getLabelByIndex } from '../../../utils/utils'
 
-const SingleChoice = ({ SingleChoice }) => (
+const Choice = ({ Choice, questIndex }) => (
   <div>
-      <p>{SingleChoice.stem || SingleChoice.title }</p>
+      <p>{questIndex}. {Choice.stem || Choice.title }</p>
       {
-          SingleChoice.choiceItems.map((item, index) => {
+          Choice.choiceItems.map((item, index) => {
               return(
                   item && <div>
                     <span>{getLabelByIndex(index)}</span>
@@ -18,8 +18,9 @@ const SingleChoice = ({ SingleChoice }) => (
   </div>
 )
 
-SingleChoice.propTypes = {
-    SingleChoice: PropTypes.object.required
+Choice.propTypes = {
+    SingleChoice: PropTypes.object.required,
+    questIndex: PropTypes.number.required
 }
 
-export default SingleChoice
+export default Choice
