@@ -14,6 +14,9 @@ export default {
             route: '/app/papers/create', visible: false, title: '试卷', component: 'Paper'
         },
         {
+            route: '/app/papers/answersheet', key: 'answersheet', title: '答题卡', component: 'AnswerSheet'
+        },
+        {
             route: '/app/quests', key:'quests',  title: '题库', icon: 'star', component: 'Quests'
         },
         {

@@ -19,6 +19,7 @@ class Paper extends Component{
         if (paper)
             return (
                 <div>
+
                     <p className={"text-center"}>{paper.title}</p>
                     {
                         paper.questions.map((item, questionSetIndex) => {

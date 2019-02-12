@@ -9,7 +9,8 @@ import Subjects from './subjects/Subjects'
 import Quests from './quests/Quests'
 import Templates from './templates/Templates'
 import Template from './templates/Template'
+import AnswerSheet from './papers/AnswerSheet'
 
 export default {
-    Dashboard, AuthBasic, RouterEnter, Papers, Paper, Records, Users, Subjects, Quests, Templates, Template
+    Dashboard, AuthBasic, RouterEnter, Papers, Paper, Records, Users, Subjects, Quests, Templates, Template, AnswerSheet
 }
