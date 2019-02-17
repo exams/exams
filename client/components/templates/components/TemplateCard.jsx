@@ -67,11 +67,12 @@ class TemplateCard extends Component{
 
         return (
             <Card
-                headStyle={{fontSize:20, fontWeight: 20}}
                 title={this.getTitle()}
                 extra={[
                         <Link to={path} key="create">
-                            <Button type="primary" style={{marginRight: 20}}><FormattedMessage id={"createPaper"} /></Button>
+                            <Button type="primary" style={{marginRight: 20}}>
+                                <FormattedMessage id={"createPaper"} />
+                            </Button>
                         </Link>,
                         <Button.Group key="edit">
                             <Button icon="edit" onClick={this.edit} title={this.props.intl.messages.edit} />
@@ -80,7 +81,7 @@ class TemplateCard extends Component{
                                         onConfirm={() => {this.props.delete(template)}}
                                         okText={<FormattedMessage id="sure" />}
                                         cancelText={<FormattedMessage id="cancel" />}>
-                            <Button icon="delete" title={this.props.intl.messages.delete} />
+                                <Button icon="delete" title={this.props.intl.messages.delete} />
                             </Popconfirm>
                         </Button.Group>
                     ]}
@@ -98,7 +99,7 @@ class TemplateCard extends Component{
                             <Col span={8}>
                                 {
                                     item.tags && item.tags.map((item, index) => {
-                                        return (<Tag key={index}>{item.name}</Tag>)
+                                        return (<Tag key={index}>{item}</Tag>)
                                     })
                                 }
                             </Col>

@@ -37,13 +37,9 @@ class UserAddContainer extends Component{
         const { showAddUser } = this.state;
         return (
             <div>
-                <Row>
-                    <Col span={6}>
-                        <Button onClick={this.toggleAddUser} icon={"plus"}><FormattedMessage id="addUser" /></Button>
-                    </Col>
-                    <Col span={18}>
-                    </Col>
-                </Row>
+                <Button onClick={this.toggleAddUser} icon={"plus"} style={{marginBottom: '16px'}}>
+                    <FormattedMessage id="addUser" />
+                </Button>
                 {
                     showAddUser && (<Row>
                         <AddUser addUser={this.addUser} subjects={subjects} />

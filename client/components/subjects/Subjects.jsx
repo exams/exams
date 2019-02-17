@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {withRouter} from "react-router-dom";
 import { connect } from 'react-redux'
-import { List, Icon, Row, Popconfirm, Button } from 'antd';
+import { List, Icon, Row, Popconfirm, Button, Divider, Table } from 'antd';
 import {addSubject, listSubjects, deleteSubject} from "./actions";
 import { FormattedMessage } from 'react-intl';
 import ModalTagManager from './components/ModalTagManager'
@@ -17,6 +17,33 @@ class Subjects extends Component{
             editSubject: null,
             shared: true
         }
+        this.columns = [{
+            title: <FormattedMessage id="subject" />,
+            dataIndex: 'name',
+            width: '60%'
+        }, {
+            title: <FormattedMessage id="subject" />,
+            width: '30%',
+            render: (text, record) => (
+                <span>{record.isDefault ? <FormattedMessage id="systemDefault" />: <FormattedMessage id="userDefinition" />}</span>
+            )
+        },{
+            title: <FormattedMessage id="action" />,
+            width: '10%',
+            key: 'action',
+            render: (text, record) => (
+                <span>
+            <a onClick={() => {this.openModal(record);}}><Icon type={"tags"} /> <FormattedMessage id="tagManagement" /></a>
+            <Divider type="vertical" />
+            <Popconfirm title={<FormattedMessage id="sureToDelete" />}
+                        onConfirm={() => {this.props.deleteSubject(record)}}
+                        okText={<FormattedMessage id="sure" />}
+                        cancelText={<FormattedMessage id="cancel" />}>
+                            <a><FormattedMessage id="delete" /></a>
+                        </Popconfirm>
+        </span>
+            ),
+        }];
     }
 
     componentDidMount() {
@@ -74,29 +101,11 @@ class Subjects extends Component{
 
         return (
             <div>
-                <Row>
+                <Row style={{marginBottom: '10px'}}>
                     <Button onClick={this.openCreateModal}><FormattedMessage id="createSubject"/></Button>
                     <Button onClick={this.openSharedModal}><FormattedMessage id="sharedTagManagement"/></Button>
                 </Row>
-                <List
-                    itemLayout="horizontal"
-                    dataSource={subjects}
-                    renderItem={item => (
-                        <List.Item actions={[<a onClick={() => {this.openModal(item);}}><Icon type={"tags"} /> <FormattedMessage id="tagManagement" /></a>,
-                            <a><Icon type={"edit"} /> <FormattedMessage id="edit" /></a>,
-                            <Popconfirm title={<FormattedMessage id="sureToDelete" />}
-                                        onConfirm={() => {this.props.deleteSubject(item)}}
-                                        okText={<FormattedMessage id="sure" />}
-                                        cancelText={<FormattedMessage id="cancel" />}>
-                                <a><Icon type={"delete"} /><FormattedMessage id="delete" /></a>
-                            </Popconfirm>]}>
-                            <List.Item.Meta
-                                title={item.name}
-                            />
-                            <span>{item.isDefault ? <FormattedMessage id="systemDefault" />: <FormattedMessage id="userDefinition" />}</span>
-                        </List.Item>
-                    )}
-                />
+                <Table size={"middle"} columns={this.columns} dataSource={subjects} />
                 {
                     visible &&
                     <ModalTagManager

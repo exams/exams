@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {withRouter} from "react-router-dom";
 import { connect } from 'react-redux'
-import { Tabs } from 'antd';
+import { Tabs, Button } from 'antd';
 import { FormattedMessage } from 'react-intl';
 import SingleChoice from "./questType/SingleChoice";
 import MultiChoice from "./questType/MultiChoice";

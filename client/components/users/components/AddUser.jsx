@@ -16,10 +16,6 @@ class AddUser extends Component{
                 values.lastName = 'mmmmm' + Math.random()*10;
                 const subjects = this.getSubjects(values.subjects);
                 values.subjects = subjects;
-                values.username = values.username_create;
-                values.password = values.password_create;
-                delete values.username_create;
-                delete values.password_create;
                 this.props.addUser(values)
             }
         });
@@ -54,7 +50,10 @@ class AddUser extends Component{
                 <Row>
                     <Col span={6}>
                         <FormItem {...formItemLayout} label={<FormattedMessage id="username" />}>
-                            {getFieldDecorator('user_create')(
+                            {getFieldDecorator('username',  {
+                                initialValue: '',
+                                rules: [{ required: true, message: this.props.intl.messages.usernamePlaceHolder }],
+                            })(
                                 <Input placeholder={this.props.intl.messages.usernamePlaceHolder}/>
                             )}
                         </FormItem>
@@ -62,7 +61,10 @@ class AddUser extends Component{
 
                     <Col span={6}>
                         <FormItem {...formItemLayout} label={<FormattedMessage id="password" />}>
-                            {getFieldDecorator('password_create')(
+                            {getFieldDecorator('password', {
+                                initialValue: '',
+                                rules: [{ required: true, message: this.props.intl.messages.passwordPlaceHolder }],
+                            })(
                                 <Input type={"password"} placeholder={this.props.intl.messages.passwordPlaceHolder} />
                             )}
                         </FormItem>
@@ -70,7 +72,9 @@ class AddUser extends Component{
 
                     <Col span={5}>
                         <FormItem {...formItemLayout} label={<FormattedMessage id="role" />}>
-                            {getFieldDecorator('roles')(
+                            {getFieldDecorator('roles', {
+                                rules: [{ required: true, message: this.props.intl.messages.rolePlaceHolder }],
+                            })(
                                 <Select
                                 mode="multiple"
                                 style={{ width: '100%' }}
@@ -85,7 +89,9 @@ class AddUser extends Component{
 
                     <Col span={5}>
                         <FormItem {...formItemLayout} label={<FormattedMessage id="subject" />}>
-                            {getFieldDecorator('subjects')(
+                            {getFieldDecorator('subjects',  {
+                                rules: [{ required: true, message: this.props.intl.messages.subjectPlaceholder }],
+                            })(
                                 <Select
                                     mode="multiple"
                                     style={{ width: '100%' }}

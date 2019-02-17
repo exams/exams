@@ -2,10 +2,40 @@ import React, {Component} from 'react';
 import {withRouter, Link} from "react-router-dom";
 import { listPapers, deletePaper } from "./actions";
 import { connect } from 'react-redux'
-import { List, Icon, Col, Popconfirm } from 'antd';
+import { Popconfirm, Table } from 'antd';
 import { FormattedMessage, FormattedDate } from 'react-intl';
 
 class Papers extends Component{
+    constructor(){
+        super();
+        this.columns = [{
+            title: <FormattedMessage id="title" />,
+            render: (text, record) => (<Link to={{
+                pathname: "/app/papers/create",
+                state: record
+            }}>{record.title}</Link>)
+        }, {
+            title: <FormattedMessage id="subject" />,
+            dataIndex: 'subject'
+        },{
+            title: <FormattedMessage id="createTime" />,
+            render: (text, record) => (<FormattedDate value={record.created} />)
+        },{
+            title: <FormattedMessage id="action" />,
+            key: 'action',
+            render: (text, record) => (
+                <span>
+            <Popconfirm title={<FormattedMessage id="sureToDelete" />}
+                        onConfirm={() => {this.delete(record)}}
+                        okText={<FormattedMessage id="sure" />}
+                        cancelText={<FormattedMessage id="cancel" />}>
+                            <a><FormattedMessage id="delete" /></a>
+                        </Popconfirm>
+        </span>
+            ),
+        }];
+    }
+
     componentDidMount() {
         this.props.listPapers()
     }
@@ -17,30 +47,7 @@ class Papers extends Component{
     render() {
         const {papers} = this.props;
         return (
-            <List
-                itemLayout="horizontal"
-                dataSource={papers}
-                renderItem={(item, index) => (
-                    <List.Item actions={[<a><Icon type={"delete"} /> <FormattedMessage id="delete" /></a>,
-                        <a><Icon type={"edit"} /> <FormattedMessage id="edit" /></a>,
-                        <Popconfirm title={<FormattedMessage id="sureToDelete" />}
-                                    onConfirm={() => {this.delete(item, index)}}
-                                    okText={<FormattedMessage id="sure" />}
-                                    cancelText={<FormattedMessage id="cancel" />}>
-                            <a><Icon type={"delete"} /><FormattedMessage id="delete" /></a>
-                        </Popconfirm>]}
-                    >
-                        <List.Item.Meta
-                            title={<Link to={{
-                                pathname: "/app/papers/create",
-                                state: item
-                            }}>{item.title}</Link>}
-                        />
-                        <Col span={6}><FormattedDate value={item.created} /></Col>
-                        <Col span={4}>{item.subject}</Col>
-                    </List.Item>
-                )}
-            />
+            <Table size={"middle"} columns={this.columns} dataSource={papers} />
         )
     }
 }
@@ -53,7 +60,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => ({
     listPapers: () => dispatch(listPapers()),
-    deletePaper: (paperId, index) => dispatch(deletePaper(paperId, index))
+    deletePaper: (paperId) => dispatch(deletePaper(paperId))
 })
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Papers));

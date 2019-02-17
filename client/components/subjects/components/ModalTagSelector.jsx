@@ -17,8 +17,9 @@ class ModalTagSelector extends React.Component {
     handleChange = (tag, checked) => {
         const { selectedTags } = this.state;
         const nextSelectedTags = checked
-            ? [...selectedTags, tag]
-            : selectedTags.filter(t => t !== tag);
+            ? [...selectedTags, tag.name]
+            : selectedTags.filter(t => t !== tag.name);
+        console.log(nextSelectedTags)
         this.setState({ selectedTags: nextSelectedTags });
     }
 
@@ -60,7 +61,7 @@ class ModalTagSelector extends React.Component {
                         {
                             sharedTags && sharedTags.map((tag) => {
                                 return (
-                                    <CheckableTag key={tag._id} checked={selectedTags.indexOf(tag) > -1}
+                                    <CheckableTag key={tag._id} checked={selectedTags.indexOf(tag.name) > -1}
                                                   onChange={checked => this.handleChange(tag, checked)}
                                     >{tag.name}</CheckableTag>
                                 );
@@ -74,7 +75,7 @@ class ModalTagSelector extends React.Component {
                         {
                             subjectTags && subjectTags.map((tag) => {
                                 return (
-                                    <CheckableTag key={tag._id} checked={selectedTags.indexOf(tag) > -1}
+                                    <CheckableTag key={tag._id} checked={selectedTags.indexOf(tag.name) > -1}
                                                   onChange={checked => this.handleChange(tag, checked)}
                                     >{tag.name}</CheckableTag>
                                 );

@@ -1,26 +1,28 @@
 import React from 'react'
-import PropTypes from 'prop-types'
-import { getLabelByIndex } from '../../../utils/utils'
+import { FormattedMessage } from 'react-intl';
 
 const Choice = ({ Choice, questIndex }) => (
-  <div>
-      <p>{questIndex}. {Choice.stem || Choice.title }</p>
+  <div style={{margin: '0px 0px 20px 30px'}}>
       {
-          Choice.choiceItems.map((item, index) => {
+          Choice &&
+          <p>
+              <span>{questIndex}</span>
+              <FormattedMessage id={"pauseSymbol"} />
+              <span>{Choice.stem || Choice.title }</span>
+          </p>
+      }
+      {
+          Choice && Choice.choiceItems.map((item, index) => {
               return(
-                  item && <div>
-                    <span>{getLabelByIndex(index)}</span>
-                    <span>{item[getLabelByIndex(index)] || item[index + 1]}</span>
+                  item &&
+                  <div key={index}>
+                    <span>{item.label}</span><FormattedMessage id={"colon"} />
+                    <span>{item.value}</span>
                   </div>
               )
           })
       }
   </div>
 )
-
-Choice.propTypes = {
-    SingleChoice: PropTypes.object.required,
-    questIndex: PropTypes.number.required
-}
 
 export default Choice

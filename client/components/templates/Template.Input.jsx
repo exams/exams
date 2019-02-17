@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import { connect } from 'react-redux'
-import { Row, Col, List, Icon, Button, Tag, Select, Input, Card, Form } from 'antd';
+import { Row, Col, Button, Tag, Select, Input, Card, Form } from 'antd';
 import { addTemplate } from "./actions";
 import {FormattedMessage, injectIntl, intlShape} from 'react-intl';
 import { listQuestTypes } from "../quests/actions";
@@ -14,8 +14,8 @@ class TemplateInput extends Component{
     constructor(){
         super();
         this.state = {
-            difficulty: 0,
-            scoreTotal: 0,
+            difficulty: 3,
+            scoreTotal: 30,
             tagModalVisible: false,
             aliasModalVisible: false,
             selectedSubjectId: '',
@@ -127,7 +127,7 @@ class TemplateInput extends Component{
         const selectTags = paperStructs[index].tags;
         const tags = [];
         selectTags && selectTags.map((item, index) => {
-            tags.push(<Tag key={index}>{item.name}</Tag>)
+            tags.push(<Tag key={index}>{item}</Tag>)
         })
         return tags
     }
@@ -178,13 +178,6 @@ class TemplateInput extends Component{
         this.calculateScoreAndDifficulty();
     }
 
-    onOffsetChange = (e, index) => {
-        const { paperStructs } = this.state
-        const questSet = paperStructs[index];
-        questSet.offset = e.target.value;
-        this.calculateScoreAndDifficulty();
-    }
-
     onSubQuestNumChange = (e, index) => {
         const { paperStructs } = this.state
         const questSet = paperStructs[index];
@@ -215,13 +208,12 @@ class TemplateInput extends Component{
         const {difficulty, scoreTotal} = this.state;
         const { getFieldDecorator } = this.props.form;
         const formItemLayout = {
-            labelCol: { span: 6 },
-            wrapperCol: { span: 18 },
+            labelCol: { span: 10 },
+            wrapperCol: { span: 14 },
         }
         const { paperStructs, tagModalVisible, aliasModalVisible } = this.state
         return (
             <Card title={<FormattedMessage id="creatTemplate" />}
-                  style={{marginTop: 16}}
                   extra={[
                       <Button key={"addQuestType"} onClick={this.addQuestType}><FormattedMessage id="addQuestType" /></Button>,
                       <Button key={"submit"} type="primary" onClick={this.handleSubmit}><FormattedMessage id="submit" /></Button>
@@ -271,16 +263,17 @@ class TemplateInput extends Component{
                             tags.unshift(<span style={{marginRight: 16}} key={-2}><FormattedMessage id="questTypeSet" /></span>)
                             return (
                                 <Card key={index}
+                                      size="small"
                                       title={tags}
                                       extra={[
-                                          <Button key={"setAlias"} onClick={() => {this.OpenAliasModal(index)}}><FormattedMessage id="setAlias" /></Button>,
-                                          <Button key={"selectTags"} onClick={() => {this.OpenModal(index)}}><FormattedMessage id="selectTags" /></Button>,
-                                          <Button key={"delete"} icon="delete" onClick={() => {this.delete(index);}} title={<FormattedMessage id="delete" />} />
+                                          <Button size={"small"} key={"setAlias"} onClick={() => {this.OpenAliasModal(index)}}><FormattedMessage id="setAlias" /></Button>,
+                                          <Button size={"small"} key={"selectTags"} onClick={() => {this.OpenModal(index)}}><FormattedMessage id="selectTags" /></Button>,
+                                          <Button size={"small"} key={"delete"} icon="delete" onClick={() => {this.delete(index);}} title={<FormattedMessage id="delete" />} />
                                       ]}
                                       style={{margin: 10}}
                                 >
                                     <Row>
-                                        <Col span={4}>
+                                        <Col span={4} offset={1}>
                                             <FormItem {...formItemLayout} label={<FormattedMessage id="questType" />}>
                                                 {getFieldDecorator('questType' + index.toString(), {
                                                     initialValue: item.questType,
@@ -320,16 +313,6 @@ class TemplateInput extends Component{
                                                     rules: [{ required: true, message: this.props.intl.messages.titlePlaceholder }],
                                                 })(
                                                     <Input placeholder={this.props.intl.messages.titlePlaceholder} onChange={(e) => {this.onDifficultyChange(e, index);}} />
-                                                )}
-                                            </FormItem>
-                                        </Col>
-                                        <Col span={4}>
-                                            <FormItem {...formItemLayout} label={<FormattedMessage id="offset" />}>
-                                                {getFieldDecorator('offset' + index.toString(), {
-                                                    initialValue: item.offset,
-                                                    rules: [{ required: true, message: this.props.intl.messages.titlePlaceholder }],
-                                                })(
-                                                    <Input placeholder={this.props.intl.messages.titlePlaceholder} onChange={(e) => {this.onOffsetChange(e, index);}} />
                                                 )}
                                             </FormItem>
                                         </Col>

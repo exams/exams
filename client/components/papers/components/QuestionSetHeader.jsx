@@ -1,20 +1,17 @@
 import React from 'react'
-import PropTypes from 'prop-types'
 import { FormattedMessage } from 'react-intl';
-import { getChineseNumberByIndex } from '../../../utils/utils'
 
 const QuestionSetHeader = ({ QuestionSet, questionSetIndex }) => (
-  <div>
-      <span>{getChineseNumberByIndex(questionSetIndex)}</span><span>{QuestionSet.alias ? QuestionSet.alias : <FormattedMessage id={QuestionSet.questType} /> }</span>
+  <p style={{margin: '10px', fontSize: '16px'}}>
+      <span><FormattedMessage id={"pNumber" + (questionSetIndex + 1).toString()} /></span>
+      <span><FormattedMessage id={"pauseSymbol"} /></span>
+      <span>{QuestionSet.alias ? QuestionSet.alias : <FormattedMessage id={QuestionSet.questType} /> }</span>
+      <span><FormattedMessage id={"colon"} /></span>
       <span><FormattedMessage id={"sumPrefix"} />{QuestionSet.number}<FormattedMessage id={"questSuffix"} />
+          <span><FormattedMessage id={"comma"} /></span>
           <FormattedMessage id={"perQuestPrefix"} />{QuestionSet.score}<FormattedMessage id={"scoreSuffix"} />
       </span>
-  </div>
+  </p>
 )
-
-QuestionSetHeader.propTypes = {
-    QuestionSet: PropTypes.object.required,
-    questionSetIndex: PropTypes.number.required
-}
 
 export default QuestionSetHeader

@@ -1,6 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { Layer, Rect, Text, Line } from "react-konva";
+import {FormattedMessage, injectIntl, intlShape} from 'react-intl';
 
 const AdmissionNumberBox = ({ x, y, length }) => {
   var rect = [];
@@ -9,7 +10,7 @@ const AdmissionNumberBox = ({ x, y, length }) => {
   }
   return (
     <Layer>
-      <Text text={"123456798"} fontSize={20} x={x + 20} y={y + 20} />
+      <Text text={"准考证号"} fontSize={20} x={x + 20} y={y + 20} />
       <Rect x={x} y={y} width={length * 50} height={50} stroke="black" />
       <Line
         points={[x, y, x + 10, y, x, y + 10]}

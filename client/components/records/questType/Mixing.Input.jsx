@@ -302,7 +302,7 @@ class MixingInput extends Component{
                         <Col span={14} offset={4}>
                             {
                                 selectTags && selectTags.map((tag) => {
-                                    return (<CheckableTag key={tag._id} checked={true}>{tag.name}</CheckableTag>);
+                                    return (<CheckableTag key={tag} checked={true}>{tag}</CheckableTag>);
                                 })
                             }
                             <Button icon={"plus"} onClick={this.OpenTagModal} style={{width: 150}}>

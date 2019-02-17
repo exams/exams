@@ -7,6 +7,7 @@ export default {
       cancel: '取消',
       sure: '确定',
       close: '关闭',
+      action: '操作',
       language: 'English',
       hello: '你好-',
       signIn: '登录',
@@ -23,7 +24,7 @@ export default {
       titlePlaceholder: '请输入标题',
 
       //users
-      edit: '修改',
+      edit: '编辑',
       delete: '删除',
       addUser: '新增用户',
       username: '名称',
@@ -126,6 +127,7 @@ export default {
       createPaper: "生成试卷",
       copy: "复制",
       subQuestNum: "子题数量",
+      alias: "别名",
       setAlias: "设置别名",
       AliasDescription: '设置在试卷上展示的试题名称,如组合题可以设置为阅读理解',
       scoreTotal: "总分",
@@ -137,5 +139,27 @@ export default {
       questSuffix: "题",
       perQuestPrefix: "每题",
       scoreSuffix: "分",
+      createTime: '创建时间',
+      comma: '，',
+      colon: '：',
+      pauseSymbol: '、',
+      pNumber1: '一',
+      pNumber2: '二',
+      pNumber3: '三',
+      pNumber4: '四',
+      pNumber5: '五',
+      pNumber6: '六',
+      pNumber7: '七',
+      pNumber8: '八',
+      pNumber9: '九',
+      pNumber10: '十',
+      pNumber11: '十一',
+      pNumber12: '十二',
+      pNumber13: '十三',
+      pNumber14: '十四',
+      pNumber15: '十五',
+
+      //Answer sheet
+      admissionNumber: '准考证号',
   }
 };

@@ -44,7 +44,7 @@ export const listPapers = () => {
 }
 
 export const DELETE_PAPER_SUCCESS = 'DELETE_PAPER_SUCCESS'
-export const deletePaper = (paperId, index) => {
+export const deletePaper = (paperId) => {
     const deletePaperApi = paperApi.replace(':paperId', paperId)
     return (dispatch) => {
         axios.delete(deletePaperApi).then(response => {

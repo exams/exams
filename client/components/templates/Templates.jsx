@@ -28,15 +28,11 @@ class Templates extends Component{
         console.log(templates)
         return (
             <div>
-                <Row>
-                    <Col span={6}>
-                        <Link to={'/app/template/create'}>
-                            <Button onClick={this.toggleAddUser} icon={"plus"}><FormattedMessage id="creatTemplate" /></Button>
-                        </Link>
-                    </Col>
-                    <Col span={18}>
-                    </Col>
-                </Row>
+                <Link to={'/app/template/create'}>
+                    <Button onClick={this.toggleAddUser} icon={"plus"} style={{margin: '0 0 6px 10px'}}>
+                        <FormattedMessage id="creatTemplate" />
+                    </Button>
+                </Link>
                 {
                     templates && templates.map((item, index) => {
                         return(<TemplateCard template={item} key={index} delete={this.delete}/>)
