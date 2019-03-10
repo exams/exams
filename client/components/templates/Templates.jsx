@@ -35,7 +35,7 @@ class Templates extends Component{
                 </Link>
                 {
                     templates && templates.map((item, index) => {
-                        return(<TemplateCard template={item} key={index} delete={this.delete}/>)
+                        return(<TemplateCard template={item} key={index} delete={this.delete} />)
                     })
                 }
             </div>

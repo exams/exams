@@ -76,7 +76,7 @@ class TemplateCard extends Component{
                         </Link>,
                         <Button.Group key="edit">
                             <Button icon="edit" onClick={this.edit} title={this.props.intl.messages.edit} />
-                            <Button icon="copy" onClick={this.copy} title={this.props.intl.messages.copy} />
+                            <Button icon="copy" onClick={() => {this.props.copy(template)}} title={this.props.intl.messages.copy} />
                             <Popconfirm title={<FormattedMessage id="sureToDelete" />}
                                         onConfirm={() => {this.props.delete(template)}}
                                         okText={<FormattedMessage id="sure" />}

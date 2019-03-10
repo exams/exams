@@ -3,6 +3,7 @@ import { FormattedMessage } from 'react-intl';
 
 const Choice = ({ Choice, questIndex }) => (
   <div style={{margin: '0px 0px 20px 30px'}}>
+    <p></p>
       {
           Choice &&
           <p>
