@@ -25,8 +25,9 @@ export default class CRouter extends Component {
         return (
             <Switch>
                 {
-                    Object.keys(routesConfig).map(key => 
+                    Object.keys(routesConfig).map(key =>
                         routesConfig[key].map(r => {
+                            console.log(key)
                             const route = r => {
                                 const Component = AllComponents[r.component];
                                 return (

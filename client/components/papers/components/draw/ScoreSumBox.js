@@ -7,16 +7,20 @@ const ScoreSumBox = ({ x, y }) => {
   return (
     <Layer>
       <Text text={"总  分"} fontSize={40} x={x + 50} y={y + 30} />
-      <Rect x={x} y={y} width={boxSize * 2} height={boxSize} stroke="black" />
+      <Rect x={x} y={y} width={boxSize * 3} height={boxSize} stroke="black" />
       <Line
-        points={[x, y, x + triangleSize, y, x, y + triangleSize]}
-        closed
-        stroke="black"
-        fill="black"
+          x={x}
+          y={y}
+          points={[0, 0, triangleSize, 0, 0, triangleSize]}
+          closed
+          stroke="black"
+          fill="black"
       />
-      <Rect x={x} y={y + boxSize} width={boxSize * 2} height={boxSize} stroke="black" />
+      <Rect x={x} y={y + boxSize} width={boxSize * 3} height={boxSize} stroke="black" />
         <Line
-            points={[x + boxSize*2, y + boxSize*2 - triangleSize, x + boxSize*2, y + boxSize*2, x + boxSize*2 - triangleSize, y + boxSize*2]}
+            x={x}
+            y={y}
+            points={[boxSize*3, boxSize*2 - triangleSize, boxSize*3, boxSize*2, boxSize*3 - triangleSize, boxSize*2]}
             closed
             stroke="black"
             fill="black"

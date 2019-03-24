@@ -20,9 +20,19 @@ const StudentNoBox = ({ x, y, length }) => {
       />
       {rect.map(item => {
         return (
-          <Rect x={item.x} y={item.y} width={boxSize} height={boxSize} stroke="black" />
+            <Rect x={item.x} y={item.y} width={boxSize} height={boxSize} stroke="black" />
         );
-      })}
+    })}
+        {rect.map(item => {
+            return (
+                <Line
+                    points={[item.x + boxSize, item.y + boxSize, item.x + boxSize - triangleSize, item.y + boxSize, item.x + boxSize, item.y + boxSize - triangleSize]}
+                    closed
+                    stroke="black"
+                    fill="black"
+                />
+            );
+        })}
     </Layer>
   );
 };

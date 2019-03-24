@@ -25,7 +25,6 @@ class Templates extends Component{
 
     render() {
         const { templates } = this.props
-        console.log(templates)
         return (
             <div>
                 <Link to={'/app/template/create'}>

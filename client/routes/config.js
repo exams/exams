@@ -5,16 +5,7 @@ export default {
             route: '/app/template', key: 'template', title: '模板', icon: 'snippets', component: 'Templates'
         },
         {
-            route: '/app/template/create', visible: false, key: 'template', title: '模板', component: 'Template'
-        },
-        {
             route: '/app/papers', key: 'paper', title: '试卷', icon: 'file-text', component: 'Papers'
-        },
-        {
-            route: '/app/papers/create', visible: false, title: '试卷', component: 'Paper'
-        },
-        {
-            route: '/app/papers/answersheet', key: 'answersheet', title: '答题卡', component: 'AnswerSheet'
         },
         {
             route: '/app/quests', key:'quests',  title: '题库', icon: 'star', component: 'Quests'
@@ -43,5 +34,12 @@ export default {
             ],
         }
     ],
-    others: []  // 非菜单相关路由
+    others: [
+        {
+            route: '/app/template/create', key: 'template', title: '模板', component: 'Template'
+        },
+        {
+            route: '/app/papers/create', title: '试卷', component: 'Paper'
+        },
+    ]  // 非菜单相关路由
 }

@@ -27,7 +27,6 @@ class Login extends React.Component {
         e.preventDefault();
         this.props.form.validateFields((err, values) => {
             if (!err) {
-                console.log('Received values of form: ', values);
                 const { fetchData } = this.props;
                 // if (values.userName === 'hello' && values.password === 'Huawei12#$') fetchData({funcName: 'admin', stateName: 'auth'});
                 if (values.userName === 'admin' && values.password === 'admin') fetchData({funcName: 'admin', stateName: 'auth'});

@@ -1,7 +1,5 @@
 import React, { Component } from "react";
-import { Stage, Rect, Layer } from "react-konva";
-import SingleChoiceAnswerBox from "./components/draw/SingleChoiceAnswerBox";
-import AdmissionNumberBox from "./components/draw/AdmissionNumberBox";
+import { Stage } from "react-konva";
 import NameBox from "./components/draw/NameBox";
 import SheetBox from "./components/draw/SheetBox";
 import TitleBox from "./components/draw/TitleBox";
@@ -12,13 +10,13 @@ import ScoreSumBox from "./components/draw/ScoreSumBox";
 class AnswerSheet extends Component {
   render() {
     return (
-      <Stage width={4800} height={3600}>
-          <SheetBox />
+      <Stage width={4200} height={2970}>
+          <SheetBox {...{ x: 200, y: 200, width: 3800, height: 2570 }}/>
           <TitleBox />
           <NameBox {...{ x: 250, y: 350 }} />
-          <StudentNoBox {...{ x: 650, y: 350, length: 10 }} />
-          <SubjectBox {...{ x: 1750, y: 350 }} />
-          <ScoreSumBox {...{ x: 2150, y: 350 }} />
+          <StudentNoBox {...{ x: 600, y: 350, length: 10 }} />
+          <SubjectBox {...{ x: 1450, y: 350 }} />
+          <ScoreSumBox {...{ x: 1800, y: 350 }} />
       </Stage>
     );
   }

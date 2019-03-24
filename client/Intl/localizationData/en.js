@@ -132,7 +132,9 @@ export default {
       scoreTotal: "Total",
 
       //paper
-      createAnswerCard: "Create Answer Card",
+      createAnswerSheet: "Create Answer Card",
+      printTips: "After the answer sheet is generated, print it with right Click of the page.",
+      paperSize: "Paper Size",
       createPaperTips: "Paper Creating",
       sumPrefix: "Total",
       questSuffix: "Questions",

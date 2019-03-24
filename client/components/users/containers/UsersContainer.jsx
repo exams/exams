@@ -41,15 +41,15 @@ class UsersContainer extends Component {
             key: 'action',
             render: (text, record) => (
                 <span>
-            <a><FormattedMessage id="edit" /></a>
-            <Divider type="vertical" />
-            <Popconfirm title={<FormattedMessage id="sureToDelete" />}
-                        onConfirm={() => {this.props.deleteUser(record)}}
-                        okText={<FormattedMessage id="sure" />}
-                        cancelText={<FormattedMessage id="cancel" />}>
-                            <a><FormattedMessage id="delete" /></a>
-                        </Popconfirm>
-        </span>
+                    <a><FormattedMessage id="edit" /></a>
+                    <Divider type="vertical" />
+                    <Popconfirm title={<FormattedMessage id="sureToDelete" />}
+                                onConfirm={() => {this.props.deleteUser(record)}}
+                                okText={<FormattedMessage id="sure" />}
+                                cancelText={<FormattedMessage id="cancel" />}>
+                                    <a><FormattedMessage id="delete" /></a>
+                                </Popconfirm>
+                </span>
             ),
         }];
     }

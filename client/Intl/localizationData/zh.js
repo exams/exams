@@ -133,7 +133,9 @@ export default {
       scoreTotal: "总分",
 
       //paper
-      createAnswerCard: "生成答题卡",
+      createAnswerSheet: "生成答题卡",
+      printTips: "答题卡生成后, 在页面右键打印即可",
+      paperSize: "纸面大小",
       createPaperTips: "试卷生成中",
       sumPrefix: "共",
       questSuffix: "题",

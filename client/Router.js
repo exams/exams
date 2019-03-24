@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-d
 import NotFound from './components/pages/NotFound';
 import Login from './components/core/Login';
 import App from './App';
+import AnswerSheet from './components/papers/AnswerSheet'
 
 export default () => (
     <Router>
@@ -11,6 +12,7 @@ export default () => (
             <Route path="/app" component={App} />
             <Route path="/404" component={NotFound} />
             <Route path="/login" component={Login} />
+            <Route path="/answersheet" component={AnswerSheet} />
             <Route component={NotFound} />
         </Switch>
     </Router>
