@@ -10,7 +10,6 @@ import QuestionSetView from './components/QuestionSetView'
 class Paper extends Component{
     componentDidMount() {
         const template = this.props.location.state;
-        console.log(template)
         this.props.createPaper(template)
     }
 

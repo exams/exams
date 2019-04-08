@@ -133,7 +133,8 @@ export default {
 
       //paper
       createAnswerSheet: "Create Answer Card",
-      printTips: "After the answer sheet is generated, print it with right Click of the page.",
+      viewAnalysis: 'View Analysis',
+      printTips: "After the answer sheet is generated, print it by select Print from the menu.",
       paperSize: "Paper Size",
       createPaperTips: "Paper Creating",
       sumPrefix: "Total",
@@ -161,6 +162,20 @@ export default {
       pNumber15: 'XV',
 
       //Answer sheet
+      answerSheet : 'Answer sheet',
       admissionNumber: 'Admission Number',
+      studentNumber: 'Student Number',
+      barCode: 'Bar Code',
+      identifierCode: 'Identifier Code Type',
+      identifierCodeLength: 'Identifier Code Length',
+      columns: 'Layout Columns',
+      column: 'Columns',
+      sheetLayout: "Layout",
+      horizon: "Horizon",
+      vertical: "Vertical",
+      identifierInfo: 'Identifier Info Items',
+      identifierInfoPlaceholder: 'Please select the Identifier Info, You can type in instead of choose',
+      name: 'Name',
+      school: 'School',
   }
 };

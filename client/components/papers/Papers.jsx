@@ -11,7 +11,8 @@ class Papers extends Component{
         super();
         this.state = {
             createAnswerSheetVisible: false,
-        }
+        };
+
         this.columns = [{
             title: <FormattedMessage id="title" />,
             render: (text, record) => (<Link to={{
@@ -29,6 +30,8 @@ class Papers extends Component{
             key: 'action',
             render: (text, record) => (
                 <span>
+                    <a><FormattedMessage id="viewAnalysis" /></a>
+                    <Divider type="vertical" />
                     <a onClick={() => {this.openAnswerSheetBox(record)}}><FormattedMessage id="createAnswerSheet" /></a>
                     <Divider type="vertical" />
                     <Popconfirm title={<FormattedMessage id="sureToDelete" />}
@@ -51,19 +54,25 @@ class Papers extends Component{
     }
 
     openAnswerSheetBox = (paper) => {
-        this.setState({createAnswerSheetVisible: true})
+        this.setState({
+            createAnswerSheetVisible: true,
+            paper: paper
+        })
     }
 
     onCancel = () => {
         this.setState({
-            createAnswerSheetVisible: false
+            createAnswerSheetVisible: false,
+            paper: null
         })
     }
 
     handleCreate = (createPaper) => {
         this.setState({
             createAnswerSheetVisible: false
-        })
+        });
+        const { paper } = this.state;
+        createPaper.paper = paper;
 
         const path = {
             pathname:'/answersheet',
@@ -74,7 +83,7 @@ class Papers extends Component{
 
     render() {
         const {papers} = this.props;
-        const { createAnswerSheetVisible } = this.state;
+        const { createAnswerSheetVisible, paper } = this.state;
         return (
             <div>
                 <Table size={"middle"} columns={this.columns} dataSource={papers} />
@@ -84,6 +93,7 @@ class Papers extends Component{
                         visible={createAnswerSheetVisible}
                         handleCreate={this.handleCreate}
                         onCancel={this.onCancel}
+                        paper={paper}
                     />
 
                 }

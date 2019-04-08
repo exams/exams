@@ -134,8 +134,9 @@ export default {
 
       //paper
       createAnswerSheet: "生成答题卡",
-      printTips: "答题卡生成后, 在页面右键打印即可",
-      paperSize: "纸面大小",
+      viewAnalysis: '查看解析',
+      printTips: "答题卡生成后, 在菜单选择打印即可",
+      paperSize: "版面大小",
       createPaperTips: "试卷生成中",
       sumPrefix: "共",
       questSuffix: "题",
@@ -162,6 +163,22 @@ export default {
       pNumber15: '十五',
 
       //Answer sheet
+      answerSheet : '答题卡',
       admissionNumber: '准考证号',
+      studentNumber: '学号',
+      barCode: '条形码',
+      identifierCode: '考生识别码',
+      identifierCodeLength: '识别码长度',
+      columns: '版面列数',
+      column: '列',
+      sheetLayout: "版面布局",
+      horizon: "水平",
+      vertical: "垂直",
+      identifierInfo: '考生信息选项',
+      identifierInfoPlaceholder: '请选择需要的考生信息选项,也可以直接输入',
+      name: '姓名',
+      school: '学校',
+
+
   }
 };

@@ -19,7 +19,7 @@ class AddUser extends Component{
                 this.props.addUser(values)
             }
         });
-    }
+    };
 
     getSubjects = (subjectIds) => {
         const { subjects } = this.props;
@@ -30,7 +30,7 @@ class AddUser extends Component{
             }
         })
         return newSubjects;
-    }
+    };
 
     render() {
         const { subjects } = this.props
