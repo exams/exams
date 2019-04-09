@@ -4,7 +4,8 @@ import SheetBox from "./components/draw/SheetBox";
 import TitleBoxA4 from "./components/draw/TitleBoxA4";
 import StudentNoBoxA4 from "./components/draw/StudentNoBoxA4";
 import HeaderInfoBoxA4 from "./components/draw/HeaderInfoBoxA4";
-import BarcodeA4 from "./components/draw/BarCodeA4"
+import BarcodeA4 from "./components/draw/BarCodeA4";
+import SingleAnswerBox from "./components/draw/SingleAnswerBox"
 import {
     widthA4,
     heightA4,
@@ -29,8 +30,12 @@ class AnswerSheet extends Component {
     constructor() {
         super();
         this.state = {
-            x: 0,
-            y: 0,
+            margin: 0,
+            stageWidth: 0,
+            stageHeight: 0,
+            sheetWidth: 0,
+            sheetHeight: 0,
+            columnWidth: 0
         };
     }
 
@@ -38,10 +43,17 @@ class AnswerSheet extends Component {
         const answerSheet = this.props.location.state;
         const paper = answerSheet.paper;
         const questions = paper.questions;
-        console.log(answerSheet);
-        console.log(paper);
-        console.log(questions);
 
+
+        const sheetParams = this.initSheetParams(answerSheet);
+        this.dealWithHeaders(answerSheet);
+
+        this.dealWithQuestions(questions, 20, 600, sheetParams);
+
+        console.log(answerSheet);
+    }
+
+    initSheetParams = (answerSheet) => {
         let stageWidth = 0;
         let stageHeight = 0;
         let tempPaperWidth = 0;
@@ -65,56 +77,45 @@ class AnswerSheet extends Component {
             stageHeight =  tempPaperWidth;
         }
 
-        console.log(stageWidth)
-        console.log(stageHeight)
         const sheetWidth = stageWidth - 2 * margin;
         const sheetHeight = stageHeight - 2 * margin;
         const columnWidth = sheetWidth / answerSheet.columns;
+        const sheetParams = {
+            margin: margin,
+            stageWidth: stageWidth,
+            stageHeight: stageHeight,
+            sheetWidth: sheetWidth,
+            sheetHeight: sheetHeight,
+            columnWidth: columnWidth
+        };
+        this.setState(sheetParams);
+        return sheetParams;
+    };
 
-
-        // 设置标题的绘制位置
-        answerSheet.titleX = margin;
-        answerSheet.titleY = margin;
-        this.updateState(margin, margin)
+    dealWithHeaders = (answerSheet) => {
 
         // 设置学号准考证号, 条形码的绘制位置.
         answerSheet.identifierCodeX = this.state.x;
         answerSheet.identifierCodeY = this.state.y + titleBoxHeight;
-        this.updateState(0, titleBoxHeight);
 
         let identifierHeight = this.getIdentifierHeight(answerSheet.identifierCode);
         const headerDivideHeight = 0;
 
-        this.dealWithQuestions(questions, columnWidth, this.state.x, this.state.y + identifierHeight + titleBoxHeight + 2 * questTitleHeight)
-    }
-
-    // 更新绘制的state, 在原有的坐标上增加距离
-    updateState = (x, y) => {
-        const {oldX, oldY} = this.state;
-        const newX = oldX + x;
-        const newY = oldY + y;
-        this.setState({
-            x: newX,
-            y: newY,
-        })
     };
 
-    dealWithLayout = () => {
-
-    };
-
-    dealWithHeaders = () => {
-
-    };
-
-    dealWithQuestions = (questions, columnWidth, beginX, beginY) => {
+    dealWithQuestions = (questions, beginX, beginY, sheetParams) => {
         let tempX = beginX;
         let tempY = beginY;
-        let hang = 0;
         let perNum = 0;
         let drawSpace = 0;
         let questList = [];
+
+        const { margin, sheetWidth, sheetHeight, columnWidth } = sheetParams;
         for (let i = 0; i < questions.length; i++) {
+            // 设置标题的位置
+            questions[i].x = tempX + drawSpace;
+            questions[i].y = tempY;
+            tempY = tempY + questTitleHeight;
             if (questions[i].questType === 'singleChoice'){
                 // 检查是否有空间打印该题型高度, 如果if满足,则证明底部边缘空间已不满足绘制要求.
                 // 需要切换column或者sheet.
@@ -124,8 +125,9 @@ class AnswerSheet extends Component {
                 }
 
                 perNum = Math.floor(columnWidth / (singleBoxWidth + minSpace));
+                console.log(perNum);
                 drawSpace = columnWidth / perNum;
-
+                console.log(drawSpace);
                 questList = questions[i].questions;
                 tempX = tempX + drawSpace; // 第一个框不能顶边打印, 要有一个空隙
                 let drawIndex = 0; // 记录每一行第几个框被打印
@@ -150,8 +152,9 @@ class AnswerSheet extends Component {
                                 // 移动到新的sheet, 重新计算x坐标和y坐标.
                                 tempX = margin + minSpace;
                                 tempY = margin + minSpace;
+
                                 // 更新stage高度.
-                                
+
                             }
                         }
                     }
@@ -164,9 +167,6 @@ class AnswerSheet extends Component {
                 // 换行后检查是否本column已经满了. 不检查本column是否有空间再打印下一行.
                 // 因为是下一种题型, 此处不知道该题型高度. 放到每种题型开始处检查是否有空间打印该题型高度
 
-
-                hang = Math.ceil(questions[i].questions.length / perNum);
-                console.log(hang)
             } else if (questions[i].questType === 'multiChoice'){
 
             } else if (questions[i].questType === 'judge'){
@@ -174,9 +174,6 @@ class AnswerSheet extends Component {
             } else if (questions[i].questType === 'blank'){
 
             }
-            questions[i].x = tempX;
-            questions[i].y = tempY + hang * singleBoxHeight;
-            tempY = tempY + hang * singleBoxHeight;
         }
     };
 
@@ -206,6 +203,18 @@ class AnswerSheet extends Component {
         }
     };
 
+    getQuestionDraw = () => {
+        const answerSheet = this.props.location.state;
+        answerSheet.paper.questions.map((item, index) => {
+            if (item.questType === 'singleChoice') {
+                item.questions.map((question, i) => {
+                    console.log(i)
+                    return ( <SingleAnswerBox {...{ x: question.x, y: question.y, index: i }} /> )
+                })
+            }
+        })
+    }
+
     renderAnswerSheet = () => {
         return (
             <Stage width={4200} height={2970}>
@@ -219,42 +228,22 @@ class AnswerSheet extends Component {
 
   render() {
       const answerSheet = this.props.location.state;
-
-      if (answerSheet.paperSize === 'A3'){
-          return (
-              <Stage width={4200} height={2970}>
-                  <SheetBox {...{ x: 200, y: 200, width: 3800, height: 2570, columns: answerSheet.columns }} />
-                  <TitleBoxA4 />
-                  <StudentNoBoxA4 {...{ x: 600, y: 350, length: 10 }} />
-                  <HeaderInfoBoxA4 {...{ x: 1450, y: 350 }} />
-              </Stage>
-          );
-      }
-      else if (answerSheet.paperSize === 'A4'){
-          let stateWidth = widthA4 * zoomSize;
-          let stateHeight =  heightA4 * zoomSize;
-          if (answerSheet.sheetLayout === 'vertical'){
-              stateWidth = widthA4 * zoomSize;
-              stateHeight =  heightA4 * zoomSize;
-          } else if (answerSheet.sheetLayout === 'horizon'){
-              stateWidth = heightA4 * zoomSize;
-              stateHeight = widthA4 * zoomSize;
-          }
-          const sheetWidth = stateWidth - 2 * marginA4;
-          const sheetHeight = stateHeight - 2 * marginA4;
-          const columnWidth = sheetWidth/answerSheet.columns;
-          return (
-              <Stage width={stateWidth} height={stateHeight}>
-                  <SheetBox {...{ x: marginA4, y: marginA4, width: sheetWidth, height: sheetHeight, columns: answerSheet.columns }} />
-                  <TitleBoxA4 {...{x: 100, y: 100,  width: columnWidth, height: titleBoxHeight, title: answerSheet.title}} />
-                  {
-                      this.getIdentifierCode()
-                  }
-                  <HeaderInfoBoxA4 {...{ x: 150, y: 500, width: 240, text: '姓名', layout: 'vertical' }} />
-                  <HeaderInfoBoxA4 {...{ x: 410, y: 500, width: 240, text: '姓名', layout: 'vertical' }} />
-              </Stage>
-          );
-      }
+      console.log(answerSheet);
+      const { margin, stageWidth, stageHeight, sheetWidth, sheetHeight, columnWidth} = this.state;
+      return (
+          <Stage width={stageWidth} height={stageHeight}>
+              <SheetBox {...{ x: margin, y: margin, width: sheetWidth, height: sheetHeight, columns: answerSheet.columns }} />
+              <TitleBoxA4 {...{x: margin, y: margin,  width: columnWidth, height: titleBoxHeight, title: answerSheet.title}} />
+              {
+                  this.getIdentifierCode()
+              }
+              <HeaderInfoBoxA4 {...{ x: 150, y: 500, width: 240, text: '姓名', layout: 'vertical' }} />
+              <SingleAnswerBox {...{ x: 410, y: 500, index: 10 }} />
+              {
+                  this.getQuestionDraw()
+              }
+          </Stage>
+      );
   }
 }
 export default AnswerSheet
