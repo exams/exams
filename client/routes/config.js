@@ -11,9 +11,6 @@ export default {
             route: '/app/quests', key:'quests',  title: '题库', icon: 'star', component: 'Quests'
         },
         {
-            route: '/app/records', visible: false, key: 'record', title: '录入', component: 'Records'
-        },
-        {
             route: '/app/subjects', key: 'subject', title: '科目', icon: 'cluster', component: 'Subjects'
         },
         {
@@ -40,6 +37,9 @@ export default {
         },
         {
             route: '/app/papers/create', title: '试卷', component: 'Paper'
+        },
+        {
+            route: '/app/records', visible: false, key: 'record', title: '录入', component: 'Records'
         },
     ]  // 非菜单相关路由
 }
